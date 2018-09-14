@@ -3,11 +3,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Thomasl007</title>
+    <title>{{ site.title }}</title>
     <link rel="icon" type="image/x-icon" href="/assets/img/icon.png"/>
 
     <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css"  media="screen,projection"/>
 
@@ -18,32 +18,27 @@
     <!--link rel="icon" type="image/x-icon" href="res/icon.png"/-->
   </head>
   <body>
-    <header>
-      <nav>
-        <div class="nav-wrapper">
-          <a href="" class="brand-logo left">Thomasl007</a>
-          <a href="" class="email right">acctml@outlook.com</a>
-        </div>
-      </nav>
-    </header>
+    {% include header.html %}
     <div class="main">
       <!--div class="image"-->
       <!--/div-->
       <div class="content">
         <ul class="collapsible" data-collapsible="accordion">
           {% for collection in site.collections %}
-           {% assign name = collection.label %}
-            <li>
-              <div class='collapsible-header waves-effect'>
-                <img class='icon'/>
-                {{ name }}
-              </div>
-              <div class='collapsible-body'>
-                {% for item in site.[name] %}
-                  <a class='waves-effect waves-light' target='_blank' href="{{ item.url }}">{{ item.title }}</a>
-                {% endfor %}
-              </div>
-            </li>
+            {% assign name = collection.label %}
+            {% if name != "posts" %}
+              <li>
+                <div class='collapsible-header waves-effect'>
+                  <img class='icon' src="{{ collection.icon }}" />
+                  {{ name }} ({{ site.[name].size }})
+                </div>
+                <div class='collapsible-body'>
+                  {% for item in site.[name] %}
+                    <a class='waves-effect waves-light' target='_blank' href="{{ item.url }}">{{ item.title }}</a>
+                  {% endfor %}
+                </div>
+              </li>
+            {% endif %}
           {% endfor %}
         </ul>
 

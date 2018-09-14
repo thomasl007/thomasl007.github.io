@@ -1,25 +1,38 @@
-include: [_layouts]
-include: [collections/_Cplusplus]
-
 collections_dir: collections
 collections:
   Cplusplus:
     output: true
-  Flutter:
-    output: true
-  Git:
-    output: true
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/140px-ISO_C%2B%2B_Logo.svg.png
   Linux:
     output: true
-  MySQL:
-    output: true
+    icon: https://www.linux.org/styles/uix/uix/logo_small.png
   Vim:
     output: true
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vimlogo.svg/64px-Vimlogo.svg.png
+  Flutter:
+    output: true
+    icon: https://flutter.io/images/flutter-mark-square-100.png
+  Git:
+    output: true
+    icon: ../../assets/img/git.png
+  MySQL:
+    output: true
+    icon: ../../assets/img/mysql.png
 
 defaults:
   - scope:
       path: ""
       type: "Cplusplus"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Linux"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Vim"
     values:
       layout: "collection"
   - scope:
@@ -34,16 +47,9 @@ defaults:
       layout: "collection"
   - scope:
       path: ""
-      type: "Linux"
-    values:
-      layout: "collection"
-  - scope:
-      path: ""
       type: "MySQL"
     values:
       layout: "collection"
-  - scope:
-      path: ""
-      type: "Vim"
-    values:
-      layout: "collection"
+
+title: thomasl007
+email: actml@outlook.com

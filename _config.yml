@@ -1,0 +1,49 @@
+include: [_layouts]
+include: [collections/_Cplusplus]
+
+collections_dir: collections
+collections:
+  Cplusplus:
+    output: true
+  Flutter:
+    output: true
+  Git:
+    output: true
+  Linux:
+    output: true
+  MySQL:
+    output: true
+  Vim:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: "Cplusplus"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Flutter"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Git"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Linux"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "MySQL"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Vim"
+    values:
+      layout: "collection"

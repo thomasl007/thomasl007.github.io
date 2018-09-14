@@ -1,6 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 
 ## PHP支持
 
@@ -62,8 +61,3 @@ nginx -s reload
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 ```
 也可能是php-fpm配置的问题
-
-<script type="text/javascript" src="../js/md.js"></script>
-<script>
-setHeader("Nginx配置");
-</script>

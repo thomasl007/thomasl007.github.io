@@ -1,7 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../css/common.css"/>
-
 ## 删除
 
 |快捷键|说明|备注|
@@ -31,8 +29,3 @@
 |-|-|-|
 |ctrl-r {寄存器名}|在当前位置插入寄存器{寄存器名}中的内容，可能包含缩进|`:h i_CTRL-R` 查看帮助文档|
 |ctrl-r ctrl-p {寄存器名}|在当前位置插入寄存器{寄存器名}中的内容，不包含缩进|`:h i_CTRL-R` 查看帮助文档|
-
-<script type="text/javascript" src="../js/md.js"></script>
-<script>
-setHeader("Vim插入模式中的快捷键");
-</script>

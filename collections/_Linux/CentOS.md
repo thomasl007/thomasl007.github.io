@@ -1,7 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../css/common.css"/>
-
 ## 查看版本
 
 |信息|命令|
@@ -165,8 +163,3 @@ yum install net-tools
 ps -aux | grep httpd
 ```
 挨个kill
-
-<script type="text/javascript" src="../js/md.js"></script>
-<script>
-setHeader("CentOS");
-</script>

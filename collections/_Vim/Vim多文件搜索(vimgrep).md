@@ -1,7 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../src/md.css">
-
 ##### 命令:
 `vimgrep`<br/>
 

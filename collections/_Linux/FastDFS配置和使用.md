@@ -1,7 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../css/common.css"/>
-
 *前言：如果想快速安装配置的话，斜体字可以不看。*
 
 ## 安装
@@ -446,9 +444,3 @@ php_client了的函数调用出了问题，先确认安装过程，如果没问�
 
 * [FastDFS的wiki](https://github.com/happyfish100/fastdfs/wiki)
 * [这篇文章写得很详细](https://blog.csdn.net/xinxin19881112/article/details/77750615)
-
-<script type="text/javascript" src="../js/md.js"></script>
-<script>
-setHeader("FastDFS配置和使用");
-</script>
-

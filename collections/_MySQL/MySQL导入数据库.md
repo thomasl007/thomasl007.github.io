@@ -1,7 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../css/common.css"/>
-
 ## 命令行导入数据库
 
 假设已经有`.sql`脚本文件。
@@ -17,8 +15,3 @@ mysql> source your_sql_script_file;
 ```
 shell> mysql -u your_username -p your_password < your_sql_script_file
 ```
-
-<script type="text/javascript" src="../js/md.js"></script>
-<script>
-setHeader("MySQL导入数据库");
-</script>

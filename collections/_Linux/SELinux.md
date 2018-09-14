@@ -1,7 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../css/common.css"/>
-
 ## SELinux
 
 ### 查看SELinux状态
@@ -25,8 +23,3 @@ vim /etc/selinux/config
 # 修改
 SELINUX=disabled
 ```
-
-<script type="text/javascript" src="../js/md.js"></script>
-<script>
-setHeader("SELinux");
-</script>

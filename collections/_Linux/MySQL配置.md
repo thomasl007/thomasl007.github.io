@@ -1,12 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../src/common.css"/>
-
-<script type="text/javascript" src="../src/md.js"></script>
-<script>
-setHeader("MySQL配置");
-</script>
-
 ## 配置文件位置
 
 *以MySQL 5.6+版本为例*

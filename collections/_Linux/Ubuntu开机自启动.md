@@ -1,12 +1,5 @@
 ---
 ---
-<link rel="stylesheet" type="text/css" href="../src/common.css"/>
-
-<script type="text/javascript" src="../src/md.js"></script>
-<script>
-setHeader("Ubuntu开机自启动");
-</script>
-
 ## 前言
 
 Ubuntu 16.04 LTS之前，使用`sysv (chkconfig)`管理服务。<br/>

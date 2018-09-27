@@ -21,6 +21,31 @@ curl cip.cc
 curl http://members.3322.org/dyndns/getip
 ```
 
+## SELinux
+
+### 查看SELinux状态
+
+```
+getenforce
+```
+
+### 关闭SELinux
+
+#### 临时
+
+```
+setenforce 0
+```
+
+#### 永久
+
+```
+vim /etc/selinux/config
+# 修改
+SELINUX=disabled
+```
+
+---
 # Ubuntu
 
 ### Ubuntu激活root
@@ -45,6 +70,7 @@ sudo apt-get -y install sysv-rc-conf
 sudo sysv-rc_conf
 ```
 
+---
 # CentOS
 
 ## 查看版本

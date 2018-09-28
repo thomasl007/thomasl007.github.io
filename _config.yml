@@ -9,6 +9,9 @@ collections:
   Vim:
     output: true
     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vimlogo.svg/64px-Vimlogo.svg.png
+  Android:
+    output: true
+    icon: https://developer.android.google.cn/static/images/branding/icons/android-blog-round-icon.svg
   Flutter:
     output: true
     icon: https://flutter.io/images/flutter-mark-square-100.png
@@ -33,6 +36,11 @@ defaults:
   - scope:
       path: ""
       type: "Vim"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Android"
     values:
       layout: "collection"
   - scope:

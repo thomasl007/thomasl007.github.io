@@ -45,6 +45,13 @@ vim /etc/selinux/config
 SELINUX=disabled
 ```
 
+## 扯淡
+
+几个可以用来扯淡的小工具
+骇客帝国`cmatrix`
+Linux Logo `linuxlogo`
+字符图形化输出 `figlet`
+
 ---
 # Ubuntu
 

@@ -61,3 +61,12 @@ nginx -s reload
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 ```
 也可能是php-fpm配置的问题
+
+# 常用配置
+
+## 配置上传文件大小限制
+
+如果要设置全局配置，则在nginx.conf中的http{}中添加以下内容：
+```
+lient_max_body_size 30m;
+```

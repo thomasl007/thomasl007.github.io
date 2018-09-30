@@ -68,3 +68,7 @@ div.collapsible-body a:hover {
 div.collapsible-body a:active {
   color: #9e9e9e;
 }
+div.collapsible-header p.collection-title {
+  // font-weight: bold;
+  font-size: 1.15rem;
+}

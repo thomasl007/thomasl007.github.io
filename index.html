@@ -30,7 +30,8 @@
               <li>
                 <div class='collapsible-header waves-effect'>
                   <img class='icon' src="{{ collection.icon }}" />
-                  {{ name }} ({{ site.[name].size }})
+		  <p class="collection-title">{{ name }}</p>
+                  <span class="badge">{{ site.[name].size }}</span>
                 </div>
                 <div class='collapsible-body'>
                   {% for item in site.[name] %}

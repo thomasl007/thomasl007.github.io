@@ -21,6 +21,10 @@ curl cip.cc
 curl http://members.3322.org/dyndns/getip
 ```
 
+## 查看目录大小
+
+进入目录执行命令`du -sh`
+
 ## SELinux
 
 ### 查看SELinux状态

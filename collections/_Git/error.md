@@ -12,6 +12,7 @@ fatal: index-pack failed
 **原因：**<br/>
 一般是项目codebase太大<br/>
 **方案：**
+网上有说使用以下命令的，但是我没奏效，最后使用SmartGit克隆的。
 ```
 git config --add core.compression -1
 or

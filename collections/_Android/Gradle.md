@@ -1,0 +1,586 @@
+---
+---
+[官方文档](http://groovy-lang.org/documentation.html)
+
+#词汇
+gradlew: gradle wrapper<br/>
+DSL: Domain Specific Language<br/>
+
+#gradlew命令
+```gradlew tasks```<br/>
+查看所有可用任务<br/>
+
+#gradle daemon
+gradle daemon是一个后台进程。gradle启动比较慢，因为启动时要创建一个JVM的实例。gradle daemon可用缩短（免除）gradle的启动时间，在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
+默认情况下gradle daemon是启动的，可以使用<br/>
+```org.gradle.daemon=false```<br/>
+关闭。<br/>
+在daemon运行状态，如果想停止运行，可使用以下命令<br/>
+```
+gradle --stop
+```
+
+#关键字
+`task`, `android`关键字都来源于gradle构建语言。<br/>
+
+#gradle构建语言（Gradle DSL）
+Gradle构建语言也称为Gradle DSL，DSL是指针对特定任务定制的语言。这里有个domain的概念，以android为例，domain指的是android构建（build.gradle中的`android {}`）<br/>
+Gradle DSL使你可以只负责描述构建，gradle负责实际的构建过程。<br/>
+目前的理解是，在gradle构建脚本文件中，可以使用Java、Groovy或Scala等任何JVM语言来编写脚本。<br/>
+
+#gradle语法
+##变量声明
+gradle声明变量时，可以指定变量类型，也可以使用`def`声明*动态类型*变量。<br/>
+动态类型变量可以赋值为其他类型。<br/>
+##函数
+以`def`开头，但def不是返回值类型，函数块中的最后一个表达式即为返回的内容。<br/>
+**一个很特别的语法**<br/>
+如果函数有参数，则可以在函数调用时省略参数两边的圆括号。但函数嵌套调用时，需要使用圆括号避免歧义。<br/>
+##字符串
+可以使用`${groovy代码}`的形式在字符串中执行简单的groovy代码。<br/>
+##闭包（closure）
+闭包实际上是一种特殊的函数声明方法。<br/>
+它是一种可以打包、传递和赋值给变量的函数。<br/>
+```
+def myClosure = {
+  println "Hello closure"
+}
+
+myClosure()
+```
+###闭包的委托对象
+闭包可以有一个委托对象。<br/>
+设置委托对象后，可以在闭包中访问委托对象中的成员变量和方法。<br/>
+```
+class GroovyGreeter {
+    String greeting = "Default greeting"
+    def printGreeting() { println "Greeting: $greeting" }
+}
+def myGroovyGreeter = new GroovyGreeter()
+// 定义闭包
+def greetingClosure = {
+    // 注意这里，闭包中并没有定义greeting变量，这个变量第一在类GroovyGreeter中
+    greeting = "Setting the greeting from a closure"
+    printGreeting()
+}
+// 这步是关键，设置委托对象
+greetingClosure.delegate = myGroovyGreeter
+greetingClosure()
+```
+###闭包传递参数
+闭包传参的语法很特别。<br/>
+参数和函数体都在花括号中，以`->`分割，即，`参数 -> 函数体`。<br/>
+多个参数以逗号分割。<br/>
+例子：
+```
+def myClosure = { arg0, arg1 ->
+    arg0 + arg1
+}
+```
+##列表
+###列表的定义
+列表的定义超级简单<br/>
+```
+def myList = ["Gradle", "Groovy", "Android"]
+```
+###列表的高级用法
+对列表中每个项目执行闭包<br/>
+```
+def printItem = {item -> println "List item $item"}
+myList.each(printItem)
+```
+**另一种写法**<br/>
+在语句中直接使用闭包（不知道是不是可以称为“匿名闭包”）
+```
+myList.each{println "Compacly printing each list item: $it"}
+```
+注意两点，1. 这里没有圆括号；2. 如果闭包中只有一个参数，则这个参数默认这个参数名为`it`。<br/>
+##类
+Groovy自动为所有成员变量添加`getter`和`setter`。<br/>
+
+#groovy
+大多数的Java也是有效的Groovy。
+Groovy中的`+`是重载的，所以`+`运算符不仅可以进行数字的运算，还可以进行字符串的拼接。<br/>
+
+#task
+##运行task
+gradlew命令默认执行build.gradle文件中的task<br/>
+例如，build.gradle文件中定义了一个名为hello的task<br/>
+```
+task hello {
+}
+```
+则执行./gradlew hello时默认执行build.gradle文件中的名为hello的task。<br/>
+如果想执行其他编译脚本，可以使用`-b`参数，例如<br/>
+有个名为mine.gradle的文件，其中定义了一个名为hello的task，则可以使用以下命令执行hello<br/>
+```
+./gradlew -b mine.gradle hello
+```
+##查看任务
+```
+gradle tasks --all
+```
+查看全部任务，包括自定义任务。
+##构建脚本的委托
+整个构建脚本会委托给一个项目（`project`）对象。<br/>
+Gradle DSL中的所有关键字都是该项目对象的属性或方法。
+例如：project对象中有一个名为`task`的方法，用于声明task
+##声明task
+```
+project.task("myTask1")
+```
+因为整个脚本已经委托给了`project`对象，所以我们其实可以直接这么写
+```
+task("myTask1")
+```
+因为Groovy对于有参函数的调用可以省略括号，所以我们其实可以直接这么写
+```
+task "myTask1"
+```
+因为Groovy的抽象语法树转换（abstract syntax tree transformation, AST）功能，我们可以直接去掉双引号
+```
+task myTask1
+```
+到这里就出现我们前边提到的定义hello任务的形式了`task hello {}`。<br/>
+###task配置
+我们可以给已声明的任务添加属性<br/>
+假设我们已声明了任务myTask<br/>
+```
+myTask.description = "this is desc"
+myTask.group = "this is group"
+
+```
+执行查看任务命令就会看到效果。<br/>
+**上边都是扯淡的属性，下边这个重要**<br/>
+即，指明task要执行的操作。<br/>
+我们可以在要执行的操作列表的末尾添加一个闭包：
+```
+myTask.doLast {}
+// 以下两种写法也可以，但是新版gradle中已经标记为“过时”了
+myTask << {}
+myTask.leftShift {}
+```
+也可以在开头添加一个闭包：
+```
+myTask.doFirst {}
+```
+###声明task同时配置属性
+声明task同时添加doLast属性
+```
+task myTask << {}
+```
+也可以在声明task的同时传递配置闭包，以添加多条属性
+```
+task myTask {
+    description "this is desc"
+    group "this is group"
+    doLast {
+        println "here's the action"
+    }
+}
+```
+
+#Demo
+demo from [Learn X in Y](https://learnxinyminutes.com/docs/groovy/)
+```
+/*
+  Set yourself up:
+
+  1) Install SDKMAN - http://sdkman.io/
+  2) Install Groovy: sdk install groovy
+  3) Start the groovy console by typing: groovyConsole
+
+*/
+
+//  Single line comments start with two forward slashes
+/*
+Multi line comments look like this.
+*/
+
+// Hello World
+println "Hello world!"
+
+/*
+  Variables:
+
+  You can assign values to variables for later use
+*/
+
+def x = 1
+println x
+
+x = new java.util.Date()
+println x
+
+x = -3.1499392
+println x
+
+x = false
+println x
+
+x = "Groovy!"
+println x
+
+/*
+  Collections and maps
+*/
+
+//Creating an empty list
+def technologies = []
+
+/*** Adding a elements to the list ***/
+
+// As with Java
+technologies.add("Grails")
+
+// Left shift adds, and returns the list
+technologies << "Groovy"
+
+// Add multiple elements
+technologies.addAll(["Gradle","Griffon"])
+
+/*** Removing elements from the list ***/
+
+// As with Java
+technologies.remove("Griffon")
+
+// Subtraction works also
+technologies = technologies - 'Grails'
+
+/*** Iterating Lists ***/
+
+// Iterate over elements of a list
+technologies.each { println "Technology: $it"}
+technologies.eachWithIndex { it, i -> println "$i: $it"}
+
+/*** Checking List contents ***/
+
+//Evaluate if a list contains element(s) (boolean)
+contained = technologies.contains( 'Groovy' )
+
+// Or
+contained = 'Groovy' in technologies
+
+// Check for multiple contents
+technologies.containsAll(['Groovy','Grails'])
+
+/*** Sorting Lists ***/
+
+// Sort a list (mutates original list)
+technologies.sort()
+
+// To sort without mutating original, you can do:
+sortedTechnologies = technologies.sort( false )
+
+/*** Manipulating Lists ***/
+
+//Replace all elements in the list
+Collections.replaceAll(technologies, 'Gradle', 'gradle')
+
+//Shuffle a list
+Collections.shuffle(technologies, new Random())
+
+//Clear a list
+technologies.clear()
+
+//Creating an empty map
+def devMap = [:]
+
+//Add values
+devMap = ['name':'Roberto', 'framework':'Grails', 'language':'Groovy']
+devMap.put('lastName','Perez')
+
+//Iterate over elements of a map
+devMap.each { println "$it.key: $it.value" }
+devMap.eachWithIndex { it, i -> println "$i: $it"}
+
+//Evaluate if a map contains a key
+assert devMap.containsKey('name')
+
+//Evaluate if a map contains a value
+assert devMap.containsValue('Roberto')
+
+//Get the keys of a map
+println devMap.keySet()
+
+//Get the values of a map
+println devMap.values()
+
+/*
+  Groovy Beans
+
+  GroovyBeans are JavaBeans but using a much simpler syntax
+
+  When Groovy is compiled to bytecode, the following rules are used.
+
+    * If the name is declared with an access modifier (public, private or
+      protected) then a field is generated.
+
+    * A name declared with no access modifier generates a private field with
+      public getter and setter (i.e. a property).
+
+    * If a property is declared final the private field is created final and no
+      setter is generated.
+
+    * You can declare a property and also declare your own getter or setter.
+
+    * You can declare a property and a field of the same name, the property will
+      use that field then.
+
+    * If you want a private or protected property you have to provide your own
+      getter and setter which must be declared private or protected.
+
+    * If you access a property from within the class the property is defined in
+      at compile time with implicit or explicit this (for example this.foo, or
+      simply foo), Groovy will access the field directly instead of going though
+      the getter and setter.
+
+    * If you access a property that does not exist using the explicit or
+      implicit foo, then Groovy will access the property through the meta class,
+      which may fail at runtime.
+
+*/
+
+class Foo {
+    // read only property
+    final String name = "Roberto"
+
+    // read only property with public getter and protected setter
+    String language
+    protected void setLanguage(String language) { this.language = language }
+
+    // dynamically typed property
+    def lastName
+}
+
+/*
+  Logical Branching and Looping
+*/
+
+//Groovy supports the usual if - else syntax
+def x = 3
+
+if(x==1) {
+    println "One"
+} else if(x==2) {
+    println "Two"
+} else {
+    println "X greater than Two"
+}
+
+//Groovy also supports the ternary operator:
+def y = 10
+def x = (y > 1) ? "worked" : "failed"
+assert x == "worked"
+
+//Groovy supports 'The Elvis Operator' too!
+//Instead of using the ternary operator:
+
+displayName = user.name ? user.name : 'Anonymous'
+
+//We can write it:
+displayName = user.name ?: 'Anonymous'
+
+//For loop
+//Iterate over a range
+def x = 0
+for (i in 0 .. 30) {
+    x += i
+}
+
+//Iterate over a list
+x = 0
+for( i in [5,3,2,1] ) {
+    x += i
+}
+
+//Iterate over an array
+array = (0..20).toArray()
+x = 0
+for (i in array) {
+    x += i
+}
+
+//Iterate over a map
+def map = ['name':'Roberto', 'framework':'Grails', 'language':'Groovy']
+x = ""
+for ( e in map ) {
+    x += e.value
+    x += " "
+}
+assert x.equals("Roberto Grails Groovy ")
+
+/*
+  Operators
+
+  Operator Overloading for a list of the common operators that Groovy supports:
+  http://www.groovy-lang.org/operators.html#Operator-Overloading
+
+  Helpful groovy operators
+*/
+//Spread operator:  invoke an action on all items of an aggregate object.
+def technologies = ['Groovy','Grails','Gradle']
+technologies*.toUpperCase() // = to technologies.collect { it?.toUpperCase() }
+
+//Safe navigation operator: used to avoid a NullPointerException.
+def user = User.get(1)
+def username = user?.username
+
+
+/*
+  Closures
+  A Groovy Closure is like a "code block" or a method pointer. It is a piece of
+  code that is defined and then executed at a later point.
+
+  More info at: http://www.groovy-lang.org/closures.html
+*/
+//Example:
+def clos = { println "Hello World!" }
+
+println "Executing the Closure:"
+clos()
+
+//Passing parameters to a closure
+def sum = { a, b -> println a+b }
+sum(2,4)
+
+//Closures may refer to variables not listed in their parameter list.
+def x = 5
+def multiplyBy = { num -> num * x }
+println multiplyBy(10)
+
+// If you have a Closure that takes a single argument, you may omit the
+// parameter definition of the Closure
+def clos = { print it }
+clos( "hi" )
+
+/*
+  Groovy can memoize closure results [1][2][3]
+*/
+def cl = {a, b ->
+    sleep(3000) // simulate some time consuming processing
+    a + b
+}
+
+mem = cl.memoize()
+
+def callClosure(a, b) {
+    def start = System.currentTimeMillis()
+    mem(a, b)
+    println "Inputs(a = $a, b = $b) - took ${System.currentTimeMillis() - start} msecs."
+}
+
+callClosure(1, 2)
+callClosure(1, 2)
+callClosure(2, 3)
+callClosure(2, 3)
+callClosure(3, 4)
+callClosure(3, 4)
+callClosure(1, 2)
+callClosure(2, 3)
+callClosure(3, 4)
+
+/*
+  Expando
+
+  The Expando class is a dynamic bean so we can add properties and we can add
+  closures as methods to an instance of this class
+
+  http://mrhaki.blogspot.mx/2009/10/groovy-goodness-expando-as-dynamic-bean.html
+*/
+  def user = new Expando(name:"Roberto")
+  assert 'Roberto' == user.name
+
+  user.lastName = 'Pérez'
+  assert 'Pérez' == user.lastName
+
+  user.showInfo = { out ->
+      out << "Name: $name"
+      out << ", Last name: $lastName"
+  }
+
+  def sw = new StringWriter()
+  println user.showInfo(sw)
+
+
+/*
+  Metaprogramming (MOP)
+*/
+
+//Using ExpandoMetaClass to add behaviour
+String.metaClass.testAdd = {
+    println "we added this"
+}
+
+String x = "test"
+x?.testAdd()
+
+//Intercepting method calls
+class Test implements GroovyInterceptable {
+    def sum(Integer x, Integer y) { x + y }
+
+    def invokeMethod(String name, args) {
+        System.out.println "Invoke method $name with args: $args"
+    }
+}
+
+def test = new Test()
+test?.sum(2,3)
+test?.multiply(2,3)
+
+//Groovy supports propertyMissing for dealing with property resolution attempts.
+class Foo {
+   def propertyMissing(String name) { name }
+}
+def f = new Foo()
+
+assertEquals "boo", f.boo
+
+/*
+  TypeChecked and CompileStatic
+  Groovy, by nature, is and will always be a dynamic language but it supports
+  typechecked and compilestatic
+
+  More info: http://www.infoq.com/articles/new-groovy-20
+*/
+//TypeChecked
+import groovy.transform.TypeChecked
+
+void testMethod() {}
+
+@TypeChecked
+void test() {
+    testMeethod()
+
+    def name = "Roberto"
+
+    println naameee
+
+}
+
+//Another example:
+import groovy.transform.TypeChecked
+
+@TypeChecked
+Integer test() {
+    Integer num = "1"
+
+    Integer[] numbers = [1,2,3,4]
+
+    Date date = numbers[1]
+
+    return "Test"
+
+}
+
+//CompileStatic example:
+import groovy.transform.CompileStatic
+
+@CompileStatic
+int sum(int x, int y) {
+    x + y
+}
+
+assert sum(2,5) == 7
+```
+

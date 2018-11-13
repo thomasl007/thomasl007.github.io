@@ -3,15 +3,22 @@
 [官方文档](http://groovy-lang.org/documentation.html)
 
 #词汇
-gradlew: gradle wrapper<br/>
+gradlew: [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html)<br/>
 DSL: Domain Specific Language<br/>
 
-#gradlew命令
-```gradlew tasks```<br/>
-查看所有可用任务<br/>
+#gradle命令
+
+```gradle tasks```：查看所有可用任务（有时可能需要`--all`）<br/>
+
+##命令参数
+
+`-b`：指定构建脚本
+`-q`：[quiet]静默模式，不输出诊断信息
+`--continue`：执行过程中有任务失败时，不终止，继续执行
 
 #gradle daemon
-gradle daemon是一个后台进程。gradle启动比较慢，因为启动时要创建一个JVM的实例。gradle daemon可用缩短（免除）gradle的启动时间，在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
+
+[gradle daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html)是一个后台进程。gradle启动比较慢，因为启动时要创建一个JVM的实例。gradle daemon可用缩短（免除）gradle的启动时间，在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
 默认情况下gradle daemon是启动的，可以使用<br/>
 ```org.gradle.daemon=false```<br/>
 关闭。<br/>
@@ -21,24 +28,34 @@ gradle --stop
 ```
 
 #关键字
+
 `task`, `android`关键字都来源于gradle构建语言。<br/>
 
 #gradle构建语言（Gradle DSL）
+
 Gradle构建语言也称为Gradle DSL，DSL是指针对特定任务定制的语言。这里有个domain的概念，以android为例，domain指的是android构建（build.gradle中的`android {}`）<br/>
 Gradle DSL使你可以只负责描述构建，gradle负责实际的构建过程。<br/>
 目前的理解是，在gradle构建脚本文件中，可以使用Java、Groovy或Scala等任何JVM语言来编写脚本。<br/>
 
 #gradle语法
+
 ##变量声明
+
 gradle声明变量时，可以指定变量类型，也可以使用`def`声明*动态类型*变量。<br/>
 动态类型变量可以赋值为其他类型。<br/>
+
 ##函数
+
 以`def`开头，但def不是返回值类型，函数块中的最后一个表达式即为返回的内容。<br/>
 **一个很特别的语法**<br/>
 如果函数有参数，则可以在函数调用时省略参数两边的圆括号。但函数嵌套调用时，需要使用圆括号避免歧义。<br/>
+
 ##字符串
+
 可以使用`${groovy代码}`的形式在字符串中执行简单的groovy代码。<br/>
+
 ##闭包（closure）
+
 闭包实际上是一种特殊的函数声明方法。<br/>
 它是一种可以打包、传递和赋值给变量的函数。<br/>
 ```
@@ -48,7 +65,9 @@ def myClosure = {
 
 myClosure()
 ```
+
 ###闭包的委托对象
+
 闭包可以有一个委托对象。<br/>
 设置委托对象后，可以在闭包中访问委托对象中的成员变量和方法。<br/>
 ```
@@ -67,7 +86,9 @@ def greetingClosure = {
 greetingClosure.delegate = myGroovyGreeter
 greetingClosure()
 ```
+
 ###闭包传递参数
+
 闭包传参的语法很特别。<br/>
 参数和函数体都在花括号中，以`->`分割，即，`参数 -> 函数体`。<br/>
 多个参数以逗号分割。<br/>
@@ -77,13 +98,18 @@ def myClosure = { arg0, arg1 ->
     arg0 + arg1
 }
 ```
+
 ##列表
+
 ###列表的定义
+
 列表的定义超级简单<br/>
 ```
 def myList = ["Gradle", "Groovy", "Android"]
 ```
+
 ###列表的高级用法
+
 对列表中每个项目执行闭包<br/>
 ```
 def printItem = {item -> println "List item $item"}
@@ -95,15 +121,22 @@ myList.each(printItem)
 myList.each{println "Compacly printing each list item: $it"}
 ```
 注意两点，1. 这里没有圆括号；2. 如果闭包中只有一个参数，则这个参数默认这个参数名为`it`。<br/>
+
 ##类
+
 Groovy自动为所有成员变量添加`getter`和`setter`。<br/>
 
 #groovy
+
 大多数的Java也是有效的Groovy。
 Groovy中的`+`是重载的，所以`+`运算符不仅可以进行数字的运算，还可以进行字符串的拼接。<br/>
 
 #task
+
+[官方文档](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
+
 ##运行task
+
 gradlew命令默认执行build.gradle文件中的task<br/>
 例如，build.gradle文件中定义了一个名为hello的task<br/>
 ```
@@ -116,16 +149,16 @@ task hello {
 ```
 ./gradlew -b mine.gradle hello
 ```
-##查看任务
-```
-gradle tasks --all
-```
 查看全部任务，包括自定义任务。
+
 ##构建脚本的委托
-整个构建脚本会委托给一个项目（`project`）对象。<br/>
+
+整个构建脚本会委托给一个项目[project](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html)对象。(所以，构建脚本中可以使用项目对象的属性和方法)<br/>
 Gradle DSL中的所有关键字都是该项目对象的属性或方法。
-例如：project对象中有一个名为`task`的方法，用于声明task
+例如：project对象中有一个名为[task](https://docs.gradle.org/current/dsl/org.gradle.api.Task.html)的方法，用于声明task
+
 ##声明task
+
 ```
 project.task("myTask1")
 ```
@@ -137,12 +170,15 @@ task("myTask1")
 ```
 task "myTask1"
 ```
-因为Groovy的抽象语法树转换（abstract syntax tree transformation, AST）功能，我们可以直接去掉双引号
+因为Groovy的抽象语法树转换（abstract syntax tree transformation, AST）功能，我们可以直接去掉双引号<br/>
+[参考这个](https://stackoverflow.com/questions/27584463/understanding-the-groovy-syntax-in-a-gradle-task-definition)
 ```
 task myTask1
 ```
 到这里就出现我们前边提到的定义hello任务的形式了`task hello {}`。<br/>
+
 ###task配置
+
 我们可以给已声明的任务添加属性<br/>
 假设我们已声明了任务myTask<br/>
 ```
@@ -164,12 +200,14 @@ myTask.leftShift {}
 ```
 myTask.doFirst {}
 ```
-###声明task同时配置属性
-声明task同时添加doLast属性
+
+###声明task同时传递闭包
+
+声明task同时传递要执行的操作的闭包，可以这样
 ```
 task myTask << {}
 ```
-也可以在声明task的同时传递配置闭包，以添加多条属性
+也可以在声明task的同时传递配置闭包
 ```
 task myTask {
     description "this is desc"
@@ -179,8 +217,97 @@ task myTask {
     }
 }
 ```
+这种写法其实是设置配置闭包的委托对象为myTask，这样在闭包中就可以访问myTask的属性和方法。<br/>
+仔细看，在闭包中配置属性时，并没有使用 `=`，这其实是调用了Groovy自动生成的setter方法（Groovy中的setter方法与属性同名），还记得吗？Groovy中调用有参函数时，可以省略圆括号。<br/>
+**一个需要注意的地方**<br/>
+如果要将集合赋值给属性，则必须使用`=`<br/>
+
+###声明task同时配置属性
+
+[某些](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/TaskContainer.html#create(java.util.Map))属性可以在task声明时直接配置
+```
+task myTask(description: "Another description") << {
+}
+```
+
+##task之间的关系
+
+[官方文档](https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:adding_dependencies_to_tasks)
+
+###依赖（dependsOn）
+
+如果在TaskB未完成时，TaskA不能做任何事，则*TaskA依赖TaskB*
+```
+task putOnSocks {
+    doLast {
+        println "Putting on socks."
+    }
+}
+task putOnShoes {
+    dependsOn "putOnSocks" // 注意这里，putOnShoes依赖putOnSocks
+    doLast {
+        println "Putting on shoes."
+    }
+}
+```
+执行putOnShoes时，gradle会先执行putOnSocks，再执行putOnShoes。<br/>
+也可以依赖多个task
+```
+task getReady {
+    // 注意这里，记得吗？将集合赋值给属性时，必须不能省略“=”
+    dependsOn = ["takeShower", "eatBreakfast", "putOnShoes"]
+}
+```
+**这里有一点需要注意一下**<br/>
+如果执行`gradle tasks`，gradle不会输出putOnSocks，因为gradle会认为putOnSocks仅仅是服务于putOnShoes的。<br/>
+可以使用`gradle tasks --all`查看所有任务。
+
+###终结（finalizedBy）
+
+如果每次TaskA执行后，都会执行TaskB，则*TaskA以TaskB结束*
+```
+task eatBreakfast {
+    finalizedBy "brushYourTeeth"
+    doLast{
+        println "Om nom nom breakfast!"
+    }
+}
+task brushYourTeeth {
+    doLast {
+        println "Brushie Brushie Brushie."
+    }
+}
+```
+执行eatBreakfast，gradle会在执行eatBreakfast之后执行brushYourTeeth。
+
+###排序
+
+####mustRunAfter和shouldRunAfter
+
+TaskA和TaskB都可以独立执行，但两个任务都执行时，<br/>
+·如果TaskA必须在TaskB之后执行，则mustRunAfter。<br/>
+·如果应该先执行TaskA再执行TaskB，则shouldRunAfter。<br/>
+*shouldRunAfter没有mustRunAfter约束性强，在两种情况下会被忽略*<br/>
+*1.多个任务之间产生了循环关系时。*<br/>
+*2.使用并发（parallel）执行，并且除shouldRunAfter之外的所有关系都满足时。*<br/>
+*总之就是，强关系用mustRunAfter，弱关系用shouldRunAfter。*
+```
+task takeShower {
+    doLast {
+        println "Taking a shower."
+    }
+}
+task putOnFragrance {
+    shouldRunAfter "takeShower"
+    doLast{
+        println "Smellin' fresh!"
+    }
+}
+执行```gradle -q putOnFragrance takeShower```，则gradle会先执行takeShower，再执行putOnFragrance
+如果希望takeShower执行失败时能继续执行putOnFragrance，则使用`--continue`参数。
 
 #Demo
+
 demo from [Learn X in Y](https://learnxinyminutes.com/docs/groovy/)
 ```
 /*
@@ -583,4 +710,3 @@ int sum(int x, int y) {
 
 assert sum(2,5) == 7
 ```
-

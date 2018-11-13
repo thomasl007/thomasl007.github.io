@@ -5,7 +5,7 @@
 # 词汇
 
 gradlew: [gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html)<br/>
-DSL: Domain Specific Language<br/>
+[DSL](https://docs.gradle.org/current/dsl/): Domain Specific Language<br/>
 
 # gradle命令
 
@@ -13,15 +13,17 @@ DSL: Domain Specific Language<br/>
 
 ## 命令参数
 
-`-b`：指定构建脚本
-`-q`：[quiet]静默模式，不输出诊断信息
-`--continue`：执行过程中有任务失败时，不终止，继续执行
+* `-b`：指定构建脚本
+* `-q`：[quiet]静默模式，不输出诊断信息
+* `--continue`：执行过程中有任务失败时，不终止，继续执行
 
 # gradle daemon
 
 [gradle daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html)是一个后台进程。gradle启动比较慢，因为启动时要创建一个JVM的实例。gradle daemon可用缩短（免除）gradle的启动时间，在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
 默认情况下gradle daemon是启动的，可以使用<br/>
-```org.gradle.daemon=false```<br/>
+```
+org.gradle.daemon=false
+```
 关闭。<br/>
 在daemon运行状态，如果想停止运行，可使用以下命令<br/>
 ```

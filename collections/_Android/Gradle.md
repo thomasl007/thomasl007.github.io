@@ -314,6 +314,7 @@ task putOnFragrance {
         println "Smellin' fresh!"
     }
 }
+```
 执行```gradle -q putOnFragrance takeShower```，则gradle会先执行takeShower，再执行putOnFragrance
 如果希望takeShower执行失败时能继续执行putOnFragrance，则使用`--continue`参数。
 

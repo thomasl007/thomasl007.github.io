@@ -1,6 +1,7 @@
 ---
 ---
 
+**注：Gradle新版本中已使用`api`和`implementation`代替了`compile`，但三者的区别不是本文的重点，所以本文中仍然使用compile引入依赖。**
 # 插件
 
 [关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)<br/>
@@ -109,7 +110,7 @@ repositories {
 
 ## 添加依赖
 
-*注：`compile()`方法来自`java`插件*
+*注：`compile()`等方法来自`java`插件*
 ```
 dependencies {
   compile 'com.google.guava:guava:19.0'
@@ -133,3 +134,43 @@ dependencies {
   compile fileTree(dir: 'libs', include: '*.jar')
 }
 ```
+
+### 不同配置的依赖
+
+使用`配置名称`+`依赖符`的形式引入不同配置的依赖，例如，`testCompile`
+
+### 自定义配置
+
+```
+configurations {
+  custom
+}
+dependencies {
+  custom 'com.google.guava:guava:19.0'
+}
+task copyDependencies(type: Copy) {
+  from configurations.custom
+  into 'build/libs'
+}
+```
+
+## 查看项目依赖
+
+使用
+```
+gradle dependencies
+```
+命令可以查看项目依赖。<br/>
+如果要查看特定配置类型的以来，可以添加`--configuration 依赖配置类型`<br/>
+例如，`gradle dependencies --configuration compile`<br/>
+
+### 查看依赖关系（依赖报告）
+
+有时，我们引入一个依赖后，查看依赖时会发现有多个依赖，这个因为我们引入的依赖需要用到其他依赖。<br/>
+以`commons-logging:commons-logging:1.2`为例，我们可以使用
+```
+gradle dependenciesInsight --dependency common-logging
+```
+命令，查看`common-logging`是被谁依赖的。<br/>
+
+**依赖报告的一个很重要的用途是，查看依赖版本冲突**

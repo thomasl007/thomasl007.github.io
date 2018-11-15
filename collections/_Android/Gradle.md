@@ -14,6 +14,7 @@
 |gradle命令|说明|
 |-|
 |```gradle tasks```|查看所有可用任务（有时可能需要`--all`）|
+|```gradle dependencies```|查看项目依赖（可以添加`--configuration 依赖配置类型（例如，runtime）`查看特定类型的依赖）|
 
 **命令参数表**
 

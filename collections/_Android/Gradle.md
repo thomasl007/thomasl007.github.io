@@ -28,9 +28,9 @@
 
 `task`, `android`关键字都来源于gradle构建语言。<br/>
 
-# . 概念
+# 概念
 
-## .. gradle daemon
+## gradle daemon
 
 [gradle daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html)是一个后台进程。gradle启动比较慢，因为启动时要创建一个JVM的实例。gradle daemon可用缩短（免除）gradle的启动时间，在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
 默认情况下gradle daemon是启动的，可以使用<br/>
@@ -43,39 +43,39 @@ org.gradle.daemon=false
 gradle --stop
 ```
 
-## .. gradle构建语言（Gradle DSL）
+## gradle构建语言（Gradle DSL）
 
 Gradle构建语言也称为Gradle DSL，DSL是指*针对特定任务定制的语言*。这里有个domain的概念，以android为例，domain指的是android构建（build.gradle中的`android {}`）<br/>
 Gradle DSL使你可以只负责描述构建，gradle负责实际的构建过程。<br/>
 目前的理解是，在gradle构建脚本文件中，可以使用Java、Groovy或Scala等任何JVM语言来编写脚本。<br/>
 
-# . gradle语法
+# gradle语法
 
 gradle使用Groovy语言。<br/>
 大多数的Java也是有效的Groovy。<br/>
 Groovy中的`+`是重载的，所以`+`运算符不仅可以进行数字的运算，还可以进行字符串的拼接。<br/>
 
-## .. 变量
+## 变量
 
-### ... 声明
+### 声明
 
 gradle声明变量时，可以指定变量类型，也可以使用`def`声明*动态类型*变量。<br/>
 动态类型变量可以赋值为其他类型。<br/>
 
-### ... 字符串
+### 字符串
 
 可以使用`${groovy代码}`的形式在字符串中执行简单的groovy代码。<br/>
 
-### ... 列表
+### 列表
 
-#### .... 列表的定义
+#### 列表的定义
 
 列表的定义超级简单<br/>
 ```
 def myList = ["Gradle", "Groovy", "Android"]
 ```
 
-#### .... 列表的高级用法
+#### 列表的高级用法
 
 对列表中每个项目执行闭包<br/>
 ```
@@ -89,14 +89,14 @@ myList.each{println "Compacly printing each list item: $it"}
 ```
 注意两点，1. 这里没有圆括号；2. 如果闭包中只有一个参数，则这个参数默认这个参数名为`it`。<br/>
 
-## .. 函数
+## 函数
 
 以`def`开头，但def不是返回值类型，函数块中的最后一个表达式即为返回的内容。<br/>
 **一个很特别的语法**<br/>
 如果函数有参数，则可以在函数调用时省略参数两边的圆括号。<br/>
 但函数嵌套调用时，需要使用圆括号避免歧义。<br/>
 
-## .. 闭包（closure）
+## 闭包（closure）
 
 闭包实际上是一种特殊的函数声明方法。<br/>
 它是一种可以打包、传递和赋值给变量的函数。<br/>
@@ -107,7 +107,7 @@ def myClosure = {
 myClosure()
 ```
 
-### ... 闭包的委托对象
+### 闭包的委托对象
 
 闭包可以有一个委托对象。<br/>
 设置委托对象后，可以在闭包中访问委托对象中的成员变量和方法。<br/>
@@ -128,7 +128,7 @@ greetingClosure.delegate = myGroovyGreeter
 greetingClosure()
 ```
 
-### ... 闭包传递参数
+### 闭包传递参数
 
 闭包传参的语法很特别。<br/>
 参数和函数体都在花括号中，以`->`分割，即，`参数 -> 函数体`。<br/>
@@ -140,22 +140,22 @@ def myClosure = { arg0, arg1 ->
 }
 ```
 
-## .. 类
+## 类
 
 Groovy自动为所有成员变量添加`getter`和`setter`。<br/>
 
-# . task
+# task
 
 [官方文档](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
 
-## .. task类别
+## task类别
 
 * ad hoc task
 例如，`task myTask {}`
 * type task
 定义任务时，指定type属性，例如，`task copyFiles(type: Copy)`
 
-## .. 运行task
+## 运行task
 
 gradlew命令默认执行build.gradle文件中的task<br/>
 例如，build.gradle文件中定义了一个名为hello的task<br/>
@@ -171,13 +171,13 @@ task hello {
 ```
 查看全部任务，包括自定义任务。
 
-## .. 构建脚本的委托
+## 构建脚本的委托
 
 整个构建脚本会委托给一个项目[project](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html)对象。(所以，构建脚本中可以使用项目对象的属性和方法)<br/>
 Gradle DSL中的所有关键字都是该项目对象的属性或方法。
 例如：project对象中有一个名为[task](https://docs.gradle.org/current/dsl/org.gradle.api.Task.html)的方法，用于声明task
 
-## .. 声明task
+## 声明task
 
 ```
 project.task("myTask1")
@@ -197,7 +197,7 @@ task myTask1
 ```
 到这里就出现我们前边提到的定义hello任务的形式了`task hello {}`。<br/>
 
-### ... task配置
+### task配置
 
 我们可以给已声明的任务添加属性<br/>
 假设我们已声明了任务myTask<br/>
@@ -221,7 +221,7 @@ myTask.leftShift {}
 myTask.doFirst {}
 ```
 
-### ... 声明task同时传递闭包
+### 声明task同时传递闭包
 
 声明task同时传递要执行的操作的闭包，可以这样
 ```
@@ -242,7 +242,7 @@ task myTask {
 **一个需要注意的地方**<br/>
 如果要将集合赋值给属性，则必须使用`=`<br/>
 
-### ... 声明task同时配置属性
+### 声明task同时配置属性
 
 [某些](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/TaskContainer.html#create(java.util.Map))属性可以在task声明时直接配置
 ```
@@ -250,11 +250,11 @@ task myTask(description: "Another description") << {
 }
 ```
 
-## .. task之间的关系
+## task之间的关系
 
 [官方文档](https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:adding_dependencies_to_tasks)
 
-### ... 依赖（dependsOn）
+### 依赖（dependsOn）
 
 如果在TaskB未完成时，TaskA不能做任何事，则*TaskA依赖TaskB*
 ```
@@ -282,7 +282,7 @@ task getReady {
 如果执行`gradle tasks`，gradle不会输出putOnSocks，因为gradle会认为putOnSocks仅仅是服务于putOnShoes的。<br/>
 可以使用`gradle tasks --all`查看所有任务。
 
-### ... 终结（finalizedBy）
+### 终结（finalizedBy）
 
 如果每次TaskA执行后，都会执行TaskB，则*TaskA以TaskB结束*
 ```
@@ -300,9 +300,9 @@ task brushYourTeeth {
 ```
 执行eatBreakfast，gradle会在执行eatBreakfast之后执行brushYourTeeth。
 
-### ... 排序
+### 排序
 
-#### .... mustRunAfter和shouldRunAfter
+#### mustRunAfter和shouldRunAfter
 
 TaskA和TaskB都可以独立执行，但两个任务都执行时，<br/>
 ·如果TaskA必须在TaskB之后执行，则mustRunAfter。<br/>
@@ -327,7 +327,7 @@ task putOnFragrance {
 执行```gradle -q putOnFragrance takeShower```，则gradle会先执行takeShower，再执行putOnFragrance
 如果希望takeShower执行失败时能继续执行putOnFragrance，则使用`--continue`参数。
 
-## .. 创建自定义task
+## 创建自定义task
 
 1、自定义Task类，集成DefaultTask
 ```
@@ -370,7 +370,7 @@ task helloName(type: HelloNameTask) {
 }
 ```
 
-## .. 参数化
+## 参数化
 
 Gradle提供三种方式向`project`对象添加属性，以参数化构建脚本。<br/>
 命令行、gradle.properties、环境变量
@@ -385,21 +385,21 @@ task printGreeting {
 如果我们直接执行printGreeting，一定会报错，因为Gradle找不到greeting属性。<br/>
 我们可以通过以下三种方式，给构建脚本传递属性。
 
-### ... gradle.properties
+### gradle.properties
 
 在与构建脚本同级目录中的`gradle.properties`文件中添加以下内容
 ```
 greeting = "hello from properties file"
 ```
 
-### ... 命令行
+### 命令行
 
 注：命令行的优先级高于`gradle.properties`
 ```
 gradle -Pgreeting="hello from the command line" printGreeting
 ```
 
-### ... 向project对象的ext属性传递闭包
+### 向project对象的ext属性传递闭包
 
 注：优先级最高
 在构建脚本中，添加以下内容
@@ -409,7 +409,12 @@ ext {
 }
 ```
 
-# . Demo
+# 脚本构建的生命周期
+
+生命周期可分三部分：初始化、配置、执行。<br/>
+Gradle遇到配置闭包时会立即执行。<br/>
+
+# Demo
 
 demo from [Learn X in Y](https://learnxinyminutes.com/docs/groovy/)
 ```

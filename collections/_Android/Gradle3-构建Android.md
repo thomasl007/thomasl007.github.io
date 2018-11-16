@@ -88,15 +88,6 @@ android {
         }
     }
 }
-
-/*
-
-This block works just like Java dependencies. This declares compile time
-dependencies on every JAR in the `libs` directory, and on the Android support
-library. We'll also be talking about this block more soon.
-
-*/
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.1.0'
@@ -117,6 +108,12 @@ dependencies {
 #### 构建变种（build variants）
 
 构建同一app的略有不同的版本，例如，debug、release、free、pay。<br/>
+构建变种是两个配置组件的矢量积：`buildTypes {}`和`productFlavors {}`
+
+|buildTypes\productFlavors|free|paid|
+|-|
+|**release**|free Release|paid Release|
+|**debug**|free Debug|paid Debug|
 
 #### 管理依赖（dependencies）
 

@@ -3,58 +3,58 @@
 
 **注：`compile`来自`java`插件。但在Gradle新版本，Gradle推荐使用`java-library`插件中的`api`和`implementation`代替`compile`，但三者的区别不是本文的重点，所以本文中只使用compile引入依赖。**
 
-# 插件
+## 插件
 
 [关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)<br/>
 [《Gradle用户指南》-核心Gradle插件](https://docs.gradle.org/current/userguide/standard_plugins.html)
 [搜索Gradle插件](https://plugins.gradle.org/)
 [如何贡献自己的插件](https://plugins.gradle.org/docs/submit)
 
-## 插件的功能
+### 插件的功能
 
 * 扩展Gradle域模型
 * 追加DSL元素
 * 追加task
 * 追加task类型
 
-## 如何应用插件
+### 如何应用插件
 
 ```
 apply plugins: "java"
 ```
 
-## buildScript
+### buildScript
 
 buildScript中添加的配置应用于构建脚本本身的执行，而不适用于Gradle正在构建的任何项目的编译或执行。<br/>
 
-# 构建Java
+## 构建Java
 
 [关于Java插件的官方文档](https://docs.gradle.org/current/userguide/java_plugin.html)<br/>
 [Java插件快速入门官方文档](https://docs.gradle.org/current/userguide/tutorial_java_projects.html)<br/>
 
 *本节中的代码，默认是在引入"java"插件的情况下运行的*<br/>
 
-## 编译 Java 项目
+### 编译 Java 项目
 
 先思考几个问题：<br/>
 1. Gradle怎么知道在哪里查找你的源码？
 1. Gradle怎么知道使用哪些编译选项？
 1. Gradle把构建输出放到哪个路径？
 
-### Gradle怎么知道在哪里查找你的源码
+#### Gradle怎么知道在哪里查找你的源码
 
 Gradle默认会到 `src/main/java` 目录中查找 java 文件，<br/>
 到 `src/test/java` 中查找测试代码。<br/>
 
-### Gradle把构建输出放到哪个路径
+#### Gradle把构建输出放到哪个路径
 
 Gradle默认将构建结果输出到 `build` 目录中。<br/>
 
-### Gradle怎么知道使用哪些编译选项
+#### Gradle怎么知道使用哪些编译选项
 
 `java`插件会引入`java base`插件，由`java base`插件负责编译Java。<br/>
 
-## 执行 Java 项目
+### 执行 Java 项目
 
 使用`JavaExec`类型task执行运行java程序。<br/>
 注：`JavaExec`不是java插件提供的task类型，是Gradle自带的。<br/>
@@ -66,17 +66,17 @@ task execute(type: JavaExec) {
 }
 ```
 
-## 生成Jar文件
+### 生成Jar文件
 
 ```
 gradle jar
 ```
 
-# 使用资源库
+## 使用资源库
 
-## 声明用于获取依赖的资源库
+### 声明用于获取依赖的资源库
 
-### 本地资源（jars）目录
+#### 本地资源（jars）目录
 ```
 repositories {
   flatDir {
@@ -85,7 +85,7 @@ repositories {
 }
 ```
 
-### 添加网络资源库(最常用的方法)
+#### 添加网络资源库(最常用的方法)
 ```
 repositories {
   mavenCentral()
@@ -94,7 +94,7 @@ repositories {
 }
 ```
 
-### 从Maven和IV存储库中解析托管依赖项
+#### 从Maven和IV存储库中解析托管依赖项
 以maven为例（ivy的写法相同）
 ```
 repositories {
@@ -116,7 +116,7 @@ repositories {
 }
 ```
 
-## 添加依赖
+### 添加依赖
 
 *注：`compile()`等方法来自`java`插件*
 ```
@@ -143,11 +143,11 @@ dependencies {
 }
 ```
 
-### 不同配置的依赖
+#### 不同配置的依赖
 
 使用`配置名称`+`依赖符`的形式引入不同配置的依赖，例如，`testCompile`
 
-### 自定义配置
+#### 自定义配置
 
 ```
 configurations {
@@ -162,7 +162,7 @@ task copyDependencies(type: Copy) {
 }
 ```
 
-## 查看项目依赖
+### 查看项目依赖
 
 使用
 ```
@@ -172,7 +172,7 @@ gradle dependencies
 如果要查看特定配置类型的以来，可以添加`--configuration 依赖配置类型`<br/>
 例如，`gradle dependencies --configuration compile`<br/>
 
-### 查看依赖关系（依赖报告）
+#### 查看依赖关系（依赖报告）
 
 有时，我们引入一个依赖后，查看依赖时会发现有多个依赖，这个因为我们引入的依赖需要用到其他依赖。<br/>
 以`commons-logging:commons-logging:1.2`为例，我们可以使用
@@ -183,9 +183,9 @@ gradle dependenciesInsight --dependency common-logging
 
 **依赖报告的一个很重要的用途是，查看依赖版本冲突**
 
-## 自动化测试
+### 自动化测试
 
-### 单元测试
+#### 单元测试
 
 将测试代码放在 `src/test/java` 目录下。(可以通过配置testSourcesSet修改)<br/>
 配置测试依赖性，以使用`junit`为例
@@ -203,7 +203,7 @@ gradle test
 build/reports/
 ```
 
-# Gradle Wrapper
+## Gradle Wrapper
 
 Gradle Wrapper可以指定使用的Gradle版本，是所有人在编译同一工程时使用相同版本的gradle。<br/>
 Gradle Wrapper包含四个文件：<br/>
@@ -211,13 +211,13 @@ Gradle Wrapper包含四个文件：<br/>
 * 属性文件
 * 两个脚本文件
 
-## 创建 Gradle Wrapper
+### 创建 Gradle Wrapper
 
 ```
 gradle wrapper
 ```
 
-### 指定创建Wrapper时使用的Gradle版本
+#### 指定创建Wrapper时使用的Gradle版本
 
 在build.gradle文件中（以使用2.2版本为例）
 ```
@@ -226,25 +226,25 @@ wrapper {
 }
 ```
 
-## 配置Wrapper
+### 配置Wrapper
 
-### 查看Wrapper使用的Gradle版本
+#### 查看Wrapper使用的Gradle版本
 
 ```
 ./gradlew --version
 ```
 
-### 修改Wrapper使用的gradle版本
+#### 修改Wrapper使用的gradle版本
 
-#### 两种方式：<br/>
-##### 第一种：直接修改配置文件<br/>
+##### 两种方式：<br/>
+###### 第一种：直接修改配置文件<br/>
 Wrapper配置选项位置<br/>
 ```
 gradle/wrapper/gradle-wrapper.properties
 ```
 在此文件中修改gradle版本
 
-##### 第二种：修改build.gradle文件<br/>
+###### 第二种：修改build.gradle文件<br/>
 修改build.gradle中指定的gradle版本，然后更新
 ```
 gradle wrapper

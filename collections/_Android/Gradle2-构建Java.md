@@ -1,10 +1,14 @@
 ---
 ---
 
-**注：Gradle新版本中已使用`api`和`implementation`代替了`compile`，但三者的区别不是本文的重点，所以本文中仍然使用compile引入依赖。**
+**注：`compile`来自`java`插件。但在Gradle新版本，Gradle推荐使用`java-library`插件中的`api`和`implementation`代替`compile`，但三者的区别不是本文的重点，所以本文中只使用compile引入依赖。**
+
 # 插件
 
 [关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)<br/>
+[《Gradle用户指南》-核心Gradle插件](https://docs.gradle.org/current/userguide/standard_plugins.html)
+[搜索Gradle插件](https://plugins.gradle.org/)
+[如何贡献自己的插件](https://plugins.gradle.org/docs/submit)
 
 ## 插件的功能
 
@@ -18,6 +22,10 @@
 ```
 apply plugins: "java"
 ```
+
+## buildScript
+
+buildScript中添加的配置应用于构建脚本本身的执行，而不适用于Gradle正在构建的任何项目的编译或执行。<br/>
 
 # 构建Java
 
@@ -174,3 +182,70 @@ gradle dependenciesInsight --dependency common-logging
 命令，查看`common-logging`是被谁依赖的。<br/>
 
 **依赖报告的一个很重要的用途是，查看依赖版本冲突**
+
+## 自动化测试
+
+### 单元测试
+
+将测试代码放在 `src/test/java` 目录下。(可以通过配置testSourcesSet修改)<br/>
+配置测试依赖性，以使用`junit`为例
+```
+dependencies {
+  testCompile 'junit:junit:4.11'
+}
+```
+运行
+```
+gradle test
+```
+测试报告位于
+```
+build/reports/
+```
+
+# Gradle Wrapper
+
+Gradle Wrapper可以指定使用的Gradle版本，是所有人在编译同一工程时使用相同版本的gradle。<br/>
+Gradle Wrapper包含四个文件：<br/>
+* jar
+* 属性文件
+* 两个脚本文件
+
+## 创建 Gradle Wrapper
+
+```
+gradle wrapper
+```
+
+### 指定创建Wrapper时使用的Gradle版本
+
+在build.gradle文件中（以使用2.2版本为例）
+```
+wrapper {
+  gradleVersion = '2.2'
+}
+```
+
+## 配置Wrapper
+
+### 查看Wrapper使用的Gradle版本
+
+```
+./gradlew --version
+```
+
+### 修改Wrapper使用的gradle版本
+
+#### 两种方式：<br/>
+##### 第一种：直接修改配置文件<br/>
+Wrapper配置选项位置<br/>
+```
+gradle/wrapper/gradle-wrapper.properties
+```
+在此文件中修改gradle版本
+
+##### 第二种：修改build.gradle文件<br/>
+修改build.gradle中指定的gradle版本，然后更新
+```
+gradle wrapper
+```

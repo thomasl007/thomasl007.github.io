@@ -1,6 +1,6 @@
 ---
 ---
-[官方文档](http://groovy-lang.org/documentation.html)
+[Gradle官方文档](http://groovy-lang.org/documentation.html)
 
 **词汇表**
 
@@ -29,12 +29,14 @@
 
 `task`, `android`关键字都来源于gradle构建语言。<br/>
 
-# 概念
-
 ## gradle daemon
 
-[gradle daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html)是一个后台进程。gradle启动比较慢，因为启动时要创建一个JVM的实例。gradle daemon可用缩短（免除）gradle的启动时间，在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
-默认情况下gradle daemon是启动的，可以使用<br/>
+[gradle daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html)是一个后台进程。<br/>
+因为Gradle启动时需要创建一个JVM的实例，所以启动比较慢。<br/>
+gradle daemon可以缩短（免除）gradle的启动时间。<br/>
+在gradle第一次启动之后，gradle daemon作为守护进程一直保留第一次启动时创建的JVM实例，使gradle一直使用这个JVM实例。<br/>
+<br/>
+默认情况下gradle daemon是启用的，可以使用<br/>
 ```
 org.gradle.daemon=false
 ```
@@ -46,7 +48,9 @@ gradle --stop
 
 ## gradle构建语言（Gradle DSL）
 
-Gradle构建语言也称为Gradle DSL，DSL是指*针对特定任务定制的语言*。这里有个domain的概念，以android为例，domain指的是android构建（build.gradle中的`android {}`）<br/>
+Gradle构建语言也称为Gradle DSL。<br/>
+DSL是指*针对特定任务定制的语言*。<br/>
+这里有个domain的概念，以android为例，domain指的是android构建（build.gradle中的`android {}`）<br/>
 Gradle DSL使你可以只负责描述构建，gradle负责实际的构建过程。<br/>
 目前的理解是，在gradle构建脚本文件中，可以使用Java、Groovy或Scala等任何JVM语言来编写脚本。<br/>
 

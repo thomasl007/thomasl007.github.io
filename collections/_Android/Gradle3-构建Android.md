@@ -115,6 +115,80 @@ dependencies {
 |**release**|free Release|paid Release|
 |**debug**|free Debug|paid Debug|
 
+##### 配置构建类型（buildTypes）
+
+`minifyEnabled false`：禁用打包优化<br/>
+
+##### 资源合并
+
+Android Gradle插件提供了许多 sourceSets，（目前的理解，`sourceSets`就是源目录，例如app目录中的main）<br/>
+以上面的表格为例，我们会有以下 sourceSets
+```
+/src
+ |-main *default
+ |-free
+ |-paid
+ |-debug
+ |-release
+ |-freeDebug
+ |-freeRelease
+ |-paidDebug
+ |-paidRelease
+```
+根据要构建的变种，**Gradle会为我们** 选择不同的 sourceSets 合并到最终的apk中。<br/>
+应该是先合并productFlavors的sourceSets再合并buildTypes的sourceSets。<br/>
+
+##### 声明productFlavors
+
+默认情况下，Gradle不会为我们创建任何productFlavors。<br/>
+创建方式：
+```
+productFlavors {
+    free {
+        applicationId "com.xxx.yyy.free"
+    }
+    paid {
+        applicationId "com.xxx.yyy.paid"
+    }
+}
+```
+基本上所有`defaultConfig`中的属性都可以在`productFlavors`的各个flavor中使用。<br/>
+**注意：Gradle不能合并Java代码，所以变种sourceSets中不能定义与main中同名的类，但不同变种sourceSets中可以有同名类。**
+
+##### flavor dimensions
+
+没太搞懂，只知道是使用`flavorDimensions`方法。<br/>
+
+##### 配置生成的任务
+
+应用场景：<br/>
+Android构建的任务名称和任务，都是在配置之后生成的，例如，`compileDebug`。<br/>
+这就意味着，我们无法在构建脚本的过程中引用这些任务。<br/>
+所以，如果我们需要引用这个任务，我们就需要在不知道任务名称的情况下，引用用于构建每个特定变种的任务。<br/>
+
+方案分析：<br/>
+首先，Android Gradle 插件会自动为不同变种配置task，然后将这些task相关的信息分组保存到一个对象中，<br/>
+这个对象主要有三种，具体是哪种取决于我们的工程类型。<br/>
+* `applicationVariants`：android应用程序工程（apk）
+* `libraryVariants`：android library工程（aar）
+* `testVariant`：用于测试apk（apk）
+
+每个对象都有特定的属性，但他们都有通用的task（例如，编译java，合并资源等）。<br/>
+
+使用方法：<br/>
+Gradle使用“实时集合（live collections）”处理这个问题。<br/>
+当Android插件创建变体时，这些变体会被放入一种集合，这些集合允许我们为不存在的对象定义配置。<br/>
+Gradle会记住这些配置，并在添加对象时执行这些配置。<br/>
+我们可以调用上述三中集合中的`all`方法来执行我们想要的配置。<br/>
+例如：
+```
+applicationVariants.all {
+    if (buildType.name == 'debug') {
+        javaCompile.options.compilerArgs = ['-verbose']
+    }
+}
+```
+
 #### 管理依赖（dependencies）
 
 管理每个变体的依赖项。（可以分别管理）<br/>
@@ -128,3 +202,11 @@ dependencies {
 #### 程序守护（pro guarding）
 
 #### 测试
+
+## 引入其他配置脚本
+
+我们可以使用一下方式引入其他配置脚本：
+```
+apply from:"solution.gradle"
+```
+**需要注意的是，引入配置脚本可以理解为“粘贴”，即将被引入脚本的内容粘贴到当前脚本中，所以如果脚本中有相对路径，则需要注意。**

@@ -5,10 +5,12 @@
 
 ## 插件
 
-[关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)<br/>
-[《Gradle用户指南》-核心Gradle插件](https://docs.gradle.org/current/userguide/standard_plugins.html)
-[搜索Gradle插件](https://plugins.gradle.org/)
-[如何贡献自己的插件](https://plugins.gradle.org/docs/submit)
+### 参考
+
+* [关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)
+* [《Gradle用户指南》-核心Gradle插件](https://docs.gradle.org/current/userguide/standard_plugins.html)
+* [搜索Gradle插件](https://plugins.gradle.org/)
+* [如何贡献自己的插件](https://plugins.gradle.org/docs/submit)
 
 ### 插件的功能
 
@@ -19,18 +21,20 @@
 
 ### 如何应用插件
 
+以`java`插件为例
 ```
 apply plugins: "java"
 ```
 
 ### buildScript
 
-buildScript中添加的配置应用于构建脚本本身的执行，而不适用于Gradle正在构建的任何项目的编译或执行。<br/>
+buildScript 中添加的配置应用于构建脚本本身的执行，而不适用于Gradle正在构建的任何项目的编译或执行。<br/>
+（就是说 buildScript 只用于配置脚本，与项目构建无关。）
 
 ## 构建Java
 
-[关于Java插件的官方文档](https://docs.gradle.org/current/userguide/java_plugin.html)<br/>
-[Java插件快速入门官方文档](https://docs.gradle.org/current/userguide/tutorial_java_projects.html)<br/>
+* [关于Java插件的官方文档](https://docs.gradle.org/current/userguide/java_plugin.html)
+* [Java插件快速入门官方文档](https://docs.gradle.org/current/userguide/tutorial_java_projects.html)
 
 *本节中的代码，默认是在引入"java"插件的情况下运行的*<br/>
 
@@ -71,6 +75,13 @@ task execute(type: JavaExec) {
 ```
 gradle jar
 ```
+
+### `application`插件
+
+我们可以在build.gradle文件中添加`application`插件来帮助我们编译java工程。<br/>
+实际上，`application`插件已经包含`java`插件了。<br/>
+`java`和`application`会为我们添加一些用于 build、clean、run、distribute Java 工程的 task。<br/>
+可以到Gradle官网了解更多关于[application](https://docs.gradle.org/current/userguide/application_plugin.html)插件的内容。<br/>
 
 ## 使用资源库
 
@@ -169,8 +180,11 @@ task copyDependencies(type: Copy) {
 gradle dependencies
 ```
 命令可以查看项目依赖。<br/>
-如果要查看特定配置类型的以来，可以添加`--configuration 依赖配置类型`<br/>
-例如，`gradle dependencies --configuration compile`<br/>
+如果要查看特定配置类型的依赖，可以添加`--configuration 依赖配置类型`<br/>
+例如，
+```
+gradle dependencies --configuration compile
+```
 
 #### 查看依赖关系（依赖报告）
 
@@ -201,51 +215,4 @@ gradle test
 测试报告位于
 ```
 build/reports/
-```
-
-## Gradle Wrapper
-
-Gradle Wrapper可以指定使用的Gradle版本，是所有人在编译同一工程时使用相同版本的gradle。<br/>
-Gradle Wrapper包含四个文件：<br/>
-* jar
-* 属性文件
-* 两个脚本文件
-
-### 创建 Gradle Wrapper
-
-```
-gradle wrapper
-```
-
-#### 指定创建Wrapper时使用的Gradle版本
-
-在build.gradle文件中（以使用2.2版本为例）
-```
-wrapper {
-  gradleVersion = '2.2'
-}
-```
-
-### 配置Wrapper
-
-#### 查看Wrapper使用的Gradle版本
-
-```
-./gradlew --version
-```
-
-#### 修改Wrapper使用的gradle版本
-
-##### 两种方式：<br/>
-###### 第一种：直接修改配置文件<br/>
-Wrapper配置选项位置<br/>
-```
-gradle/wrapper/gradle-wrapper.properties
-```
-在此文件中修改gradle版本
-
-###### 第二种：修改build.gradle文件<br/>
-修改build.gradle中指定的gradle版本，然后更新
-```
-gradle wrapper
 ```

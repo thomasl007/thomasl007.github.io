@@ -9,45 +9,40 @@
 
 ## Android Studio 与 Gradle
 
-Android Studio 维护自己的项目内部模型，当项目加载或gradle构建脚本发生变化时，Android Studio 需要将其内部模型与 Gradle 的模型同步。<br/>
-<br/>
+### Android Studio 中的同步
+
+Android Studio 有自己的项目内部模型。<br/>
+当项目加载或Gradle构建脚本发生变化时，Android Studio 需要将其内部模型与 Gradle 的模型同步。<br/>
+也就是说，同步是为了让 Android Studio 识别 Gradle脚本。<br/>
+
+### Gradle Wrapper 和 Gradle Daemon
+
 Android Studio 使用 Gradle Wrapper 和 Gradle Daemon。<br/>
-<br/>
-Android Studio 中的同步是为了让 Android Studio 识别 Gradle脚本。<br/>
-<br/>
 
 ## Android Studio 工程目录结构
 
-**.gradle目录**<br/>
+* **.gradle目录**<br/>
 这个目录是gradle存储增量构建支持信息的位置。<br/>
-Gradel task的输入输出都在这个目录中。(还记得给增量编译相关的输入输出吗)<br/>
-**.idea**<br/>
+Gradle task的输入输出都在这个目录中。(还记得增量编译相关的输入输出吗)<br/>
+* **.idea**<br/>
 这个目录存放 Android Studio 的项目模型（前边提到过，Android Studio 有自己的项目模型）<br/>
-**build**<br/>
+* **build**<br/>
 存放编译输出内容，以及 Android Studio 项目模型 和 Gradle 项目模型同步相关的信息。<br/>
-**.iml**<br/>
+* **.iml**<br/>
 跟`.idea`一样，也是 Android Studio 项目模型的一部分<br/>
-**local.properties**<br/>
+* **local.properties**<br/>
 设置 Android sdk 的位置（提供给Gradle）<br/>
 
-## 进一步了解插件
+## Android 构建脚本
 
-### `java`和`application`插件
+### 工程根目录下的`build.gradle`
 
-我们可以在build.gradle文件中添加`java`和`application`插件来帮助我们编译java工程。<br/>
-实际上，`application`插件已经包含`java`插件了。<br/>
-`java`和`application`会为我们添加一些用于 build、clean、run、distribute Java工程的task。<br/>
-可以到Gradle官网了解更多关于[application](https://docs.gradle.org/current/userguide/application_plugin.html)插件的内容。<br/>
-
-### Android 构建脚本
-
-#### 工程根目录下的`build.gradle`
-
-android构建是多工程构建（multi project build），工程目录中的 `app` 就是其中一个子工程（sub project）。<br/>
+Android 构建是多工程构建（multi project build），工程目录中的 `app` 就是其中一个子工程（sub project）。<br/>
 我们来简单分析一下这个`build.gradle`脚本。<br/>
 ```
 buildscript {
     repositories {
+        // 声明从何处引入插件
         jcenter()
     }
     dependencies {
@@ -64,7 +59,7 @@ allprojects {
 }
 ```
 
-#### 专门用于构建Android的`build.gradle`
+### 专门用于构建 Android 的 build.gradle
 
 在子工程（例如，`app`）中的`build.gradle`。<br/>
 ```
@@ -93,54 +88,41 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
 }
 ```
-首先，引入了`android`插件，取自根目录脚本里`buildscript`中定义的资源库（例如，`jcenter`）。<br/>
-**！！注意！！：高版本插件需要从`google()`库获取！！**
+首先，应用了`android`插件，取自根目录脚本里`buildscript`中定义的资源库（例如，`jcenter`）。<br/>
+**！！注意！！：高版本`android`插件需要从`google()`库获取！！**
 
-##### android块
+#### android块
 
 所有有关android的配置，都包含在`android`块中。<br/>
 其中只有`compileSdkVersion`和`buildToolsVersion`是必要的。<br/>
+
 `defaultConfig`块负责配置android manifest的属性。<br/>
+
 详细内容参考[Android插件DSL参考文档](http://google.github.io/android-gradle-dsl/current/)。<br/>
 
-### `android`插件
+## android 插件
 
-#### 构建变种（build variants）
+`android` 插件主要功能包括：
+* 构建变种（build variants）
+* 管理依赖（dependencies）
+* 替换res和Manifest
+* 应用程序签名
+* 程序守护（pro guarding）
+* 测试
+
+### 构建变种（build variants）
 
 构建同一app的略有不同的版本，例如，debug、release、free、pay。<br/>
-构建变种是两个配置组件的矢量积：`buildTypes {}`和`productFlavors {}`
+构建变种是两个配置组件 `buildTypes {}` 和 `productFlavors {}` 的矢量积：
 
 |buildTypes\productFlavors|free|paid|
 |-|
 |**release**|free Release|paid Release|
 |**debug**|free Debug|paid Debug|
 
-##### 配置构建类型（buildTypes）
+#### 声明 productFlavors
 
-`minifyEnabled false`：禁用打包优化<br/>
-
-##### 资源合并
-
-Android Gradle插件提供了许多 sourceSets，（目前的理解，`sourceSets`就是源目录，例如app目录中的main）<br/>
-以上面的表格为例，我们会有以下 sourceSets
-```
-/src
- |-main *default
- |-free
- |-paid
- |-debug
- |-release
- |-freeDebug
- |-freeRelease
- |-paidDebug
- |-paidRelease
-```
-根据要构建的变种，**Gradle会为我们** 选择不同的 sourceSets 合并到最终的apk中。<br/>
-应该是先合并productFlavors的sourceSets再合并buildTypes的sourceSets。<br/>
-
-##### 声明productFlavors
-
-默认情况下，Gradle不会为我们创建任何productFlavors。<br/>
+默认情况下，Gradle 不会为我们创建任何 productFlavors。<br/>
 创建方式：
 ```
 productFlavors {
@@ -153,13 +135,12 @@ productFlavors {
 }
 ```
 基本上所有`defaultConfig`中的属性都可以在`productFlavors`的各个flavor中使用。<br/>
-**注意：Gradle不能合并Java代码，所以变种sourceSets中不能定义与main中同名的类，但不同变种sourceSets中可以有同名类。**
 
-##### flavor dimensions
+#### flavor dimensions
 
 没太搞懂，只知道是使用`flavorDimensions`方法。<br/>
 
-##### 配置生成的任务
+#### 配置生成的task
 
 应用场景：<br/>
 Android构建的任务名称和任务，都是在配置之后生成的，例如，`compileDebug`。<br/>
@@ -189,24 +170,74 @@ applicationVariants.all {
 }
 ```
 
-#### 管理依赖（dependencies）
+### 资源合并
 
-管理每个变体的依赖项。（可以分别管理）<br/>
-
-#### 替换res和Manifest
-
-替换每个变体的res和Manifest。
-
-#### 应用程序签名
-
-#### 程序守护（pro guarding）
-
-#### 测试
-
-## 引入其他配置脚本
-
-我们可以使用一下方式引入其他配置脚本：
+Android Gradle插件提供了许多 sourceSets。<br/>
+（目前的理解，`sourceSets`就是源目录，例如 `app` 目录中的 `main`）<br/>
+以上面的表格为例，我们会有以下 sourceSets
 ```
-apply from:"solution.gradle"
+/src
+ |-main *default
+ |-free
+ |-paid
+ |-debug
+ |-release
+ |-freeDebug
+ |-freeRelease
+ |-paidDebug
+ |-paidRelease
 ```
-**需要注意的是，引入配置脚本可以理解为“粘贴”，即将被引入脚本的内容粘贴到当前脚本中，所以如果脚本中有相对路径，则需要注意。**
+根据要构建的变种，**Gradle会为我们** 选择不同的 sourceSets 与 `main` 进行合并，进而合并到最终的apk中。<br/>
+应该是先合并 `productFlavors` 的sourceSets，再合并 `buildTypes` 的sourceSets。<br/>
+**注意：<br/>
+Gradle不能合并Java代码，所以变种sourceSets中不能定义与main中同名的类。<br/>
+但不同变种sourceSets中可以有同名类。**
+
+资源合并也包括 Manifest 文件。
+
+### 管理依赖（dependencies）
+
+管理每个变体的依赖项。（可以分别管理，例如，变体名+Compile）<br/>
+
+### ProGuard
+
+[ProGuard官方文档](https://developer.android.google.cn/studio/build/shrink-code)<br/>
+
+ProGuard工具可以去除无用的代码和资源，以缩小应用的大小。<br/>
+ProGuard的功能还包括混淆代码（为所有类和方法设置无意义的名称）。<br/>
+
+* `minifyEnabled`：开启后，会执行代码压缩。通常需要和`proguardFiles`一起使用<br/>
+**但有两点需要注意**<br/>
+  * **代码压缩会拖慢构建速度，因此应尽量避免在debug构建中使用。**
+  * **如果要在release版本中使用代码压缩，则一定在测试版本中启用代码压缩，以确认你的`proguard-rules.pro`文件没有问题，否则可能导致错误。**）
+* `shrinkResources`：开启后，可去除任何未使用的资源，包括依赖库中未使用的资源。
+* `proguardFiles`：用于定义ProGuard的规则
+
+### Android测试
+
+两种类型：<br/>
+unit test：运行在电脑上，测试非android相关的类<br/>
+connected test：运行在测试设备上<br/>
+
+## android插件常用变量
+
+工程根目录：
+```
+$rootdir
+```
+
+## Multidex
+
+默认最大方法数是65535。<br/>
+Android虚拟机实际上并没有运行java字节码，它运行的是Dalvik字节码。<br/>
+在执行Java编译之后，会执行一个构建步骤，将Java字节码转换为Dalvik字节码，这个过程称为“dexing”。<br/>
+这个过程的任务之一是为应用程序中的所有方法构建方法表（默认是一张表），然后用两个字节编制索引。<br/>
+两个字节是16位，2的16次方是65536。<br/>
+所以，默认情况下，我们最多只能定义65536个方法。<br/>
+<br/>
+可以使用以下配置，要求 gradle 将一张表拆分成多张表。<br/>
+```
+defaultConfig {
+    multiDexEnabled true
+}
+```

@@ -3,34 +3,6 @@
 
 **注：`compile`来自`java`插件。但在Gradle新版本，Gradle推荐使用`java-library`插件中的`api`和`implementation`代替`compile`，但三者的区别不是本文的重点，所以本文中只使用compile引入依赖。**
 
-## 插件
-
-### 参考
-
-* [关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)
-* [《Gradle用户指南》-核心Gradle插件](https://docs.gradle.org/current/userguide/standard_plugins.html)
-* [搜索Gradle插件](https://plugins.gradle.org/)
-* [如何贡献自己的插件](https://plugins.gradle.org/docs/submit)
-
-### 插件的功能
-
-* 扩展Gradle域模型
-* 追加DSL元素
-* 追加task
-* 追加task类型
-
-### 如何应用插件
-
-以`java`插件为例
-```
-apply plugins: "java"
-```
-
-### buildScript
-
-buildScript 中添加的配置应用于构建脚本本身的执行，而不适用于Gradle正在构建的任何项目的编译或执行。<br/>
-（就是说 buildScript 只用于配置脚本，与项目构建无关。）
-
 ## 构建Java
 
 * [关于Java插件的官方文档](https://docs.gradle.org/current/userguide/java_plugin.html)

@@ -464,6 +464,50 @@ include ':app', ':app2'
 ./gradlew projects
 ```
 
+## buildScript
+
+buildScript 中添加的配置应用于构建脚本本身的执行，而不适用于Gradle正在构建的任何项目的编译或执行。<br/>
+（就是说 buildScript 只用于配置脚本，与项目构建无关。）
+
+## 插件
+
+### 参考
+
+* [关于插件的官方文档](https://docs.gradle.org/current/userguide/plugins.html)
+* [《Gradle用户指南》-核心Gradle插件](https://docs.gradle.org/current/userguide/standard_plugins.html)
+* [搜索Gradle插件](https://plugins.gradle.org/)
+* [如何贡献自己的插件](https://plugins.gradle.org/docs/submit)
+
+### 插件的功能
+
+* 扩展Gradle域模型
+* 追加DSL元素
+* 追加task
+* 追加task类型
+
+### 如何应用插件
+
+Gradle本身提供一些插件，例如`java`、`java-library`等，这些Gradle提供的插件可以直接使用以下命令应用。
+```
+apply plugins: "java"
+```
+
+如果是第三方提供的插件，例如`android`插件，则需要先声明插件从何处引入。
+```
+buildscript {
+    repositories {
+        // 声明从何处引入插件
+        jcenter()
+    }
+    dependencies {
+        // 这里引入 android 插件
+        classpath 'com.android.tools.build:gradle:2.2.3'
+    }
+}
+// 应用插件
+apply plugin: "com.android.application"
+```
+
 ## 附录
 
 ### 命令表

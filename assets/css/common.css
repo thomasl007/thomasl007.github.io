@@ -192,6 +192,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 16px;
 }
 
-ul, li {
-    list-style-type: disc;
+ul>li {
+    list-style-type: square;
+}
+
+ol>li {
+    list-style-type: decimal;
 }

@@ -12,9 +12,6 @@ collections:
   Android:
     output: true
     icon: https://developer.android.google.cn/static/images/branding/icons/android-blog-round-icon.svg
-  Flutter:
-    output: true
-    icon: https://flutter.io/images/flutter-mark-square-100.png
   Git:
     output: true
     icon: ../../assets/img/git.png
@@ -41,11 +38,6 @@ defaults:
   - scope:
       path: ""
       type: "Android"
-    values:
-      layout: "collection"
-  - scope:
-      path: ""
-      type: "Flutter"
     values:
       layout: "collection"
   - scope:

@@ -163,7 +163,7 @@ gradle dependencies --configuration compile
 有时，我们引入一个依赖后，查看依赖时会发现有多个依赖，这个因为我们引入的依赖需要用到其他依赖。<br/>
 以`commons-logging:commons-logging:1.2`为例，我们可以使用
 ```
-gradle dependenciesInsight --dependency common-logging
+gradle dependencyInsight --dependency common-logging
 ```
 命令，查看`common-logging`是被谁依赖的。<br/>
 

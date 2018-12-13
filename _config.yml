@@ -1,3 +1,6 @@
+markdown: kramdown
+highlighter: rouge
+
 collections_dir: collections
 collections:
   Cplusplus:
@@ -18,6 +21,9 @@ collections:
   MySQL:
     output: true
     icon: ../../assets/img/mysql.png
+  DesignPattern:
+    output: true
+    icon: ../../assets/img/dp.png
 
 defaults:
   - scope:
@@ -48,6 +54,11 @@ defaults:
   - scope:
       path: ""
       type: "MySQL"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "DesignPattern"
     values:
       layout: "collection"
 

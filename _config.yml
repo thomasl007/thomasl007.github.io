@@ -59,6 +59,10 @@ defaults:
     values:
       layout: "collection"
 
+markdown: kramdown
+kramdown:
+   input: GFM
+   hard_wrap: true
 #theme: minima
 title: thomasl007
 email: actml@outlook.com

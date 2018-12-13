@@ -59,6 +59,6 @@ defaults:
     values:
       layout: "collection"
 
-theme: minima
+#theme: minima
 title: thomasl007
 email: actml@outlook.com

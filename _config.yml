@@ -21,6 +21,9 @@ collections:
   DesignPattern:
     output: true
     icon: ../../assets/img/dp.png
+  English:
+    output: true
+    icon: ../../assets/img/dp.png
 
 defaults:
   - scope:
@@ -56,6 +59,11 @@ defaults:
   - scope:
       path: ""
       type: "DesignPattern"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "English"
     values:
       layout: "collection"
 

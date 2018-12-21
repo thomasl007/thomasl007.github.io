@@ -7,6 +7,22 @@
 /etc/mysql/mysql.conf.d/mysqld.conf
 ```
 
+## Errors
+
+### ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+[stackoverflow](https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost)
+Ubuntu 18.04 lts 安装 MySQL 5.7，使用`mysql -u root -p`不能登录
+```
+$ sudo mysql -u root # I had to use "sudo" since is new installation
+
+mysql> USE mysql;
+mysql> UPDATE user SET plugin='mysql_native_password', authentication_string=PASSWORD('123456') WHERE user='root';
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
+
+$ service mysql restart
+```
+
 ## 允许远程连接
 
 MySQL未开启远程访问时，会出现以下错误：

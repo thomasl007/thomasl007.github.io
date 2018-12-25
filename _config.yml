@@ -24,6 +24,9 @@ collections:
   English:
     output: true
     icon: ../../assets/img/dp.png
+  Mathematics:
+    output: true
+    icon: ../../assets/img/dp.png
 
 defaults:
   - scope:
@@ -64,6 +67,11 @@ defaults:
   - scope:
       path: ""
       type: "English"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Mathematics"
     values:
       layout: "collection"
 

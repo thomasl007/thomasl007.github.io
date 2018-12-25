@@ -226,3 +226,13 @@ li>ol {
 li>ol>li {
     list-style-type: lower-roman;
 }
+
+red {
+    color: #f44336
+}
+green {
+    color: #4caf50
+}
+blue {
+    color: #2196f3
+}

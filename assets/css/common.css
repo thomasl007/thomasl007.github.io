@@ -81,12 +81,6 @@ main.page-content {
     padding: 0;
 }
 
-h1.post-header {
-    margin: 0;
-    padding: 0;
-    height: 0;
-}
-
 .highlighter-rouge .highlight {
     background: #f6f8fa;
 }
@@ -170,6 +164,34 @@ a {
     text-decoration: none;
 }
 
+blockquote {
+    border-left: .25em solid #dfe2e5;
+    color: #6a737d;
+    padding: 0 1em;
+    margin: 0;
+}
+
+/* header style begin */
+h1, h2, h3 {
+    border-bottom-width: 1px;
+    border-bottom-color: #eaecef;
+    border-bottom-style: solid;
+    padding-bottom: .3em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.25;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+h1.post-header {
+    margin: 0;
+    padding: 0;
+    height: 0;
+}
+
 h1 {
     font-size: 2rem;
 }
@@ -194,19 +216,9 @@ h6 {
     font-size: 0.85rem;
     color: #6a737d;
 }
+/* header style end */
 
-h1, h2, h3 {
-    border-bottom: 1px solid #eaecef;
-    padding-bottom: .3em;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    line-height: 1.25;
-    margin-top: 24px;
-    margin-bottom: 16px;
-}
-
+/* list style begin */
 ol, ul {
     padding-inline-start: 25px;
 }
@@ -226,7 +238,9 @@ li>ol {
 li>ol>li {
     list-style-type: lower-roman;
 }
+/* list style end */
 
+/* custom color begin */
 red {
     color: #f44336
 }
@@ -236,3 +250,4 @@ green {
 blue {
     color: #2196f3
 }
+/* custom color end */

@@ -37,7 +37,7 @@ body {
 
 div.wrapper {
     position: relative;
-    // top: -100px;
+    /* top: -100px; */
     /* max-width: calc(800px - (30px * 2)); */
     max-width: calc(800px - (0px * 2));
     margin-left: auto;
@@ -125,6 +125,7 @@ blockquote>p {
 p img {
     display: block;
     margin: 0 auto;
+    max-width: calc(100%);
 }
 
 /* table style begin */

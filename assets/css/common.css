@@ -1,3 +1,12 @@
+@font-face {
+    font-family: NotoSansSC;
+    src: url('../fonts/NotoSansSC-Regular.otf');
+}
+@font-face {
+    font-family: SourceCodePro-Semibold;
+    src: url('../fonts/SourceCodePro-Semibold.ttf');
+}
+
 header.site-header {
     min-height: 0;
     border-top: 0;
@@ -22,7 +31,8 @@ body {
     line-height: 1.5;
     background-color: #ffffff;
     /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol */
-    font-family: 'Source Code Pro', monospace, 'Noto Serif SC', serif;
+    /* font-family: 'Source Code Pro', monospace, 'Noto Sans SC', serif; */
+    font-family: SourceCodePro-Semibold, monospace, NotoSansSC, serif;
 }
 
 div.wrapper {

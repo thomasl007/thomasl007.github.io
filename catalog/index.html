@@ -16,9 +16,9 @@
             {% assign name = collection.label %}
             {% if name != "posts" %}
               <li>
-                <p class="collection-title">{{ name }}[{{ site.[name].size }}]</p>
+                <p class="collection-title">{{ name }}[{{ site[name].size }}]</p>
                 <ul>
-                {% for item in site.[name] %}
+                {% for item in site[name] %}
                   {% if item.title != 'Index' %}
                     <li><a class='waves-effect waves-light' target='_blank' href="{{ item.url }}">{{ item.title }}</a></li>
                   {% endif %}

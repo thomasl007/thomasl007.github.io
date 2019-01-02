@@ -30,10 +30,10 @@
                 <div class='collapsible-header waves-effect'>
                   <img class='icon' src="{{ collection.icon }}" />
                   <p class="collection-title">{{ name }}</p>
-                  <span class="badge">{{ site.[name].size }}</span>
+                  <span class="badge">{{ site[name].size }}</span>
                 </div>
                 <div class='collapsible-body'>
-                  {% for item in site.[name] %}
+                  {% for item in site[name] %}
                     {% if item.title != 'Index' %}
                       <a class='waves-effect waves-light' target='_blank' href="{{ item.url }}">{{ item.title }}</a>
                     {% endif %}

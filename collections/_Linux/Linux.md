@@ -1,55 +1,48 @@
 ---
 ---
-# 通用
+#### 版本信息
 
-## Linux常用命令
+|信息|发行版|命令|
+|-|-|-|
+|发行版版本|CentOS|`cat /etc/redhat-release`<br/>`cat /etc/centos-release`|
+||Ubuntu|`sudo lsb_release -a`|
+|内核版本（Linux版本）|-|`cat /proc/version`<br/>`uname -a`<br/>`uname -r`|
+|系统是多少位|-|`getconf LONG_BIT`|
 
-### 始终以root权限执行命令
+#### 网络信息
+
+|操作|命令|说明|
+|-|-|-|
+|查看IP|`ip addr`<br/>`ifconfig`||
+|查看出口IP|`curl ifconfig.me`||
+||`curl ipinfo.io`||
+||`curl cip.cc`||
+||`curl http://members.3322.org/dyndns/getip`|可能无效|
+||`curl myip.ipip.net`|可能无效|
+
+#### SELinux
+
+|操作|命令|说明|
+|-|-|-|
+|查看SELinux状态|`getenforce`||
+|关闭SELinux|`setenforce 0`|临时关闭，重启恢复|
+||修改/etc/selinux/config<br/>`SELINUX=disabled`|永久关闭|
+
+## 通用
+
+### Linux常用命令
+
+#### 始终以root权限执行命令
 
 ```
 sudo -i
 ```
 
-### 查看出口IP
-
-以下任意一种(最后一种可能不好用)
-```
-curl ifconfig.me
-curl myip.ipip.net
-curl ipinfo.io
-curl cip.cc
-curl http://members.3322.org/dyndns/getip
-```
-
-## 查看目录大小
+### 查看目录大小
 
 进入目录执行命令`du -sh`
 
-## SELinux
-
-### 查看SELinux状态
-
-```
-getenforce
-```
-
-### 关闭SELinux
-
-#### 临时
-
-```
-setenforce 0
-```
-
-#### 永久
-
-```
-vim /etc/selinux/config
-# 修改
-SELINUX=disabled
-```
-
-## 扯淡
+### 扯淡
 
 几个可以用来扯淡的小工具
 骇客帝国`cmatrix`
@@ -57,21 +50,19 @@ Linux Logo `linuxlogo`
 字符图形化输出 `figlet`
 
 ---
-# Ubuntu
+## Ubuntu
 
-### Ubuntu激活root
-
+#### root账户相关
+###### 激活root
 ```
 sudo passwd root
 ```
-
-### 屏蔽root
-
+###### 屏蔽root
 ```
 sudo passwd -l root # 'l' means 'lock'
 ```
 
-## 开机自启动
+### 开机自启动
 
 Ubuntu 16.04 LTS之前，使用`sysv (chkconfig)`管理服务。<br/>
 Ubuntu 18.04 LTS之后，使用`systemd`管理服务。<br/>
@@ -82,48 +73,32 @@ sudo sysv-rc_conf
 ```
 
 ---
-# CentOS
+## CentOS
 
-## 查看版本
+### yum常用命令
 
-|信息|命令|
-|-|-|
-|查看CentOS版本|`cat /etc/redhat-release`<br/>或<br/>`cat /etc/centos-release`|
-|查看基于的RedHat版本|`cat /proc/version`|
-|查看内核版本|`cat /proc/version`<br/>或<br/>`uname -a`<br/>或<br/>`uname -r`|
-|查看系统是多少位|`getconf LONG_BIT`|
-
-## yum常用命令
-
-### 查找命令所在安装包
+#### 查找命令所在安装包
 
 ```
 yum search ifconfig
 ```
 
-## 网络配置
+### 网络配置
 
-### 查看ip地址
-
-除了使用`ifconfig`之外，还可以用
-```
-ip addr
-```
-
-### CentOS网络配置脚本文件位置
+#### CentOS网络配置脚本文件位置
 
 ```
 /etc/sysconfig/network-scripts
 ```
 
-### DNS配置
+#### DNS配置
 
-#### CentOS7
+##### CentOS7
 
 网络配置由NetworkManager管理，直接修改`/etc/resolv.conf`无效。<br/>
 有几种方案处理这个问题。<br/>
 
-##### 方案一
+###### 方案一
 
 直接修改网卡配置文件<br/>
 
@@ -147,7 +122,7 @@ DNS2 你的备用DNS
 service network restart
 ```
 
-##### 方案二
+###### 方案二
 
 关闭NetworkManager<br/>
 ```
@@ -157,7 +132,7 @@ chkconfig NetworkManager off
 然后直接编辑`/etc/resolv.conf`（参考下边的CentOS7之前的版本）<br/>
 **注意，使用这个方案可能需要把手动将network设置为开机自启动。**
 
-#### CentOS**7之前**的版本
+##### CentOS**7之前**的版本
 
 直接修改`/etc/resolv.conf`即可
 ```
@@ -170,15 +145,15 @@ vim /etc/resolv.conf
 nameserver 你的DNS
 ```
 
-## 端口和防火墙
+### 端口和防火墙
 
 CentOS7开始使用`firewalld`防火墙。<br/>
 
-### 需要注意的问题
+#### 需要注意的问题
 
 从RedHat7开始，默认情况下，即使防火墙关闭，也只开放22端口，其他端口仍然是关闭的。
 
-### 端口
+#### 端口
 
 ```
 查看开放的端口
@@ -195,11 +170,11 @@ firewall-cmd --remove-port=80/tcp --permanent
 firewall-cmd --reload
 ```
 
-### 防火墙
+#### 防火墙
 
 ```
 启动： systemctl start firewalld
-查看状态： systemctl status firewalld 
+查看状态： systemctl status firewalld
 停止： systemctl disable firewalld
 禁用： systemctl stop firewalld
 启动服务：systemctl start firewalld.service
@@ -226,21 +201,21 @@ firewall-cmd --reload
 *`--zone`: 作用域，例如，`--zone=public`*<br/>
 *`--permanent`: 永久生效*
 
-## CentOS最小安装的问题
+### CentOS最小安装的问题
 
-### ifconfig、netstat找不到
+#### ifconfig、netstat找不到
 
 ```
 yum install net-tools
 ```
 
-## 关于httpd
+### 关于httpd
 
 ```
 启动
-# /usr/sbin/httpd -k start
+## /usr/sbin/httpd -k start
 停止
-# /usr/sbin/httpd -k stop
+## /usr/sbin/httpd -k stop
 ```
 如果实在停不了
 ```

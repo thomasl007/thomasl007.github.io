@@ -6,7 +6,7 @@
 |命令|功能|解释|用例|
 |-|-|-|-|
 |M|move to|移动绘制点，作用相当于把画笔落在哪一点。|`Mx,y`<br/>把画笔移动到x,y，准备在这个地方画图|
-|L|line to|直线. 注意，直线是没有宽度的，所以什么也看不到。<br/>设置颜色和线宽:<br/>`android:strokeColor="#333330" `<br/>`android:strokeWidth="10"`|`Lx,y`<br/>直线连到x,y<br/>还有简化命令(貌似在android里无效):<br/>--`H(x)`水平连接<br/>--`V(y)`垂直连接|
+|L|line to|直线. 注意，直线是没有宽度的，所以什么也看不到。<br/>设置颜色和线宽:<br/>`android:strokeColor="#333330" `<br/>`android:strokeWidth="10"`|`Lx,y`<br/>直线连到x,y<br/>还有简化命令:<br/>--`H(x)`水平连接<br/>--`V(y)`垂直连接|
 |Z|close|闭合，嗯，就是把图封闭起来。|`Z`<br/>没有参数，连接起点和终点|
 |C|cubic bezier|三次贝塞尔曲线|`C(x1 y1 x2 y2 x y)`<br/>--控制点: `(x1,y1)`, `(x2,y2)`<br/>--终点: `(x,y)`|
 |Q|quatratic bezier|二次贝塞尔曲线|`Q(x1 y1 x y)`<br/>--控制点:`(x1,y1)`<br/>--终点`(x,y)`|

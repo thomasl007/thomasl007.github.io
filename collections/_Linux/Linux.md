@@ -62,7 +62,7 @@ sudo passwd root
 sudo passwd -l root # 'l' means 'lock'
 ```
 
-### 开机自启动
+#### 开机自启动
 
 Ubuntu 16.04 LTS之前，使用`sysv (chkconfig)`管理服务。<br/>
 Ubuntu 18.04 LTS之后，使用`systemd`管理服务。<br/>
@@ -70,6 +70,18 @@ Ubuntu 18.04 LTS之后，使用`systemd`管理服务。<br/>
 ```
 sudo apt-get -y install sysv-rc-conf
 sudo sysv-rc_conf
+```
+
+#### 常见错误
+
+###### locale.Error: unsupported locale setting
+
+```
+$ locale # 插件locale设置
+```
+根据数据结果进行设置，比如设置LC_ALL
+```
+$ export LC_ALL=en_US.UTF-8
 ```
 
 ---

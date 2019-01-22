@@ -91,3 +91,4 @@ kramdown:
 #theme: minima
 title: thomasl007
 email: acctml@outlook.com
+exclude: [vendor]

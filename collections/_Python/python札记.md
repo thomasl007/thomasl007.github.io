@@ -114,6 +114,56 @@ print list1 * 4
 > ['physics', 'chemistry', 1997, 2000, 'physics', 'chemistry', 1997, 2000, 'physics', 'chemistry', 1997, 2000, 'physics', 'chemistry', 1997, 2000]
 1. 列表支持`+`拼接
 
+#### 元组
+
+[元组内建函数](http://www.runoob.com/python/python-tuples.html)
+
+相当于普通数组, 其中的元素不能修改
+
+###### 与其他语言较明显的区别
+
+1. 用`()`定义
+1. 任意无符号的对象，以逗号隔开(未使用`()`包裹)，默认为元组, 例如
+```python
+print 'abc', -4.24e93, 18+6.6j, 'xyz'
+x, y = 1, 2
+print "Value of x , y : ", x,y
+```
+1. 可以存不同类型的变量
+1. 使用`,`分割元素, 如果只有一个元素, 需要在元素后添加`,`, 即`tup1 = (50,)`
+1. 支持`+`拼接, 创建全新数组
+1. 支持`*`复制, 创建全新数组
+
+#### 字典
+
+[字典内建函数](http://www.runoob.com/python/python-dictionary.html)
+
+###### 定义
+
+```python
+d = {key1 : value1, key2 : value2 }
+```
+
+###### 添加,更新,删除
+
+```python
+dict = {'Name': 'Zara', 'Age': 7, 'Class': 'First'}
+ 
+dict['Age'] = 8           # 更新
+dict['School'] = "RUNOOB" # 添加
+del dict['Name']          # 删除键是'Name'的条目
+dict.clear()              # 清空词典所有条目
+del dict                  # 删除词典
+```
+
+###### 与其他语言较明显的区别
+
+1. 键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行，如下实例：
+```python
+dict = {['Name']: 'Zara', 'Age': 7} 
+print "dict['Name']: ", dict['Name']\
+```
+
 ## 模块
 
 使用`import`导入模块
@@ -127,7 +177,9 @@ dir(math)
 
 #### 常用模块
 
-|模块名|概述|
-|-|-|
-|math|浮点数数学运算函数|
-|cmath|复数数学运算函数|
+|模块名|概述|参考|
+|-|-|-|
+|math|浮点数数学运算函数|[参考](http://www.runoob.com/python/python-numbers.html)|
+|cmath|复数数学运算函数|[参考](http://www.runoob.com/python/python-numbers.html)|
+|time|时间相同函数|[参考](http://www.runoob.com/python/python-date-time.html)|
+|calendar|日历相关函数|[参考](http://www.runoob.com/python/python-date-time.html)|

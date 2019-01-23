@@ -38,6 +38,7 @@ name = "John" # 字符串
 a, b, c = 1, 2, "john"
 ```
 1. 循环语句后可以接`else`, else 中的语句会在循环正常执行完（即 for 不是通过 break 跳出而中断的）的情况下执行，while … else 也是一样
+1. 要在函数中使用全局变量, 必须在使用之前执行`global 全局变量`, python会认为是在使用局部变量.
 
 ## 变量类型
 
@@ -245,6 +246,17 @@ from fib import fibonacci
 
 也可以使用`from...import *`引入全部内容.
 
+###### 包的概念
+
+包就是包含`__init__.py`文件的文件夹, 该文件的内容可以为空。`__init__.py`用于标识当前文件夹是一个包。
+引入包中的模块:
+```python
+# 假设有包名为: package_xxx
+# 包中有文件: something.py
+# 文件中有函数: hello
+from package_xxx.something import hello
+```
+
 #### python查找模块的顺序
 
 1. 当前目录
@@ -266,3 +278,26 @@ dir(math)
 |cmath|复数数学运算函数|[参考](http://www.runoob.com/python/python-numbers.html)|
 |time|时间相同函数|[参考](http://www.runoob.com/python/python-date-time.html)|
 |calendar|日历相关函数|[参考](http://www.runoob.com/python/python-date-time.html)|
+|os|文件和目录|[参考](http://www.runoob.com/python/os-file-methods.html)|
+
+## 异常处理
+
+```python
+try:
+<语句>        #运行别的代码
+except <名字>：
+<语句>        #如果在try部份引发了'name'异常
+except <名字>，<数据>:
+<语句>        #如果引发了'name'异常，获得附加的数据
+else:
+<语句>        #如果没有异常发生
+finally:
+<语句>        #退出try时总会执行
+```
+抛异常使用`raise`关键字
+
+## 参考
+
+[IO操作](http://www.runoob.com/python/python-files-io.html)
+[File操作](http://www.runoob.com/python/file-methods.html)
+[Python内置函数](http://www.runoob.com/python/python-built-in-functions.html)

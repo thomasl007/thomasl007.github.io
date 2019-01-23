@@ -16,9 +16,10 @@
   <body>
     <div class="wrapper">
       <h1>{{ page.title }}</h1>
-      {{* content {:toc}}}
-      * content
-      {:toc}
+      {% capture my_include %}
+      {% include a_markdown_file.md %}
+      {% endcapture %}
+      {{ my_include | markdownify }}
       {{ content }}
     </div>
     <!--Import jQuery before materialize.js-->

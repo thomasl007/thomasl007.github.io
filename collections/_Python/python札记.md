@@ -58,7 +58,7 @@ Python有五个标准的数据类型：
 1. String（字符串）
 1. List（列表）
 1. Tuple（元组）
-1, Dictionary（字典）
+1. Dictionary（字典）
 
 #### 字符串
 
@@ -161,7 +161,7 @@ del dict                  # 删除词典
 1. 键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行，如下实例：
 ```python
 dict = {['Name']: 'Zara', 'Age': 7} 
-print "dict['Name']: ", dict['Name']\
+print "dict['Name']: ", dict['Name']
 ```
 
 ## 模块

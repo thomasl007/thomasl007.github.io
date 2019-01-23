@@ -12,13 +12,6 @@ total = item_one + \
         item_two + \
         item_three
 ```
-1. Python 可以使用引号`'`、双引号`"`、三引号`'''`或`"""`来表示字符串, 三引号字符串可以由多行组成, 例如
-```python
-word = 'word'
-sentence = "这是一个句子。"
-paragraph = """这是一个段落。
-包含了多个语句"""
-```
 1. 多行注释使用三个单引号`'''`或三个双引号`"""`, 例如
 ```python
 '''
@@ -60,9 +53,21 @@ Python有五个标准的数据类型：
 1. Tuple（元组）
 1. Dictionary（字典）
 
+其中，String, Tuple, 和 Numbers 是不可更改的对象，而 List,Dictionary 等则是可以修改的对象。
+
 #### 字符串
 
 [字符串内建函数](http://www.runoob.com/python/python-strings.html)
+
+###### 字符串定义
+
+Python 可以使用引号`'`、双引号`"`、三引号`'''`或`"""`来表示字符串, 三引号字符串可以由多行组成, 例如
+```python
+word = 'word'
+sentence = "这是一个句子。"
+paragraph = """这是一个段落。
+包含了多个语句"""
+```
 
 ###### 字符串截取
 
@@ -163,6 +168,61 @@ del dict                  # 删除词典
 dict = {['Name']: 'Zara', 'Age': 7} 
 print "dict['Name']: ", dict['Name']
 ```
+
+## 参数
+
+#### 参数传递
+
+python函数的参数传递分两种:
+* 传不可变对象: 如传整数、字符串、元组. 对应C++里的传值
+* 传可变对象: 如传列表，字典。对应C++里的传址
+
+#### 参数类型
+
+* 必备参数: 按函数声明中参数的顺序传入
+* 关键字参数: 参数可以是任意顺序
+```python
+#可写函数说明
+def printme( str ):
+   "打印任何传入的字符串"
+   print str;
+   return;
+ 
+#调用printme函数
+printme( str = "My string");
+```
+* 默认参数: 有默认值的参数, 如果没有传入, 则使用默认值。
+```python
+#可写函数说明
+def printinfo( name, age = 35 ):
+   "打印任何传入的字符串"
+   print "Name: ", name;
+   print "Age ", age;
+   return;
+ 
+#调用printinfo函数
+printinfo( age=50, name="miki" );
+printinfo( name="miki" );
+```
+* 不定长参数: 参数名前加`*`即可. 用于存放所有未命名的变量参数.
+
+## lambda
+
+#### 定义
+
+```python
+# 可写函数说明
+sum = lambda arg1, arg2: arg1 + arg2;
+ 
+# 调用sum函数
+print "相加后的值为 : ", sum( 10, 20 )
+print "相加后的值为 : ", sum( 20, 20 )
+```
+
+#### 特点
+
+* lambda的主体是一个表达式，而不是一个代码块。仅仅能在lambda表达式中封装有限的逻辑进去。
+* lambda函数拥有自己的命名空间，且不能访问自有参数列表之外或全局命名空间里的参数。
 
 ## 模块
 

@@ -226,10 +226,33 @@ print "相加后的值为 : ", sum( 20, 20 )
 
 ## 模块
 
-使用`import`导入模块
+模块实际就是一个以`.py`结尾的python文件.
+
+#### 引入模块
+
+###### 使用`import`引入模块
+
 ```python
 import math
 ```
+
+###### 使用`from...import`引入模块中指定的内容
+
+例如，要导入模块 fib 的 fibonacci 函数，使用如下语句：
+```python
+from fib import fibonacci
+```
+
+也可以使用`from...import *`引入全部内容.
+
+#### python查找模块的顺序
+
+1. 当前目录
+1. 如果不在当前目录，Python则搜索在 shell 变量`PYTHONPATH`下的每个目录
+1. 如果都找不到，Python会察看默认路径。UNIX下，默认路径一般为`/usr/local/lib/python/`
+
+#### 查看模块内容
+
 使用`dir`函数查看模块内容
 ```python
 dir(math)

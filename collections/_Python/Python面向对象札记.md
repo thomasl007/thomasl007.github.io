@@ -69,6 +69,7 @@ hasattr(emp1, 'age')     # 如果存在 'age' 属性返回 True。
 getattr(emp1, 'age')     # 返回 'age' 属性的值
 setattr(emp1, 'age', 8)  # 添加属性 'age' 值为 8
 delattr(emp1, 'age')     # 删除属性 'age'
+
 ```
 
 #### Python内置类属性
@@ -86,11 +87,12 @@ delattr(emp1, 'age')     # 删除属性 'age'
 # -*- coding: UTF-8 -*-
 
 
-class Parent:
+class Parent():
     parentAttr = 100
 
-    def __init__(self):
+    def __init__(self, name):
         print "调用父类构造函数"
+        self.name = name
 
     def parent_method(self):
         print '调用父类方法'
@@ -104,11 +106,27 @@ class Parent:
     def my_method(self):
         print '调用父类方法'
 
+    def get_name(self):
+        print "name is " + self.name
+
 
 # 继承Parent, Python支持多继承, 多个基类使用'逗号'分割
-class Child(Parent):
-    def __init__(self):
-        Parent.__init__(self)
+class Child(Parent, object):
+    def __init__(self, name):
+        """
+        Python中子类构造函数调用父类构造函数方法:
+        1. python2, python3
+            1.1. super(Child, self).__init__(name)
+                前提: Parent必须继承object (或, Child除继承Parent外, 还要继承object, 并且object必须在Parent之后)
+            1.2. Parent.__init__(self, name)
+                注意: 这里要传self
+        2. python3 only
+            说明: python3的类自动继承object, super中的参数可以省略
+            super().__init__(name)
+
+        :param name:
+        """
+        Parent.__init__(self, name)
         print "调用子类构造方法"
 
     def child_method(self):
@@ -119,12 +137,14 @@ class Child(Parent):
         print '调用子类方法'
 
 
-c = Child()          # 实例化子类
-c.child_method()      # 调用子类的方法
-c.parent_method()     # 调用父类方法
-c.set_attr(200)       # 再次调用父类的方法 - 设置属性值
-c.get_attr()          # 再次调用父类的方法 - 获取属性值
-c.my_method()         # 子类调用重写方法
+c = Child("thomasl007")  # 实例化子类
+c.child_method()         # 调用子类的方法
+c.parent_method()        # 调用父类方法
+c.set_attr(200)          # 再次调用父类的方法 - 设置属性值
+c.get_attr()             # 再次调用父类的方法 - 获取属性值
+c.my_method()            # 子类调用重写方法
+c.get_name()
+
 ```
 
 #### 如何定义静态方法

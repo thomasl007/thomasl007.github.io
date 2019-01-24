@@ -1,5 +1,8 @@
 ---
 ---
+* content
+{:toc}
+
 以Python2.7为基础进行学习.
 
 ## 与其他语言较明显的区别
@@ -301,3 +304,96 @@ finally:
 [IO操作](http://www.runoob.com/python/python-files-io.html)
 [File操作](http://www.runoob.com/python/file-methods.html)
 [Python内置函数](http://www.runoob.com/python/python-built-in-functions.html)
+
+## 面向对象
+
+### @property
+
+`@property`必须在新式类中使用, 否则基本没有意义.
+
+**为什么使用`@property`?**
+给类添加实例变量后, 对象可以直接访问实例变量, 这样就不能在赋值时对参数进行检查, 也不能在get时进行转换.
+虽然我们可以定义getter和setter函数来间接访问实例变量, 但这在使用上略显麻烦(不遵循了统一访问原则).
+为了既能提供setter和getter方法, 又能简化调用方法(遵循统一访问原则), python为我们提供了`@property`.
+
+**如何使用`@property`?**
+`@property`是一个装饰器, 用于修饰方法, 使方法可以像属性一样调用.
+```python
+class Baby(object):
+
+    def __init__(self):
+        self.__name = ""
+
+    @property
+    def name(self):
+        pass
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+    @name.getter
+    def name(self):
+        return self.__name
+
+    @name.deleter
+    def name(self):
+        """可选的"""
+        del self.__name
+
+
+baby = Baby()
+baby.name = "dan"  # 将调用@name.setter修饰的方法
+print baby.name    # 将调用@name.getter修饰的方法
+del baby.name      # 将调用@name.deleter修饰的方法
+```
+简化一下
+```python
+class Baby(object):
+
+    def __init__(self):
+        self.__name = ""
+
+    @property
+    def name(self):
+        """同时定义getter方法, 不需要再定义使用@name.getter修饰的方法"""
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+    @name.deleter
+    def name(self):
+        """可选的"""
+        del self.__name
+
+
+baby = Baby()
+baby.name = "dan"  # 将调用@name.setter修饰的方法
+print baby.name    # 将调用@property修饰的方法
+del baby.name      # 将调用@name.deleter修饰的方法
+```
+只读
+```python
+class Baby(object):
+
+    def __init__(self):
+        self.__name = ""
+
+    @property
+    def name(self):
+        """同时定义getter方法, 不需要再定义使用@name.getter修饰的方法"""
+        return self.__name
+
+    @name.deleter
+    def name(self):
+        """可选的"""
+        del self.__name
+
+
+baby = Baby()
+print baby.name    # 将调用@property修饰的方法
+del baby.name      # 将调用@name.deleter修饰的方法
+```
+

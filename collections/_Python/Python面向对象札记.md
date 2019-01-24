@@ -19,6 +19,21 @@ class Employee:
         并且可以使用对象或指定的函数任意添加实例变量
     """
     empCount = 0
+    """
+    私有类属性: ("私有"在Python中只是"君子协议")
+        以"__"开头
+    访问:
+        虽然Python不允许对象访问私有数据, 但
+        Python支持使用以下方式访问私有属性:
+            object._className__attrName
+            (对象名._类名__私有属性名)
+    """
+    __private_attrs = 0
+    """
+    protected类属性: ("protected"在Python中只是"君子协议")
+        以"_"开头
+    """
+    _protected_attrs = 1
 
     """
     构造函数
@@ -32,6 +47,25 @@ class Employee:
         self.name = name
         self.salary = salary
         Employee.empCount += 1
+
+    """
+    私有类方法:
+        以"__"开头
+    访问:
+        虽然Python不允许对象访问私有方法, 但
+        Python支持使用以下方式访问私有方法:
+            object._className__methodName()
+            (对象名._类名__私有方法名)
+    """
+    def __private_method(self):
+        print "调用类的私有方法"
+
+    """
+    protected类方法:
+        以"_"开头
+    """
+    def _protected_method(self):
+        print "调用类的protected方法"
 
     "析构函数"
     def __del__(self):
@@ -59,14 +93,23 @@ emp1.display_employee()
 emp2.display_employee()
 print "Total Employee %d" % Employee.empCount
 
+"对象访问私有属性和方法 (使用 print dir(emp1) 看看就明白了)"
+print emp1._Employee__private_attrs
+emp1._Employee__private_method()
+
+"对象访问protected属性和方法"
+print emp1._protected_attrs
+emp1._protected_method()
+
 "添加，删除，修改类的属性"
 emp1.age = 7  # 添加一个 'age' 属性
 emp1.age = 8  # 修改 'age' 属性
 del emp1.age  # 删除 'age' 属性
 
 "使用函数的方式来访问属性"
-hasattr(emp1, 'age')     # 如果存在 'age' 属性返回 True。
-getattr(emp1, 'age')     # 返回 'age' 属性的值
+if hasattr(emp1, 'age'):     # 如果存在 'age' 属性返回 True。
+    getattr(emp1, 'age')     # 返回 'age' 属性的值
+
 setattr(emp1, 'age', 8)  # 添加属性 'age' 值为 8
 delattr(emp1, 'age')     # 删除属性 'age'
 

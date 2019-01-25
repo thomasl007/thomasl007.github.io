@@ -4,6 +4,9 @@
 {:toc}
 
 以Python2.7为基础进行学习.
+[参考]
+* [菜鸟教程的Python2教程](http://www.runoob.com/python/python-tutorial.html)
+* [廖雪峰的Python2教程](https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013747381369301852037f35874be2b85aa318aad57bda000)
 
 ## 与其他语言较明显的区别
 
@@ -12,18 +15,15 @@
 1. 以新行作为语句的结束符(不使用`;`, 如果两条语句在同一行, 则可以使用`;`进行分割), 可以使用斜杠`\`将一行的语句分为多行显示, 例如
 ```python
 total = item_one + \
-        item_two + \
-        item_three
+        item_two
 ```
 1. 多行注释使用三个单引号`'''`或三个双引号`"""`, 例如
 ```python
 '''
 这是多行注释，使用单引号。
 这是多行注释，使用单引号。
-这是多行注释，使用单引号。
 '''
 """
-这是多行注释，使用双引号。
 这是多行注释，使用双引号。
 这是多行注释，使用双引号。
 """
@@ -32,9 +32,9 @@ total = item_one + \
 1. 像`if`、`while`、`def`和`class`这样的复合语句, 首行以关键字开始, 以冒号`:`结束
 1. 变量赋值以后该变量才会被创建, 变量赋值不需要类型声明, 例如:
 ```python
-counter = 100 # 赋值整型变量
-miles = 1000.0 # 浮点型
-name = "John" # 字符串
+counter = 100   # 赋值整型变量
+miles = 1000.0  # 浮点型
+name = "John"   # 字符串
 ```
 1. 多个变量赋值时, 可以给不同类型的变量赋值, 例如:
 ```python
@@ -82,7 +82,7 @@ python的字串列表有2种取值顺序:
 如果你要实现从字符串中获取一段子字符串的话，可以使用`[头下标:尾下标]`来截取相应的字符串
 ```
 str = 'Hello World!'
- 
+
 print str           # 输出完整字符串
 print str[0]        # 输出字符串中的第一个字符
 print str[2:5]      # 输出字符串中第三个至第五个之间的字符串
@@ -99,7 +99,7 @@ print str[1:4:2]    # 输出 bd
 ###### 字符串格式化
 
 ```python
-print "My name is %s and weight is %d kg!" % ('Zara', 21) 
+print "My name is %s and weight is %d kg!" % ('Zara', 21)
 ```
 输出
 > My name is Zara and weight is 21 kg!
@@ -108,7 +108,7 @@ print "My name is %s and weight is %d kg!" % ('Zara', 21)
 
 [列表内建函数](http://www.runoob.com/python/python-lists.html)
 
-###### 列表操作与其他语言较明显的区别
+**列表操作与其他语言较明显的区别**
 
 1. 删除列表元素的方式很特别
 ```python
@@ -129,8 +129,7 @@ print list1 * 4
 
 相当于普通数组, 其中的元素不能修改
 
-###### 与其他语言较明显的区别
-
+**与其他语言较明显的区别**
 1. 用`()`定义
 1. 任意无符号的对象，以逗号隔开(未使用`()`包裹)，默认为元组, 例如
 ```python
@@ -147,17 +146,15 @@ print "Value of x , y : ", x,y
 
 [字典内建函数](http://www.runoob.com/python/python-dictionary.html)
 
-###### 定义
-
+**怎么定义字典?**
 ```python
 d = {key1 : value1, key2 : value2 }
 ```
 
-###### 添加,更新,删除
-
+**添加,更新,删除**
 ```python
 dict = {'Name': 'Zara', 'Age': 7, 'Class': 'First'}
- 
+
 dict['Age'] = 8           # 更新
 dict['School'] = "RUNOOB" # 添加
 del dict['Name']          # 删除键是'Name'的条目
@@ -165,82 +162,280 @@ dict.clear()              # 清空词典所有条目
 del dict                  # 删除词典
 ```
 
-###### 与其他语言较明显的区别
-
+**与其他语言较明显的区别**
 1. 键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行，如下实例：
 ```python
-dict = {['Name']: 'Zara', 'Age': 7} 
+dict = {['Name']: 'Zara', 'Age': 7}
 print "dict['Name']: ", dict['Name']
 ```
 
-## 参数
+## 函数
 
-#### 参数传递
+### 参数
 
+**"传值"和"传址"的问题**
+
+"传值"和"传址"只是为了帮组理解, Python中没有"传值"和"传址"的概念.
 python函数的参数传递分两种:
-* 传不可变对象: 如传整数、字符串、元组. 对应C++里的传值
-* 传可变对象: 如传列表，字典。对应C++里的传址
+* 传不可变对象: 如传整数、字符串、元组. (对应C++里的传值)
+* 传可变对象: 如传列表，字典。(对应C++里的传址)
 
-#### 参数类型
+**参数分类**
 
-* 必备参数: 按函数声明中参数的顺序传入
-* 关键字参数: 参数可以是任意顺序
+Python中的参数分:
+* 必选参数
+* 默认参数
+* 不定长参数
+* 关键字参数
+
+**1, 必选参数**
+
+按顺序传即可
+
+**2, 默认参数**
+
+**作用是什么?**
+不传时, 使用默认值.
+
+**怎么定义?**
+定义默认参数需要注意以下两点:
+1. 如果有必选参数, 则默认参数必须在必选参数之后
+1. 默认参数必须指向不变对象 (君子协议)
+*Python函数在定义时, 默认参数的只就已经确定, 即, 已经创建了一个对象.*
+*如果传可变对象, 例如list或dict, 则函数定义时就会创建一个list或dict对象.*
+*这样, 如果不给有默认值的参数重新进行赋值(每次都使用默认值), 则这个参数始终指向之前的对象.*
+*那个之后所有对参数的操作, 实际上都是对同一个list或dict对象的操作. 这显然是很容易出问题的.*
+
 ```python
-#可写函数说明
-def printme( str ):
-   "打印任何传入的字符串"
-   print str;
-   return;
- 
-#调用printme函数
-printme( str = "My string");
+def print_info(name, age=35):
+    print "Name: ", name
+    print "Age ", age
+    return
+
 ```
-* 默认参数: 有默认值的参数, 如果没有传入, 则使用默认值。
+**怎么传递?**
+参数可以不按顺序传递.
 ```python
-#可写函数说明
-def printinfo( name, age = 35 ):
-   "打印任何传入的字符串"
-   print "Name: ", name;
-   print "Age ", age;
-   return;
- 
-#调用printinfo函数
-printinfo( age=50, name="miki" );
-printinfo( name="miki" );
+print_info("dan")               # 只传name
+print_info(name="dan")          # 只传name
+print_info("dan", 29)           # 传name和age
+print_info("dan", age=29)       # 传name和age
+print_info(name="dan", age=29)  # 传name和age
+print_info(age=29, name="dan")  # 传name和age
+
 ```
-* 不定长参数: 参数名前加`*`即可. 用于存放所有未命名的变量参数.
 
-## lambda
+**3, 不定长参数**
 
-#### 定义
+**作用是什么?**
+用于存放所有未命名的变量参数.
+不定长参数允许你传入0个或任意个参数, 这些不定长参数在函数调用时自动组装为一个`tuple`.
 
+**怎么定义?**
+参数名前加`*`即可.
+```python
+def calc(*numbers):
+    _sum = 0
+    for n in numbers:
+        _sum = _sum + n
+    return _sum
+
+```
+
+**怎么传递?**
+```python
+print calc(1)
+print calc(1, 2)
+
+# 如果已有一个`list`或`tuple`, 想传给不定长参数, 只要在`list`或`tuple`变量前加`*`即可.
+# 传 list
+nums = [1, 2]
+print calc(*nums)
+# 传 tuple
+nums2 = (1, 2)
+print calc(*nums2)
+
+```
+
+**4, 关键字参数**
+```python
+def person(name, age, **kwargs):
+    print 'name:', name, 'age:', age, 'other:', kwargs
+
+
+person('Michael', 30)
+person('Bob', 35, city='Beijing')
+person('Adam', 45, gender='M', job='Engineer')
+
+kw = {'city': 'Beijing', 'job': 'Engineer'}
+person('Jack', 24, city=kw['city'], job=kw['job'])
+
+person('Jack', 24, **kw)
+
+```
+
+**5, 组合参数**
+必选参数、默认参数、不定长参数和关键字参数四种参数可以组合使用, 但参数的定义顺序必须是:
+必选参数、默认参数、不定长参数和关键字参数
+```python
+def func(a, b, c=0, *args, **kwargs):
+    print 'a =', a, 'b =', b, 'c =', c, 'args =', args, 'kw =', kwargs
+
+
+func(1, 2)
+func(1, 2, c=3)
+func(1, 2, x=99)
+func(1, 2, 3, 4)
+func(1, 2, 3, x=99)
+func(1, 2, 3, 'a', 'b')
+func(1, 2, 3, 'a', 'b')
+func(1, 2, 3, 'a', 'b', x=99)
+
+args = (1, 2, 3, 4)
+kw = {'x': 99}
+func(*args, **kw)
+
+```
+对于任意函数，都可以通过类似`func(*args, **kw)`的形式调用它，无论它的参数是如何定义的.
+
+### lambda
+
+**什么是lambda?**
+* lambda的主体是一个表达式，而不是一个代码块。仅仅能在lambda表达式中封装有限的逻辑进去。
+* lambda函数拥有自己的命名空间，且不能访问自有参数列表之外或全局命名空间里的参数。
+
+**怎么定义?**
 ```python
 # 可写函数说明
 sum = lambda arg1, arg2: arg1 + arg2;
- 
+
 # 调用sum函数
 print "相加后的值为 : ", sum( 10, 20 )
 print "相加后的值为 : ", sum( 20, 20 )
 ```
 
-#### 特点
+### 内置函数
 
-* lambda的主体是一个表达式，而不是一个代码块。仅仅能在lambda表达式中封装有限的逻辑进去。
-* lambda函数拥有自己的命名空间，且不能访问自有参数列表之外或全局命名空间里的参数。
+#### tuple()
+
+1. 将列表转换为元组
+1. 针对字典, 会返回字典的key组成的tuple
+
+#### list()
+
+将元组转换为列表
+
+#### dict()
+
+用于创建一个字典
+```python
+>>>dict()                                           # 创建空字典
+{}
+>>> dict(a='a', b='b', t='t')                       # 传入关键字
+{'a': 'a', 'b': 'b', 't': 't'}
+>>> dict(zip(['one', 'two', 'three'], [1, 2, 3]))   # 映射函数方式来构造字典
+{'three': 3, 'two': 2, 'one': 1}
+>>> dict([('one', 1), ('two', 2), ('three', 3)])    # 可迭代对象方式来构造字典
+{'three': 3, 'two': 2, 'one': 1}
+```
+
+#### zip()
+
+将可迭代的对象(比如, list)作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表。
+
+```python
+>>>a = [1,2,3]
+>>> b = [4,5,6]
+>>> c = [4,5,6,7,8]
+>>> zipped = zip(a,b)     # 打包为元组的列表
+[(1, 4), (2, 5), (3, 6)]
+>>> zip(a,c)              # 元素个数与最短的列表一致
+[(1, 4), (2, 5), (3, 6)]
+>>> zip(*zipped)          # 与 zip 相反，*zipped 可理解为解压，返回二维矩阵式
+[(1, 2, 3), (4, 5, 6)]
+```
+
+## 函数式编程
+
+Python一切皆对象, 包括函数.
+
+**高阶函数:**就是以函数作为参数的函数
+
+### 装饰器
+
+**装饰器是什么?**
+本质上就是一个返回函数的高阶函数.
+
+**装饰器的作用是什么?**
+在代码运行期间动态增加功能.
+比如, 我们想在函数调用时, 输出一条log, 但又不想对函数进行修改, 这是我们就可以使用装饰器.
+
+**如何定义和使用装饰器?**
+```python
+import functools  # 引入functools.wraps, 后边会说明functools.wraps的作用
+
+
+def enter_log(func):
+    @functools.wraps(func)  # 后边会讲解这句的含义
+    def wrapper(*arg, **kw):  # 注意, 这里的参数格式是固定的
+        print "%s() entering..." % func.__name__
+        return func(*arg, **kw)
+    return wrapper
+
+
+@enter_log
+def birthday(name):
+    return name + " 2019-01-25"
+
+```
+使用`@enter_log`修饰函数, 相当于先执行了`birthday = enter_log(birthday)`.
+Python中的函数也是对象, 函数名是指向对象的变量.
+所以在执行`birthday = enter_log(birthday)`之后, birthday指向了新的函数.
+这时再调用`birthday`就是调用`enter_log`函数了.
+
+`@functools.wraps(func)`的作用
+`enter_log`函数会返回`wrapper`函数, 所以最终`birthday`会指向`wrapper`.
+因此, 这时调`birthday.__name__`会返回字符串`wrapper`.
+这样, 如果某些地方需要使用`birthday.__name__`就会有问题.
+所以我们要使用`@functools.wraps(func)`把原始函数的`__name__`等属性复制到`wrapper()`函数中.
+
+给装饰器传参数:
+```python
+import functools
+
+
+def enter_log(comment):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*arg, **kw):
+            print "[%s()] %s" % (func.__name__, comment)
+            return func(*arg, **kw)
+        return wrapper
+    return decorator
+
+
+@enter_log("entering...")
+def birthday(name):
+    return name + " 2019-01-25"
+
+```
+定义可以接收参数的装饰器, 相当于定义一个"装饰器的装饰器".
+这时, 使用`@enter_log`修饰函数, 相当于先执行了`birthday = enter_log("entering...")(birthday)`
+(*注意: `enter_log("entering...")`返回`decorator`函数对象*).
 
 ## 模块
 
 模块实际就是一个以`.py`结尾的python文件.
 
-#### 引入模块
+### 引入模块
 
-###### 使用`import`引入模块
+**使用`import`引入模块**
 
 ```python
 import math
 ```
 
-###### 使用`from...import`引入模块中指定的内容
+**使用`from...import`引入模块中指定的内容**
 
 例如，要导入模块 fib 的 fibonacci 函数，使用如下语句：
 ```python
@@ -249,7 +444,7 @@ from fib import fibonacci
 
 也可以使用`from...import *`引入全部内容.
 
-###### 包的概念
+### 包的概念
 
 包就是包含`__init__.py`文件的文件夹, 该文件的内容可以为空。`__init__.py`用于标识当前文件夹是一个包。
 引入包中的模块:
@@ -260,20 +455,20 @@ from fib import fibonacci
 from package_xxx.something import hello
 ```
 
-#### python查找模块的顺序
+### python查找模块的顺序
 
 1. 当前目录
 1. 如果不在当前目录，Python则搜索在 shell 变量`PYTHONPATH`下的每个目录
 1. 如果都找不到，Python会察看默认路径。UNIX下，默认路径一般为`/usr/local/lib/python/`
 
-#### 查看模块内容
+### 查看模块内容
 
 使用`dir`函数查看模块内容
 ```python
 dir(math)
 ```
 
-#### 常用模块
+### 常用模块
 
 |模块名|概述|参考|
 |-|-|-|
@@ -585,4 +780,3 @@ baby = Baby()
 print baby.name    # 将调用@property修饰的方法
 del baby.name      # 将调用@name.deleter修饰的方法
 ```
-

@@ -30,6 +30,9 @@ collections:
   Python:
     output: true
     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png
+  Notes:
+    output: true
+    icon: ../../assets/img/dp.png
 
 defaults:
   - scope:
@@ -80,6 +83,11 @@ defaults:
   - scope:
       path: ""
       type: "Python"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "Notes"
     values:
       layout: "collection"
 

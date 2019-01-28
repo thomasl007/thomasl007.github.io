@@ -807,3 +807,25 @@ baby = Baby()
 print baby.name    # 将调用@property修饰的方法
 del baby.name      # 将调用@name.deleter修饰的方法
 ```
+
+## 多线程
+
+**1. 怎么创建线程?**
+Python的标准库提供了两个模块：
+* `thread`
+低级模块
+* `threading`
+高级模块，对`thread`进行了封装。绝大多数情况下，我们只需要使用`threading`这个高级模块。
+```python
+import threading
+
+
+def loop():
+    pass
+
+t = threading.Thread(target=loop, name='LoopThread')  # 创建线程
+t.start()  # 启动线程
+t.join()   # 阻塞线程
+print 'thread %s ended.' % threading.current_thread().name  # 返回当前线程实例
+
+```

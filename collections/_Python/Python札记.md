@@ -4,7 +4,7 @@
 {:toc}
 
 以Python2.7为基础进行学习.
-[参考]
+## 参考
 * [菜鸟教程的Python2教程](http://www.runoob.com/python/python-tutorial.html)
 * [廖雪峰的Python2教程](https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013747381369301852037f35874be2b85aa318aad57bda000)
 
@@ -357,13 +357,12 @@ print "相加后的值为 : ", sum( 20, 20 )
 
 ## 函数式编程
 
-Python一切皆对象, 包括函数.
-
-**高阶函数:**就是以函数作为参数的函数
-
 ### 装饰器
 
 **装饰器是什么?**
+理解装饰器, 首选要明确两点:
+1. Python一切皆对象, 包括函数.
+2. **什么是高阶函数: **高阶函数就是以函数作为参数的函数
 本质上就是一个返回函数的高阶函数.
 
 **装饰器的作用是什么?**
@@ -423,26 +422,54 @@ def birthday(name):
 这时, 使用`@enter_log`修饰函数, 相当于先执行了`birthday = enter_log("entering...")(birthday)`
 (*注意: `enter_log("entering...")`返回`decorator`函数对象*).
 
+### 偏函数 (Partial function)
+
+偏函数是`functools`模块提供的功能.
+使用`functools.partial`函数生成(返回)一个函数, 并将某些参数固定.
+```python
+def func(arg1, arg2, arg3=3):
+    print arg1, arg2, arg3
+
+
+func(1, 2)
+
+func2 = functools.partial(func, arg2=20)
+
+func2(1)
+
+```
+
 ## 模块
 
 模块实际就是一个以`.py`结尾的python文件.
 
-### 引入模块
+**怎么引入模块?**
 
-**使用`import`引入模块**
-
+1. 使用`import`引入模块
 ```python
 import math
 ```
-
-**使用`from...import`引入模块中指定的内容**
-
+2. 使用`from...import`引入模块中指定的内容
 例如，要导入模块 fib 的 fibonacci 函数，使用如下语句：
 ```python
 from fib import fibonacci
 ```
-
 也可以使用`from...import *`引入全部内容.
+
+**模块别名**
+
+```python
+import cStringIO as cStrIO
+```
+
+**模块导入异常的处理**
+
+```python
+try:
+    import json # python >= 2.6
+except ImportError:
+    import simplejson as json # python <= 2.5
+```
 
 ### 包的概念
 

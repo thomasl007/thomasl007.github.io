@@ -811,21 +811,76 @@ del baby.name      # 将调用@name.deleter修饰的方法
 ## 多线程
 
 **1. 怎么创建线程?**
-Python的标准库提供了两个模块：
-* `thread`
-低级模块
-* `threading`
-高级模块，对`thread`进行了封装。绝大多数情况下，我们只需要使用`threading`这个高级模块。
+Python的标准库提供了两个线程相关的模块：
+* `thread`: 低级模块
+* `threading`: 高级模块, 对`thread`进行了封装. 大多数情况下, 我们只需要使用`threading`这个高级模块
+
 ```python
 import threading
 
 
 def loop():
-    pass
+    print 'thread %s ended.' % threading.current_thread().name
 
-t = threading.Thread(target=loop, name='LoopThread')  # 创建线程
+
+t = threading.Thread(target=loop, name="LoopThread")  # 创建线程
 t.start()  # 启动线程
-t.join()   # 阻塞线程
-print 'thread %s ended.' % threading.current_thread().name  # 返回当前线程实例
+t.join()   # 阻塞调用线程, 放在这里就是阻塞主线程, 等待LoopThread线程执行完
+
+print 'thread %s ended.' % threading.current_thread().name  # 打印当前线程名
 
 ```
+也可以继承`threading.Thread`, 然后重写`__init__`方法和`run`方法.
+```python
+class MyThread(threading.Thread):
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs=None, verbose=None):
+        threading.Thread.__init__(self)
+        self.name = name
+        self.args = args
+        self.kwargs = kwargs
+        self.verbose = verbose
+
+    def run(self):
+        print "do something"
+
+
+t = MyThread(name="MyThread")
+t.start()
+
+```
+
+**2. threading模块提供的方法**
+
+|方法|说明|
+|-|-|
+|threading.current_thread()|返回当前线程对象|
+|threading.enumerate()|返回当前活动的所有线程对象的列表|
+|threading.active_count()|返回正在运行的线程数量<br/>与`len(threading.enumerate())`有相同的结果|
+
+threading模块中包含`Thread`类, 提供以下方法:
+
+|方法|说明|
+|-|-|
+|run()|线程要执行的操作<br/>*默认情况下直接调创建`Thread`时传入的`target`函数对象*<br/>*可以重写这个方法以实现自己的逻辑*|
+|start()|启动线程|
+|join([time])|阻塞调用线程(上例中, 调用线程是主线程), 等待此线程结束.<br/>*结束是指: 正常退出, 抛出未处理的异常或超时(如果传了[time]参数)*|
+|is_alive()|判断线程是否处于活动状态|
+|getName()<br/>对应属性**`name`**|返回线程名|
+|setName()<br/>对应属性**`name`**|设置线程名|
+
+**3. 线程锁(线程同步)**
+
+```python
+lock = threading.Lock()  # 创建一个线程锁
+# 在需要同步的地方执行
+lock.acquire()
+# 执行完释放
+lock.release()
+```
+当多个线程同时执行lock.acquire()时，只有一个线程能成功地获取锁，然后继续执行代码，其他线程只能等待直到获得锁为止。
+获得锁的线程用完后一定要释放锁，我们用`try...finally`来确保锁一定会释放。
+Lock对象最好是统一的, 避免造成死锁.
+
+**4. CPU占用问题**
+
+由于GIL(Global Interpreter Lock)的制约, 导致Python的多线程并不能充分利用多核CPU.

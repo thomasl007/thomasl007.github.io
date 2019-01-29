@@ -97,6 +97,6 @@ kramdown:
    input: GFM
    hard_wrap: true
 #theme: minima
-title: thomasl007
-email: acctml@outlook.com
+title: liutianming
+email: ""
 exclude: [vendor]

@@ -504,6 +504,8 @@ dir(math)
 |time|时间相同函数|[参考](http://www.runoob.com/python/python-date-time.html)|
 |calendar|日历相关函数|[参考](http://www.runoob.com/python/python-date-time.html)|
 |os|文件和目录|[参考](http://www.runoob.com/python/os-file-methods.html)|
+|urllib2<br/>httplib|http请求, urllib2是对httplib的封装||
+|PIL|图像处理库|[参考](https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/00140767171357714f87a053a824ffd811d98a83b58ec13000)|
 
 ## 异常处理
 

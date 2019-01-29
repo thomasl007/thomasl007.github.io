@@ -1,8 +1,5 @@
 collections_dir: collections
 collections:
-  Cplusplus:
-    output: true
-    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/140px-ISO_C%2B%2B_Logo.svg.png
   Linux:
     output: true
     icon: https://www.linux.org/styles/uix/uix/logo_small.png
@@ -35,11 +32,6 @@ collections:
     icon: ../../assets/img/dp.png
 
 defaults:
-  - scope:
-      path: ""
-      type: "Cplusplus"
-    values:
-      layout: "collection"
   - scope:
       path: ""
       type: "Linux"

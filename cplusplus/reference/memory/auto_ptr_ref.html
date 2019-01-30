@@ -1,0 +1,18 @@
+---
+layout: cplusplus
+---
+
+_header file_: ```<memory>```
+_class template_: ```template <class Y> struct auto_ptr_ref;```
+
+>Reference to automatic pointer
+
+参照 automatic pointer
+
+>This is an instrumental class to allow certain conversions that allow auto_ptr objects to be passed to and returned from functions.
+
+>The class has no members other than holding a reference to an auto_ptr object.
+
+该类只持有一个对 `auto_ptr` 对象的引用，没有任何其他成员。
+
+>C++11, which deprecates the use of auto_ptr, also introduces flexibility on whether a library shall implement a class with this name or provide the same functionality in some other way.

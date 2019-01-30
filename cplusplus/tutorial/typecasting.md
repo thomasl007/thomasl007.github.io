@@ -1,13 +1,14 @@
 ---
+layout: cplusplus
 ---
 <!--
 ### Implicit conversion
 -->
-### 隐式转换
+隐式转换
 <!--
 Implicit conversions are automatically performed when a value is copied to a compatible type. For example:
 -->
-将值复制给与该值兼容的类型时，会自动执行隐式转换。例如：
+将值拷贝到兼容类型时，会自动执行隐式转换。例如：
 ```
 short a=2000;
 int b;
@@ -16,53 +17,42 @@ b=a;
 <!--
 Here, the value of `a` is promoted from `short` to `int` without the need of any explicit operator. This is known as a *standard conversion*. Standard conversions affect fundamental data types, and allow the conversions between numerical types (`short` to `int`, `int` to `float`, `double` to `int`...), to or from `bool`, and some pointer conversions.
 -->
-`a`的值从`short`升级到`int`而不需要任何显式运算符。这种类型转换称为*标准转换*。标准转换作用于基本数据类型，允许数字类型之间的转换(`short` 转 `int`, `int` 转 `float`, `double` 转 `int`...)，转换为或转换自`bool`型，还有一些指针类型的转换。
+`a`的值从`short`升级到`int`而不需要任何显式运算符。这种类型转换称为*标准转换*。标准转换会影响基本数据类型，允许数字类型之间的转换(`short` 转 `int`, `int` 转 `float`, `double` 转 `int`...)，
 <!--
 Converting to `int` from some smaller integer type, or to `double` from `float` is known as *promotion*, and is guaranteed to produce the exact same value in the destination type. Other conversions between arithmetic types may not always be able to represent the same value exactly:
+-->
+从一些较小的整数类型转换为`int`，或从`float`转换为`double`称为*升级*，并保证在目标类型中生成完全相同的值。 算术类型之间的其他转换可能并不总是能够准确地表示相同的值：
+<!--
 *   If a negative integer value is converted to an unsigned type, the resulting value corresponds to its 2's complement bitwise representation (i.e., `-1` becomes the largest value representable by the type, `-2` the second largest, ...).
 *   The conversions from/to `bool` consider `false` equivalent to *zero* (for numeric types) and to *null pointer* (for pointer types); `true` is equivalent to all other values and is converted to the equivalent of `1`.
 *   If the conversion is from a floating-point type to an integer type, the value is truncated (the decimal part is removed). If the result lies outside the range of representable values by the type, the conversion causes *undefined behavior*.
 *   Otherwise, if the conversion is between numeric types of the same kind (integer-to-integer or floating-to-floating), the conversion is valid, but the value is *implementation-specific* (and may not be portable).
 -->
-从一些较小的整数类型转换为`int`，或从`float`转换为`double`称为*升级*，这个中转换能够确保在目标类型中生成完全相同的值。算术类型之间的其他转换可能并不总是能够准确地表示相同的值：
-* 如果将负整数值转换为无符号类型，则结果值对应于其2的补码按位表示（即，`-1`成为类型可表示的最大值，`-2`是第二大，...）。
-（_译注：[这里有一篇关于2的补码的文章](http://www.ruanyifeng.com/blog/2009/08/twos_complement.html)，简单来说，计算机使用2的补码的形式表示负数，2的补码即二进制反码加1，反码即二进制按位取反。_)
-* 与`bool`类型的转换中
-    * `false`对于数字类型等价于*0*；对于指针类型等价于*null指针*;
-    * `true`等价于所有其他值，在转换中等价于`1`。
-* 如果从浮点类型转换为整数类型，则只保留整数部分，小数部分会被删除。如果结果位于类型的可表示值范围之外，则会导致 *未定义的行为(undefined behavior)* 错误。
-* 此外，如果是在相同的数字类型之间转换（整数到整数或浮动到浮动），则转换是有效的，但该值是*特定实现的*（而且可能不可移植）。（_TODO：这个没看懂啊..._）
-<!--
 Some of these conversions may imply a loss of precision, which the compiler can signal with a warning. This warning can be avoided with an explicit conversion.
--->
-其中一些转换可能意味着精度损失，编译器会产生警告。通过显式转换可以避免此类警告。
-<!--
+
 For non-fundamental types, arrays and functions implicitly convert to pointers, and pointers in general allow the following conversions:
 
 *   *Null pointers* can be converted to pointers of any type
 *   Pointers to any type can be converted to `void` pointers.
 *   Pointer *upcast*: pointers to a derived class can be converted to a pointer of an *accessible* and *unambiguous* base class, without modifying its `const` or `volatile` qualification.
--->
-对于非基本类型，数组和函数隐式转换为指针，而指针通常允许以下转换：
-* *Null指针*可以转换为任何类型的指针
-* 任何类型的指针都可以转换为`void`指针。
-* 指针*向上转换(upcast)*：指向派生类的指针可以转换为*accessible*和*unambiguous*基类的指针，而无需修改其`const`或`volatile`限定。（_TODO：这个没看懂啊..._）
 
-<!--
 ### Implicit conversions with classes
--->
-### 类的隐式类型转换
-<!--
+
 In the world of classes, implicit conversions can be controlled by means of three member functions:
 
 *   **Single-argument constructors:** allow implicit conversion from a particular type to initialize an object.
 *   **Assignment operator:** allow implicit conversion from a particular type on assignments.
 *   **Type-cast operator:** allow implicit conversion to a particular type.
--->
-类的隐式转换可以通过三个成员函数来控制：
-* **单参数构造函数：** 允许从特定类型进行隐式转换以初始化一个对象。
-* **赋值运算符：** 允许在赋值时从特定类型进行隐式转换。
-* **类型转换运算符：** 允许隐式转换为特定类型。
+
+For example:
+
+|
+
+```
+123456789101112131415161718192021222324
+```
+
+ |
 
 ```
 // implicit conversion of classes:
@@ -91,11 +81,11 @@ int main ()
 }
 ```
 
- | 
+ |
 
 <pre style="margin: 0px;"> <samp></samp> </pre>
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 
@@ -149,13 +139,13 @@ int main ()
   foo = bar;
 
 //  fn (foo);  // not allowed for explicit ctor.
-  fn (bar);  
+  fn (bar);
 
   return 0;
 }
 ```
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 
@@ -163,7 +153,7 @@ int main ()
 
 Additionally, constructors marked with `explicit` cannot be called with the assignment-like syntax; In the above example, `bar` could not have been constructed with:
 
-|  | 
+|  |
 
 ```
 B bar = foo;
@@ -177,32 +167,32 @@ Type-cast member functions (those described in the previous section) can also be
 
 C++ is a strong-typed language. Many conversions, specially those that imply a different interpretation of the value, require an explicit conversion, known in C++ as *type-casting*. There exist two main syntaxes for generic type-casting: *functional* and *c-like*:
 
-| 
+|
 
 ```
 1234
 ```
 
- | 
+ |
 
 ```
 double x = 10.3;
 int y;
 y = int (x);    // functional notation
-y = (int) x;    // c-like cast notation 
+y = (int) x;    // c-like cast notation
 ```
 
  |  |
 
 The functionality of these generic forms of type-casting is enough for most needs with fundamental data types. However, these operators can be applied indiscriminately on classes and pointers to classes, which can lead to code that -while being syntactically correct- can cause runtime errors. For example, the following code compiles without errors: 
 
-| 
+|
 
 ```
 12345678910111213141516171819202122
 ```
 
- | 
+ |
 
 ```
 // class type-casting
@@ -229,11 +219,11 @@ int main () {
 }
 ```
 
- | 
+ |
 
 <pre style="margin: 0px;"> <samp></samp> </pre>
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 
@@ -241,7 +231,7 @@ int main () {
 
 The program declares a pointer to `Addition`, but then it assigns to it a reference to an object of another unrelated type using explicit type-casting:
 
-|  | 
+|  |
 
 ```
 padd = (Addition*) &d;
@@ -256,11 +246,11 @@ In order to control these types of conversions between classes, we have four spe
 `dynamic_cast <new_type> (expression)
 reinterpret_cast <new_type> (expression)
 static_cast <new_type> (expression)
-const_cast <new_type> (expression)` 
+const_cast <new_type> (expression)`
 The traditional type-casting equivalents to these expressions would be:
 
 `(new_type) expression
-new_type (expression)` 
+new_type (expression)`
 but each one with its own special characteristics:
 
 ### dynamic_cast
@@ -271,13 +261,13 @@ This naturally includes *pointer upcast* (converting from pointer-to-derived t
 
 But `dynamic_cast` can also *downcast* (convert from pointer-to-base to pointer-to-derived) polymorphic classes (those with virtual members) if -and only if- the pointed object is a valid complete object of the target type. For example:
 
-| 
+|
 
 ```
 1234567891011121314151617181920212223
 ```
 
- | 
+ |
 
 ```
 // dynamic_cast
@@ -305,11 +295,11 @@ int main () {
 }
 ```
 
- | 
+ |
 
 <pre style="margin: 0px;"><samp>Null pointer on second type-cast.</samp></pre>
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 
@@ -320,13 +310,13 @@ int main () {
 
 The code above tries to perform two dynamic casts from pointer objects of type `Base*` (`pba` and `pbb`) to a pointer object of type `Derived*`, but only the first one is successful. Notice their respective initializations:
 
-| 
+|
 
 ```
 12
 ```
 
- | 
+ |
 
 ```
 Base * pba = new Derived;
@@ -345,13 +335,13 @@ When `dynamic_cast` cannot cast a pointer because it is not a complete object 
 
 `static_cast` can perform conversions between pointers to related classes, not only *upcasts* (from pointer-to-derived to pointer-to-base), but also *downcasts* (from pointer-to-base to pointer-to-derived). No checks are performed during runtime to guarantee that the object being converted is in fact a full object of the destination type. Therefore, it is up to the programmer to ensure that the conversion is safe. On the other side, it does not incur the overhead of the type-safety checks of `dynamic_cast`.
 
-| 
+|
 
 ```
 1234
 ```
 
- | 
+ |
 
 ```
 class Base {};
@@ -386,13 +376,13 @@ It can also cast pointers to or from integer types. The format in which this int
 
 The conversions that can be performed by `reinterpret_cast` but not by `static_cast` are low-level operations based on reinterpreting the binary representations of the types, which on most cases results in code which is system-specific, and thus non-portable. For example:
 
-| 
+|
 
 ```
 1234
 ```
 
- | 
+ |
 
 ```
 class A { /* ... */ };
@@ -409,13 +399,13 @@ This code compiles, although it does not make much sense, since now `b` points
 
 This type of casting manipulates the constness of the object pointed by a pointer, either to be set or to be removed. For example, in order to pass a const pointer to a function that expects a non-const argument:
 
-| 
+|
 
 ```
 1234567891011121314
 ```
 
- | 
+ |
 
 ```
 // const_cast
@@ -434,11 +424,11 @@ int main () {
 }
 ```
 
- | 
+ |
 
 <pre style="margin: 0px;"><samp>sample text</samp></pre>
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 
@@ -450,16 +440,16 @@ The example above is guaranteed to work because function `print` does not writ
 
 `typeid` allows to check the type of an expression: 
 
-`typeid (expression)` 
+`typeid (expression)`
 This operator returns a reference to a constant object of type `[type_info](http://www.cplusplus.com/type_info)` that is defined in the standard header `[<typeinfo>](http://www.cplusplus.com/%3Ctypeinfo%3E)`. A value returned by `typeid` can be compared with another value returned by `typeid` using operators `==`and `!=` or can serve to obtain a null-terminated character sequence representing the data type or class name by using its `name()` member.
 
-| 
+|
 
 ```
 12345678910111213141516
 ```
 
- | 
+ |
 
 ```
 // typeid
@@ -480,13 +470,13 @@ int main () {
 }
 ```
 
- | 
+ |
 
 <pre style="margin: 0px;"><samp>a and b are of different types:
 a is: int *
 b is: int</samp> </pre>
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 
@@ -494,13 +484,13 @@ b is: int</samp> </pre>
 
 When `typeid` is applied to classes, `typeid` uses the RTTI to keep track of the type of dynamic objects. When `typeid` is applied to an expression whose type is a polymorphic class, the result is the type of the most derived complete object:
 
-| 
+|
 
 ```
 1234567891011121314151617181920
 ```
 
- | 
+ |
 
 ```
 // typeid, polymorphic class
@@ -525,14 +515,14 @@ int main () {
 }
 ```
 
- | 
+ |
 
 <pre style="margin: 0px;"><samp>a is: class Base *
 b is: class Base *
 *a is: class Base
 *b is: class Derived</samp></pre>
 
- | 
+ |
 
 [Edit & Run](http://www.cplusplus.com/doc/tutorial/typecasting/# "Open C++ Shell (in a new window)")
 

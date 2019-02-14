@@ -1,0 +1,29 @@
+ol, ul {
+    padding-inline-start: 30px;
+    margin-block-start: 0em;
+    margin-block-end: 0.5em;
+}
+
+ul>li {
+    list-style-type: square;
+}
+
+ol>li {
+    list-style-type: decimal;
+}
+
+li>ol {
+    padding-inline-start: 30px;
+}
+
+div>ol>li>ol>li {
+    list-style-type: upper-roman;
+}
+
+div>ol>li>ol>li>ol>li {
+    list-style-type: lower-roman;
+}
+
+div>ol>li>ol>li>ol>li>ol>li {
+    list-style-type: lower-alpha;
+}

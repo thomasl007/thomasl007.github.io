@@ -1,7 +1,16 @@
----
-layout: template
----
-<head>
-  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/140px-ISO_C%2B%2B_Logo.svg.png" type="image/x-icon"></link>
-</head>
-{{ content }}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"></meta>
+    <title>{{ page.title }}</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/140px-ISO_C%2B%2B_Logo.svg.png" type="image/x-icon"></link>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/universal.css"></link>
+  </head>
+  <body>
+    <div class="wrapper">
+      {{ content }}
+    </div>
+    {% include highlight.html %}
+  </body>
+</html>

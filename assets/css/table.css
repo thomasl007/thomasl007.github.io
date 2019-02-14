@@ -1,0 +1,66 @@
+table {
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0xp 0;
+    margin-bottom: 15px;
+    box-sizing: inherit;
+    display: table;
+    border-color: grey;
+}
+
+thead {
+    box-sizing: inherit;
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+table tr {
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+table tr th {
+    border: 1px solid #ccc;
+    margin: 0;
+    /* padding: 6px 13px; */
+    padding: 6px;
+    font-weight: bold;
+    box-sizing: inherit;
+}
+
+th {
+    text-align: -internal-center;
+}
+
+table tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+table tr td {
+    border: 1px solid #ccc;
+    margin: 0;
+    /* padding: 6px 13px; */
+    padding: 6px;
+}
+
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}

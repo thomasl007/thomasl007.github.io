@@ -1,7 +1,16 @@
----
-layout: template
----
-<head>
-  <link rel="icon" href="https://developer.android.google.cn/_static/3aadba8ea3/images/android/favicon.png" type="image/x-icon"></link>
-</head>
-{{ content }}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"></meta>
+    <title>{{ page.title }}</title>
+    <link rel="icon" href="https://developer.android.google.cn/_static/3aadba8ea3/images/android/favicon.png" type="image/x-icon"></link>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/universal.css"></link>
+  </head>
+  <body>
+    <div class="wrapper">
+      {{ content }}
+    </div>
+    {% include highlight.html %}
+  </body>
+</html>

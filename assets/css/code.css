@@ -1,0 +1,27 @@
+pre, code {
+    font-size: 14px;
+    background-color: #f8f8f8;
+}
+
+pre>code {
+    /* border: 0; */
+    /* padding-right: 0; */
+    /* padding-left: 0; */
+    padding: 8px 12px;
+    overflow-x: auto;
+}
+
+/* pre {
+    padding: 8px 12px;
+    overflow-x: auto;
+    border: 1px solid #e8e8e8;
+    border-radius: 3px;
+} */
+
+code {
+    padding: 1px 5px;
+    border-style: solid;
+    border-color: #e8e8e8;
+    border-width: 1px;
+    border-radius: 4px;
+}

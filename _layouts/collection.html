@@ -15,26 +15,20 @@
     <!-- <script src="../release/flowchart.min.js"></script> -->
     <script>
         window.onload = function () {
-            var btn = document.getElementById("run"),
-                cd = document.getElementById("code"),
-                chart;
-            var codes = document.getElementsByClassName("code"),
+            var flowes = document.getElementsByClassName("flow"),
                 canvases = document.getElementsByClassName("canvas");
-            (btn.onclick = function () {
-                for (var i = 0; i < codes.length; i++) {
-                    var code = codes[i].value;
-                    // if (chart) {
-                    //   chart.clean();
-                    // }
-                    var chart = flowchart.parse(code);
-                    chart.drawSVG(canvases[i].getAttribute("id"), {
-                        'line-width': 2,
-                        'line-length': 20,
-                        'yes-text': '是',
-                        'no-text': '否',
-                    });
-                }
-            })();
+            for (var i = 0; i < flowes.length; i++) {
+                var code = flowes[i].getElementsByClassName("code")[0].value;
+                var chart = flowchart.parse(code);
+                var canvas = "canvas" + i;
+                flowes[i].innerHTML = "<div id=\"" + canvas + "\"></div>"
+                chart.drawSVG(canvas, {
+                    'line-width': 2,
+                    'line-length': 20,
+                    'yes-text': '是',
+                    'no-text': '否',
+                });
+            }
         };
     </script>
 

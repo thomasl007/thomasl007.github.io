@@ -71,6 +71,7 @@ SingleTaskActivity的启动行为，与它的taskAffinity有关。
 
 即以下流程:
 
+<div class="flow">
 <textarea class="code" style="display: none;" rows="0">
 st=>start: 启动Activity
 e=>end: 完成
@@ -103,7 +104,7 @@ cond1(yes)->cond2
 cond2(yes)->op3->op4->op5->e
 cond2(no)->op6->e
 </textarea>
-<div class="canvas" id="code1"></div>
+</div>
 
 **一种特殊的情况**
 
@@ -129,6 +130,7 @@ SingleInstanceActivity实例在整个系统中是唯一的。
 
 即以下流程:
 
+<div class="flow">
 <textarea class="code" style="display: none;" rows="0">
 st=>start: 启动Activity
 e=>end: 完成
@@ -153,9 +155,7 @@ cond1(yes)->cond2
 cond2(yes)->op3->op4->e
 cond2(no)->op5->e
 </textarea>
-<div class="canvas" id="code2"></div>
-
-<div><button id="run" style="display: none;" type="button"></button></div>
+</div>
 
 **一种非常特殊的情况**
 

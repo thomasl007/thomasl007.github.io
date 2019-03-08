@@ -237,3 +237,13 @@ yum install net-tools
 ps -aux | grep httpd
 ```
 挨个kill
+
+设置开机启动/关闭
+```
+systemctl enable httpd.service #开机启动
+systemctl disable httpd.service #开机不启动
+```
+检查httpd状态
+```
+systemctl status httpd.service
+```

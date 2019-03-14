@@ -22,9 +22,10 @@ pypi在国内经常被墙.f**k
 需要修改一下pip源. (如果已经修改了, 仍然超时, 那就是你的网络问题, 修改一下超时时间)
 国内比较好的有
 * 豆瓣的 http://pypi.douban.com/simple/
-* 清华的 https://pypi.tuna.tsinghua.edu.cn/simple
 * 阿里的 http://mirrors.aliyun.com/pypi/simple/
-* 中科大 https://pypi.mirrors.ustc.edu.cn/simple/
+* 清华的 https://pypi.tuna.tsinghua.edu.cn/simple
+
+推荐清华的, 因为内容比较全, 而且是https的, 不会有警告.
 
 _以使用清华的为例:_
 **临时使用:**

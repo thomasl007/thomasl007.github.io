@@ -46,24 +46,22 @@ a, b, c = 1, 2, "john"
 ## 变量类型
 
 Python有五个标准的数据类型：
-1. Numbers（数字）
-数字数据是不可改变的数据类型, 改变数字数据类型会分配一个新的对象
-    1. int（有符号整型）
-    1. long（长整型[也可以代表八进制和十六进制]）
-    1. float（浮点型）
-    1. complex（复数）
-1. String（字符串）
-1. List（列表）
-1. Tuple（元组）
-1. Dictionary（字典）
 
-其中，String, Tuple, 和 Numbers 是不可更改的对象，而 List,Dictionary 等则是可以修改的对象。
+|类型|名称|是否可变|备注|
+|-|-|-|-|
+|`Numbers`|数字|不可变|`int`（有符号整型）<br/>`long`（长整型, 也可用于代表八进制和十六进制）<br/>`float`（浮点型）<br/>`complex`（复数）|
+|`String`|字符串|不可变||
+|`List`|列表|可变||
+|`Tuple`|元组|不可变|地位相当于其他语言里的数组|
+|`Dictionary`|字典|可变||
 
-#### 字符串
+*不可变的含义是, 如果尝试改变不可变数据类型, 结果并不是修改了原来的变量, 而是重新分配了一个新的对象.*
+
+### 字符串
 
 [字符串内建函数](http://www.runoob.com/python/python-strings.html)
 
-###### 字符串定义
+**字符串定义**
 
 Python 可以使用引号`'`、双引号`"`、三引号`'''`或`"""`来表示字符串, 三引号字符串可以由多行组成, 例如
 ```python
@@ -73,7 +71,7 @@ paragraph = """这是一个段落。
 包含了多个语句"""
 ```
 
-###### 字符串截取
+**字符串截取**
 
 python的字串列表有2种取值顺序:
 1. 从左到右索引默认0开始的，最大范围是字符串长度少1
@@ -96,7 +94,7 @@ str = 'abcdefg'
 print str[1:4:2]    # 输出 bd
 ```
 
-###### 字符串格式化
+**字符串格式化**
 
 ```python
 print "My name is %s and weight is %d kg!" % ('Zara', 21)
@@ -104,17 +102,18 @@ print "My name is %s and weight is %d kg!" % ('Zara', 21)
 输出
 > My name is Zara and weight is 21 kg!
 
-#### 列表
+### 列表
 
 [列表内建函数](http://www.runoob.com/python/python-lists.html)
 
-**列表操作与其他语言较明显的区别**
+**删除列表元素的方式很特别**
 
-1. 删除列表元素的方式很特别
 ```python
 del list[2]
 ```
-1. 列表支持`*`运算符
+
+**列表支持`*`运算符**
+
 ```python
 list1 = ['physics', 'chemistry', 1997, 2000]
 print list1 * 4
@@ -123,11 +122,11 @@ print list1 * 4
 > ['physics', 'chemistry', 1997, 2000, 'physics', 'chemistry', 1997, 2000, 'physics', 'chemistry', 1997, 2000, 'physics', 'chemistry', 1997, 2000]
 1. 列表支持`+`拼接
 
-#### 元组
+### 元组
 
 [元组内建函数](http://www.runoob.com/python/python-tuples.html)
 
-相当于普通数组, 其中的元素不能修改
+在python中的地位相当于其他语言里的数组, 其中的元素不能修改
 
 **与其他语言较明显的区别**
 1. 用`()`定义
@@ -142,16 +141,18 @@ print "Value of x , y : ", x,y
 1. 支持`+`拼接, 创建全新数组
 1. 支持`*`复制, 创建全新数组
 
-#### 字典
+### 字典
 
 [字典内建函数](http://www.runoob.com/python/python-dictionary.html)
 
 **怎么定义字典?**
+
 ```python
 d = {key1 : value1, key2 : value2 }
 ```
 
 **添加,更新,删除**
+
 ```python
 dict = {'Name': 'Zara', 'Age': 7, 'Class': 'First'}
 
@@ -163,7 +164,8 @@ del dict                  # 删除词典
 ```
 
 **与其他语言较明显的区别**
-1. 键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行，如下实例：
+
+键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行，如下实例：
 ```python
 dict = {['Name']: 'Zara', 'Age': 7}
 print "dict['Name']: ", dict['Name']
@@ -362,12 +364,13 @@ print "相加后的值为 : ", sum( 20, 20 )
 **装饰器是什么?**
 理解装饰器, 首选要明确两点:
 1. Python一切皆对象, 包括函数.
-2. **什么是高阶函数: **高阶函数就是以函数作为参数的函数
-本质上就是一个返回函数的高阶函数.
+2. **什么是高阶函数:** 高阶函数就是以函数作为参数的函数
+
+装饰器本质上就是一个返回函数的高阶函数.
 
 **装饰器的作用是什么?**
 在代码运行期间动态增加功能.
-比如, 我们想在函数调用时, 输出一条log, 但又不想对函数进行修改, 这是我们就可以使用装饰器.
+比如, 我们想在函数调用时, 输出一条log, 但又不想对函数进行修改, 这时我们就可以使用装饰器.
 
 **如何定义和使用装饰器?**
 ```python

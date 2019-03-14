@@ -19,7 +19,7 @@ sudo apt install python2.7 python-pip
 ##### pip安装模块时提示 Read timed out 的问题
 
 pypi在国内经常被墙.f**k
-需要修改一下pip源.
+需要修改一下pip源. (如果已经修改了, 仍然超时, 那就是你的网络问题, 修改一下超时时间)
 国内比较好的有
 * 豆瓣的 http://pypi.douban.com/simple/
 * 清华的 https://pypi.tuna.tsinghua.edu.cn/simple
@@ -39,4 +39,11 @@ Windows, `C:\Users\你的用户名\pip\pip.ini`
 ```
 [global]
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+**修改超时时间**
+一样是在上边的配置文件里
+```
+[global]
+timeout = 6000
 ```

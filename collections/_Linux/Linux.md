@@ -87,6 +87,24 @@ $ locale # 插件locale设置
 $ export LC_ALL=en_US.UTF-8
 ```
 
+### 端口和防火墙
+
+Ubuntu16.04使用`ufw`管理防火墙.
+```
+# 开启防火墙
+sudo ufw enable
+# 关闭防火墙
+sudo ufw disable
+# 查看防火墙状态, 及开放的端口
+sudo ufw status
+# 开放端口
+sudo ufw allow 8080
+# 关闭端口
+sudo ufw deny 8080
+# 允许特定来源的ip地址访问
+sudo ufw allow from 192.168.1.1
+```
+
 ---
 ## CentOS
 

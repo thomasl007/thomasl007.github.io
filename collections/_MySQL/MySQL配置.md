@@ -1,5 +1,8 @@
 ---
 ---
+* content
+{:toc}
+
 ## 配置文件位置
 
 *以MySQL 5.6+版本为例*
@@ -9,9 +12,20 @@
 
 ## Errors
 
-### ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+### MySQL 5.7 密码问题
+
+MySQL 5.7 开始，安装过程中不会提示设置root密码，如果尝试使用root进行无密码登录（`mysql -u root`）会提示以下错误：
+> ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+
+不同的系统、不同的Linux发行版、不同的安装方式，处理方法可能不同。
+
+一、Ubuntu（Debian系应该都可以参考这个）
+
+第一种：【官方建议】mysql_secure_installation
+执行`mysql_secure_installation`，按提示一步步操作
+
+第二种：使用root进行无密码登录，然后设置root密码
 [stackoverflow](https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost)
-Ubuntu 18.04 lts 安装 MySQL 5.7，使用`mysql -u root -p`不能登录
 ```
 $ sudo mysql -u root # I had to use "sudo" since is new installation
 
@@ -22,6 +36,17 @@ mysql> exit;
 
 $ service mysql restart
 ```
+第三种：【适用于使用apt安装，未验证是否适用于使用官方包安装】实际上MySQL 5.7在安装时，已经为我们提供了密码，我们可以使用这个密码进行登录
+密码位置：/etc/mysql/debian.cnf
+但注意用户名不是root
+登录之后，可以按第二种处理方法中的方式设置root密码
+
+二、CentOS
+
+使用官方的Yum源进行安装时，MySQL会生成一个随机密码。
+密码位置：/var/log/mysqld.log
+执行名`sudo cat /var/log/mysqld.log | grep 'temporary password'`获取随机密码
+登录之后，可以按上边Ubuntu中的第二种处理方法中的方式设置root密码
 
 ## 允许远程连接
 

@@ -23,6 +23,8 @@ MySQL 5.7 开始，安装过程中不会提示设置root密码，如果尝试使
 
 第一种：【官方建议】mysql_secure_installation
 执行`mysql_secure_installation`，按提示一步步操作
+但要注意密码安全等级，如果密码不符合安全等级，设置密码会失败。
+如果要使用低级别的密码，则需要先使用第二种或第三种方法，登录mysql，然后参考下边的“修改密码安全等级”进行修改。
 
 第二种：使用root进行无密码登录，然后设置root密码
 [stackoverflow](https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost)
@@ -47,6 +49,14 @@ $ service mysql restart
 密码位置：/var/log/mysqld.log
 执行名`sudo cat /var/log/mysqld.log | grep 'temporary password'`获取随机密码
 登录之后，可以按上边Ubuntu中的第二种处理方法中的方式设置root密码
+
+### 修改密码安全等级
+
+登录mysql命令行
+```
+mysql> show variables like 'validate_password%'; # 查看密码安全选项
+mysql> set global xxxx=xxx; # 设置安全选项
+```
 
 ## 允许远程连接
 

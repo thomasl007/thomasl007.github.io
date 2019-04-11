@@ -14,12 +14,11 @@
 git status # 注意，如果已经commit了全部内容，则工作区是干净的，这个命令将放回`nothing to commit, working tree clean`
 ```
 
-## 上传代码
+## 上传代码（不上传到远程仓库）
 
 ```
 git add    # 把文件修改添加到暂存区
 git commit # 把暂存区的所有内容提交到当前分支
-git push   # 将本地仓库变更内容上传到远程仓库
 ```
 注意，没有添加到暂存区（即没有执行git add）的修改内容是不会被commit的，即使是对同一个文件的修改。
 例如，有文件 bingo.txt
@@ -89,10 +88,12 @@ git reset --hard HEAD^ # 回滚到上一个版本，注意跟*第二种*的区�
 git reflog # 查看命令历史，可以查看你执行过的操作
 ```
 
-## 添加远程仓库
+## 远程仓库
 
-Git是分布式的，我们本地就有一个仓库，这样的好处之一是，我们在不联网的状态下，在本地对项目进行版本管理。
+Git是分布式的，我们本地就有一个仓库，这样的好处之一是，我们在不联网的状态下，在本地也可以对项目进行版本管理。
 如果想与其他人共享代码，则通常需要一个远程仓库。
+
+#### 添加远程仓库
 
 我们本地已有远程仓库，要添加本地仓库，可以使用以下命令：
 ```
@@ -102,13 +103,28 @@ git remote add origin 远程仓库地址
 
 添加成功后，我们需要把本地仓库中的分支提交到远程仓库，并与远程仓库的分支关联。
 ```
-git push -u origin master # 向远程仓库origin提交master分支，-u参数使本地的master分支与远程的master分支向关联
+git push -u origin master # 向远程仓库origin提交master分支，-u参数使本地的master分支与远程的master分支相关联
 ```
 
 关联之后，只要使用以下命令即可把本地master分支的最新修改推送至远程仓库
 ```
 git push origin master
 ```
+
+#### 查看远程仓库信息
+
+```
+git remote    # 返回远程仓库名
+git remote -v # 查看远程仓库详细信息（包括远程仓库的地址）
+```
+
+#### 上传到远程仓库
+
+推送指定分支到远程仓库，以master分支为例
+```
+git push origin master
+```
+
 ## 分支
 
 #### 创建分支
@@ -152,8 +168,13 @@ git merge --no-ff -m 'commit log' dev
 
 #### 删除分支
 
+如果分支内容都已经合并到其他分支
 ```
 git branch -d dev # 删除dev分支
+```
+如果分支有变更内容未合并到主分支，但还是想删除，则可以强制删除
+```
+git branch -D dev # 强制删除dev分支
 ```
 
 ## 暂存变更内容
@@ -187,4 +208,66 @@ git stash apply stash@{0}
 ```
 git stash drop
 ```
+
+## clone其他分支
+
+`git clone`只会克隆远程仓库的master分支。
+要获取其他分支，比如，克隆远程的dev分支
+```
+git checkout -b dev origin/dev
+```
+如果想向这个分支提交内容，则还需要
+```
+git branch --set-upstream-to=origin/dev dev # 指定本地dev分支与远程origin/dev分支的链接
+或
+git branch --set-upstream-to dev origin/dev
+```
+否则会提示`There is no tracking information for the current branch.`
+
+
+## rebase
+
+rebase操作可以把本地未push的分叉提交历史整理成直线；
+rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+```
+git rebase
+```
+
+## 标签（tag）
+
+在HEAD上加标签
+```
+git tag tag_name
+```
+在指定commit id上加标签
+```
+git tag tag_name commit_id
+```
+给标签加说明
+```
+git tag -a tag_name -m 'comment'
+```
+查看全部标签
+```
+git tag
+```
+删除本地标签
+```
+git tag -d tag_name
+```
+推送指定标签到远程仓库
+```
+git push origin tag_name
+```
+推送全部标签到远程仓库
+```
+git push origin --tags
+```
+删除远程标签
+```
+git tag -d tag_name             # 先删除本地标签
+git push origin :refs/tags/tag_name # 删除远程标签，注意格式，有点怪
+```
+
+
 

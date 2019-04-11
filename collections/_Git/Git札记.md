@@ -134,9 +134,20 @@ git branch
 ```
 git checkout master
 ```
-然后进行合并
+然后进行合并，合并时要注意
+Git默认会尽量采用Fast forward方式合并分支。
+这种合并方式非常快，从代码角度来说，就是直接将master指针指向了dev分支的最新提交。
+但这样就会存在一个问题，如果查看分支线就会发现，你只能看到master的线，而看不到dev的线。
+而且在删除dev之后，dev的分支信息会删除。
+这可能是你希望的，但如果你不希望这样，可以添加`--no-ff`命令强制关闭Fast forward。
+
+注意到上边说的是**尽量**，如果merge过程中产生冲突，则不能进行Fast forward。这时需要你处理冲突后，在commit。
 ```
 git merge dev # 将dev分支合并到当前分支，注意，merge成功后，会自动执行commit
+```
+如果不想使用Fast forward
+```
+git merge --no-ff -m 'commit log' dev
 ```
 
 #### 删除分支
@@ -145,4 +156,35 @@ git merge dev # 将dev分支合并到当前分支，注意，merge成功后，�
 git branch -d dev # 删除dev分支
 ```
 
+## 暂存变更内容
+
+如果你修改了一些内容，突然想暂停这部分修改，去做一些别的修改，但现在又不想提交已修改的内容。
+这是可以把当前的修改内容暂存起来。
+```
+git stash
+```
+执行这个命令之后，查看git status，你会发现，工作区没有变更内容。
+但注意，stash不会暂存为被git管理的文件（未add进来的文件）。
+
+查看暂存内容
+```
+git stash list
+```
+要提取暂存内容，但不从暂存列表中删除
+```
+git stash apply
+```
+要提取暂存内容，并从暂存列表中删除
+```
+git stash pop
+```
+要提取指定的暂存内容，可以先用`git stash list`查看stash的id
+例如，id是stash@{0}
+```
+git stash apply stash@{0}
+```
+要删除暂存内容（后边可以加stash的id）
+```
+git stash drop
+```
 

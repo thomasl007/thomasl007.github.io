@@ -37,6 +37,10 @@ git commit -m '我是commitshuoming'
 ```
 git log
 ```
+带分支线
+```
+git log --graph
+```
 
 ## 回滚
 
@@ -105,3 +109,40 @@ git push -u origin master # 向远程仓库origin提交master分支，-u参数�
 ```
 git push origin master
 ```
+## 分支
+
+#### 创建分支
+
+```
+git checkout -b dev # 创建dev分支，并切换到dev分支
+```
+等价于
+```
+git branch dev      # 创建dev分支
+git checkout dev    # 切换到dev分支
+```
+
+查看当前分支：
+```
+git branch
+```
+
+#### 合并分支
+
+比如，要把dev分支的内容合并到master上
+我们要先切换到master分支
+```
+git checkout master
+```
+然后进行合并
+```
+git merge dev # 将dev分支合并到当前分支，注意，merge成功后，会自动执行commit
+```
+
+#### 删除分支
+
+```
+git branch -d dev # 删除dev分支
+```
+
+

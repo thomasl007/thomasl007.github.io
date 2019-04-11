@@ -273,9 +273,34 @@ git push origin --tags
 ```
 删除远程标签
 ```
-git tag -d tag_name             # 先删除本地标签
+git tag -d tag_name                 # 先删除本地标签
 git push origin :refs/tags/tag_name # 删除远程标签，注意格式，有点怪
 ```
 
+## Git配置
 
+让Git显示颜色，会让命令输出看起来更醒目
+```
+git config --global color.ui true
+```
 
+## .gitignore
+
+检查规则是否有问题
+```
+git check-ignore -v App.class
+.gitignore:3:*.class    App.class
+```
+
+强制添加
+```
+git add -f xxx
+```
+
+## 给git的命令设置别名，比如，svn里的checkout可以简写为co
+
+```
+git config --global alias.co checkout
+git config --global alias.unstage 'reset HEAD'
+```
+`--global`使配置应用于当前用户，不加的话只是应用于当前工程

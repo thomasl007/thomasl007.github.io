@@ -304,3 +304,11 @@ git check-ignore -v App.class
 ```
 git add -f xxx
 ```
+
+## 常见错误
+
+问题：
+warning: LF will be replaced by CRLF in
+方案：
+针对当前工程：git config core.autocrlf false
+针对全局进行：git config --global core.autocrlf false

@@ -9,7 +9,7 @@
 第一，Git和SVN不同，SVN的仓库在服务器上，而Git是分布式的，每个终端上都有一个仓库。
 第二，Git有个**暂存区**的概念，你的工程文件放在**工作区（Working Directory）**，`.git`目录是**版本库（Repository）**，
 版本库中有一个称为stage（或者叫index）的**暂存区**。
-![流程图]({{ site.baseurl }}/assets/img/git.png)
+![Git本地仓库结构图]({{ site.baseurl }}/assets/img/git.png)
 
 ## 查看仓库状态（哪些文件被修改了，哪些文件没添加...）
 

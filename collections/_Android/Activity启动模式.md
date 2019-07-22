@@ -3,40 +3,15 @@
 * content
 {:toc}
 
-## Activity启动模式
+#### 相关概念
 
-### standard
+Task: 可以简单的理解为Activity栈.
 
-默认启动模式。
-每次启动都会重新创建实例。
-与上一级Activity同栈。
-
-### singleTop
-
-两种情况：
-
-1. 已经有一个SingleTopActivity的实例位于栈顶
-不重新创建实例，直接使用栈顶的这个实例。
-    1. 先回调栈顶实例的`onPause()`
-    1. 再回调`onNewIntent()`->`onResume()`
-**注意：这时不会执行`onCreate()`和`onStart()`**
-1. 栈中没有SingleTopActivity实例或SingleTopActivity实例不位于栈顶
-与standard模式的情况完全相同
-
-### singleTask
-
-#### taskAffinity
-
-先要了解一下taskAffinity。
-taskAffinity用于指定Activity所处的栈的名字。
-
-**注意事项**
-
-taskAffinity属性主要和singleTask启动模式或者allowTaskReparenting属性配对使用，在其他情况下没有意义。
-taskAffinity的名字必须包含至少一个`.`。
-
-**指定方法**
-
+taskAffinity: 用于指定 Activity 所处的 Task 的名字。
+**注意：**
+taskAffinity 属性主要和 singleTask 启动模式或者 allowTaskReparenting 属性配对使用，在其他情况下没有意义。
+taskAffinity 的名字必须包含至少一个`.`。
+taskAffinity 的设置方法：
 在activity中指定
 ```
 <activity
@@ -52,64 +27,43 @@ taskAffinity的名字必须包含至少一个`.`。
 ```
 如果application中也没有指定，则默认以包名作为栈的名字。
 
+#### standard（默认启动模式）
+
+每次`startActivity`都会创建新的实例。
+Task 需要分两种情况考虑：
+1、如果 Activity 来自同一 app，则两个 Activity 在同一 Task 中。
+2、如果 Activity 来自不同 app，
+5.0之前：两个 Activity 在同一 Task 中
+5.0之后：创建新的 Task 存放新启动的 Activity
+
+#### singleTop
+
+与 standard 只有一个区别：
+_(假设有两个 Activity，A 和 B，B 的启动模式是 singleTop)_
+如果 A 所在的 Task 的栈顶已经存在 B 的实例，则不重新创建 B 的实例，直接使用栈顶的这个实例。
+**但要注意栈顶 Activity 的生命周期变化:**
+* **先回调栈顶实例的`onPause()`**
+* 再回调`onNewIntent()`->`onResume()`
+**注意：这时不会执行`onCreate()`和`onStart()`**
+
 #### singleTask
 
-SingleTaskActivity的启动行为，与它的taskAffinity有关。
-在启动SingleTaskActivity时，首先会判断当前是否存在与它的taskAffinity对应的栈。
+singleTask Activity 的启动行为，与它的 taskAffinity 有关。
+启动 singleTask Activity 时，
+**会先判断与 Activity 的 taskAffinity 对应的 Task 是否存在，然后再判断 Activity 是否存在**，具体如下：
+如果 Task 不存在，则创建 Task ，然后创建 singleTask Activity 实例放入新创建的 Task 中。
+如果 Task 存在，
+  查找这个 Task 中是否存在 singleTask Activity 实例，
+    如果 Activity 实例不存在，则创建 Activity 实例放入 Task 中
+    如果 Activity 实例存在，则将 Task 中位于这个 Activity 实例之上的所有 Activity 都出栈（clearTop）
+      **同时注意这个 Activity 实例的生命周期变化**
+      1、**先回调 `onPause()`方法**
+      2、再回调`onNewIntent`->`onStart()`->`onResume()`
+        **注意：不回调`onCreate()`，与 singleTop 不同，会回调`onStart()`
 
-1. 如果不存在
-    1. 创建对应的栈
-    1. 创建SingleTaskActivity实例放入新创建的栈中。
-1. 如果存在
-    1. 查找当前这个栈中是否存在SingleTaskActivity实例
-        1. 如果存在
-            1. 将栈中位于SingleTaskActivity实例之上的所有Activity都出栈（clearTop）
-            1. 回调SingleTaskActivity实例的`onPause()`方法
-            1. 回调SingleTaskActivity的`onNewIntent`->`onStart()`->`onResume()`（不回调`onCreate()`，与singleTop不同，会回调`onStart()`）
-        1. 如果不存在
-            1. 创建SingleTaskActivity实例放入栈中
-
-即以下流程:
-
-<div class="flow">
-<textarea class="code" style="display: none;" rows="0">
-st=>start: 启动Activity
-e=>end: 完成
-cond1=>condition: 是否存在
-与它的taskAffinity
-对应的栈
-op1=>operation: 创建对应的栈
-op2=>operation: 创建Activity实例
-放入新创建的栈中
-cond2=>condition: 栈中是否存在
-Activity实例
-op3=>operation: 将栈中
-位于SingleTaskActivity实例之上的
-所有Activity都出栈
-（即,clearTop）
-op4=>operation: 先回调这个实例的 onPause() 方法
-op5=>operation: 再回调
-onNewIntent()
-onStart()
-onResume()
-（不回调 onCreate() ，
-与singleTop不同，会回调 onStart()）
-op6=>operation: 创建
-SingleTaskActivity实例
-放入栈中
-
-st->cond1
-cond1(no)->op1->op2->e
-cond1(yes)->cond2
-cond2(yes)->op3->op4->op5->e
-cond2(no)->op6->e
-</textarea>
-</div>
-
-**一种特殊的情况**
-
-不同App中的Activity，使用相同的taskAffinity，
-则两个Activity会共用同一个栈，**注意：这时即使两个activity是同包同名的，也不会共用同一个实例。**。
+**！！特别注意！！**
+不同 App 中的 Activity，如果使用相同的 taskAffinity，则两个 Activity 会共用同一个栈。
+**但是，注意，这时即使两个activity是同包同名的，也不会共用同一个实例。**。
 
 ### singleInstance
 

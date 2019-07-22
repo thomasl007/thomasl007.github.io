@@ -67,69 +67,28 @@ singleTask Activity 的启动行为，与它的 taskAffinity 有关。
 
 ### singleInstance
 
-SingleInstanceActivity很复杂...
+singleInstance Activity 实例在整个系统中是唯一的。
+启动 singleInstance Activity 时，
+首先判断系统中是否存在 singleInstance Activity 的实例，
+如果不存在，创建一个新的 Task ，然后创建 singleInstance Activity 实例。
+如果存在，需要分两种情况考虑：
+  singleInstance Activity 与发送 intent 的 Activity 在同一 App 中，则
+    先回调这个实例的`onPause()`方法
+    再回调`onNewIntent()`->`onResume()`(**注意：没有`onStart()`**)
+  在不同 App 中，回调`onCreate()`->`onStart()`->`onResume()`
 
-SingleInstanceActivity实例在整个系统中是唯一的。
-启动SingleInstanceActivity时，首先判断系统中是否存在SingleInstanceActivity的实例
+**！！特别注意！！**
+_(假设有两个 App： A 和 B ，都会启动同一个 singleInstance Activity。)_
 
-1. 如果不存在
-    1. 创建一个新的栈
-    1. 创建SingleInstanceActivity实例。
-1. 如果存在，使用同一个实例
-    1. 同一App中
-        1. 回调这个实例的`onPause()`方法
-        1. 回调`onNewIntent()`->`onResume()`(**注意：没有`onStart()`**)
-    1. 不同App中
-        1. 回调`onCreate()`->`onStart()`->`onResume()`
-
-即以下流程:
-
-<div class="flow">
-<textarea class="code" style="display: none;" rows="0">
-st=>start: 启动Activity
-e=>end: 完成
-cond1=>condition: 是否存在
-Activity实例
-op1=>operation: 创建新栈
-op2=>operation: 创建Activity实例
-cond2=>condition: 同一App中
-op3=>operation: 先回调这个实例的 onPause() 方法
-op4=>operation: 再回调
-onNewIntent()
-onResume()
-(注意：没有 onStart())
-op5=>operation: 回调
-onCreate()
-onStart()
-onResume()
-
-st->cond1
-cond1(no)->op1->op2->e
-cond1(yes)->cond2
-cond2(yes)->op3->op4->e
-cond2(no)->op5->e
-</textarea>
-</div>
-
-**一种非常特殊的情况**
-
-假设有两个App：A和B，都有SingleInstanceActivity。
-
-1、 执行以下步骤：
-
-1. A启动SingleInstanceActivity
-1. B启动SingleInstanceActivity
-1. 在最近任务中彻底关闭SingleInstanceActivity，**注意，这时会回调`onDestroy()`**
-1. 回到A，启动SingleInstanceActivity
-
-这时，SingleInstanceActivity的生命周期是：
-**`onNewIntent()`->`onStart()`->`onResume()`**
-
-2、 执行以下步骤：
-
-1. A启动SingleInstanceActivity
-1. 在最近任务中彻底关闭SingleInstanceActivity，**注意，这时会回调`onDestroy()`**
+第一种情况，执行以下步骤：
+1. A 启动 singleInstance Activity
+1. 在最近任务中彻底关闭 singleInstance Activity，**注意，这时会回调`onDestroy()`**
 1. 在A中再次启动SingleInstanceActivity
+**这时，SingleInstanceActivity的生命周期是：`onCreate()`->`onStart()`->`onResume()`**
 
-这时，SingleInstanceActivity的生命周期是：
-**`onCreate()`->`onStart()`->`onResume()`**
+第二种情况，执行以下步骤：
+1. A 启动 singleInstance Activity
+1. B 启动 singleInstance Activity
+1. 在最近任务中彻底关闭 singleInstance Activity，**注意，这时会回调`onDestroy()`**
+1. 回到A，启动SingleInstanceActivity
+**这时，SingleInstanceActivity的生命周期是：`onNewIntent()`->`onStart()`->`onResume()`**

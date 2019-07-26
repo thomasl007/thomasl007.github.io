@@ -1,13 +1,20 @@
 #### android version
 
-|Codename|Version|API|
+|API|Version|Codename|
 |-|-|-|
-|Q|10|29|
-|Pie|9|28|
-|Oreo|8.1<br/>8.0|27<br/>26|
-|Nougat|7.1<br/>7.0|25<br/>24|
-|Marshmallow|6.0|23|
-|Lollipop|5.1<br/>5.0|22<br/>21|
-|KitKat|4.4W<br/>4.4|20<br/>19|
-|Jelly Bean|4.3<br/>4.2<br/>4.1|18<br/>17<br/>16|
-|Ice Cream Sandwich|4.0.3<br>4.0|15<br/>14|
+|29|10|Q|
+|28|9|Pie|
+|27|8.1|Oreo|
+|26|8.0|Oreo|
+|25|7.1|Nougat|
+|24|7.0|Nougat|
+|23|6.0|Marshmallow|
+|22|5.1|Lollipop|
+|21|5.0|Lollipop|
+|20|4.4W|KitKat|
+|19|4.4|KitKat|
+|18|4.3|Jelly Bean|
+|17|4.2|Jelly Bean|
+|16|4.1|Jelly Bean|
+|15|4.0.3|Ice Cream Sandwich|
+|14|4.0|Ice Cream Sandwich|

@@ -65,7 +65,7 @@ singleTask Activity 的启动行为，与它的 taskAffinity 有关。
 不同 App 中的 Activity，如果使用相同的 taskAffinity，则两个 Activity 会共用同一个栈。
 **但是，注意，这时即使两个activity是同包同名的，也不会共用同一个实例。**。
 
-### singleInstance
+#### singleInstance
 
 singleInstance Activity 实例在整个系统中是唯一的。
 启动 singleInstance Activity 时，

@@ -24,11 +24,13 @@ git clone https://remote_repo_url/shenmewanyier
 *https://shenmewanyier/shenmewanyier ：是远程仓库的地址。*
 执行这个命令会在你本地创建一个名为 shenmewanyier 的目录，里边包括工程文件和一个`.git`目录。
 <br/>
+<br/>
 如果你想在 clone 时**指定本地创建的目录名**，直接把目录名写在后边即可：
 ```
 git clone https://remote_repo_url/shenmewanyier zhegewanyier
 ```
 *zhegewanyier ：就是你想指定的目录名。*
+<br/>
 <br/>
 上边的命令会将整个工程 clone 到本地，包括工程的全部分支和历史版本，通常这是我们希望的。
 但有些情况下，你可能想**只获取其中一个分支**，这时你可以这样：
@@ -36,6 +38,7 @@ git clone https://remote_repo_url/shenmewanyier zhegewanyier
 git clone -b master https://remote_repo_url/shenmewanyier
 ```
 *-b：用于指定分支。master是你想 clone 的远程分支的名称。*
+<br/>
 <br/>
 或者你可能想**只获取最后一个历史版本**，这时你可以这样：
 ```

@@ -3,13 +3,43 @@
 * content
 {:toc}
 
-## Git宏观认知
+### Git宏观认知
 
 首先明确两点：
-第一，Git和SVN不同，SVN的仓库在服务器上，而Git是分布式的，每个终端上都有一个仓库。
-第二，Git有个**暂存区**的概念，你的工程文件放在**工作区（Working Directory）**，`.git`目录是**版本库（Repository）**，
-版本库中有一个称为stage（或者叫index）的**暂存区**。
+1. Git 和 SVN 不同，SVN 的仓库在服务器上，而Git是分布式的，每个终端上都有一个仓库，只在本地即可对工程进行版本控制。
+2. Git 有个**暂存区**的概念。工程文件（就是你要进行管理的文件）放在**工作区（Working Directory）**。`.git`目录是**版本库（Repository）**，
+版本库中有一个称为 stage（或者叫 index）的**暂存区**。它们的关系如下：
 ![Git本地仓库结构图]({{ site.baseurl }}/assets/img/git.png)
+
+### 从远程仓库获取工程（git clone）
+
+假设远程仓库已经存在，而我们本地没有任何内容。我们要拉取远程仓库到本地来完成开发工作。
+这时我们需要使用`git clone`命令。
+
+最基本也是最常见的用法是：
+```
+git clone https://remote_repo_url/shenmewanyier
+```
+*https://shenmewanyier/shenmewanyier ：是远程仓库的地址。
+执行这个命令会在你本地创建一个名为 shenmewanyier 的目录，里边包括工程文件和一个`.git`目录。
+
+如果你想在 clone 时**指定本地创建的目录名**，直接把目录名写在后边即可：
+```
+git clone https://remote_repo_url/shenmewanyier zhegewanyier
+```
+*zhegewanyier ：就是你想指定的目录名。*
+
+上边的命令会将整个工程 clone 到本地，包括工程的全部分支和历史版本，通常这是我们希望的。
+但有些情况下，你可能想**只获取其中一个分支**，这时你可以这样：
+```
+git clone -b master https://remote_repo_url/shenmewanyier
+```
+*-b：用于指定分支。master是你想 clone 的远程分支的名称。*
+或者你可能想**只获取最后一个历史版本**，这时你可以这样：
+```
+git clone --depth=1 https://remote_repo_url/shenmewanyier
+```
+*--depth=1：用于指定获取最近提交的几个历史版本，=1即获取一个*
 
 ## 查看仓库状态（哪些文件被修改了，哪些文件没添加...）
 

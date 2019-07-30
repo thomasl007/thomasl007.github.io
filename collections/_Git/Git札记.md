@@ -17,30 +17,32 @@
 假设远程仓库已经存在，而我们本地没有任何内容。我们要拉取远程仓库到本地来完成开发工作。
 这时我们需要使用`git clone`命令。
 
-**最基本也是最常见的用法**是：
+#### 最基本也是最常见的用法
+
 ```
 git clone https://remote_repo_url/shenmewanyier
 ```
 *https://shenmewanyier/shenmewanyier ：是远程仓库的地址。*
 执行这个命令会在你本地创建一个名为 shenmewanyier 的目录，里边包括工程文件和一个`.git`目录。
-<br/>
-<br/>
-如果你想在 clone 时**指定本地创建的目录名**，直接把目录名写在后边即可：
+
+#### 指定 clone 到本地时创建的目录名
+
+如果你想在 clone 时指定本地创建的目录名，直接把目录名写在后边即可：
 ```
 git clone https://remote_repo_url/shenmewanyier zhegewanyier
 ```
 *zhegewanyier ：就是你想指定的目录名。*
-<br/>
-<br/>
+
+#### 只 clone 其中一个分支，或最后提交的几个历史版本
+
 上边的命令会将整个工程 clone 到本地，包括工程的全部分支和历史版本，通常这是我们希望的。
-但有些情况下，你可能想**只获取其中一个分支**，这时你可以这样：
+但有些情况下，你可能想只获取其中一个分支，这时你可以这样：
 ```
 git clone -b master https://remote_repo_url/shenmewanyier
 ```
 *-b：用于指定分支。master是你想 clone 的远程分支的名称。*
-<br/>
-<br/>
-或者你可能想**只获取最后一个历史版本**，这时你可以这样：
+
+或者你可能想只获取最后一个历史版本，这时你可以这样：
 ```
 git clone --depth=1 https://remote_repo_url/shenmewanyier
 ```

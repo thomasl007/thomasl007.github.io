@@ -17,8 +17,9 @@
 假设远程仓库已经存在，而我们本地没有任何内容。我们要拉取远程仓库到本地来完成开发工作。
 这时我们需要使用`git clone`命令。
 
-#### 最基本也是最常见的用法
+#### 最基本最常见的用法
 
+**最基本也是最常见**的用法是：
 ```
 git clone https://remote_repo_url/shenmewanyier
 ```
@@ -27,7 +28,7 @@ git clone https://remote_repo_url/shenmewanyier
 
 #### 指定 clone 到本地时创建的目录名
 
-如果你想在 clone 时指定本地创建的目录名，直接把目录名写在后边即可：
+如果你想在 clone 时**指定本地创建的目录名**，直接把目录名写在后边即可：
 ```
 git clone https://remote_repo_url/shenmewanyier zhegewanyier
 ```
@@ -36,40 +37,43 @@ git clone https://remote_repo_url/shenmewanyier zhegewanyier
 #### 只 clone 其中一个分支，或最后提交的几个历史版本
 
 上边的命令会将整个工程 clone 到本地，包括工程的全部分支和历史版本，通常这是我们希望的。
-但有些情况下，你可能想只获取其中一个分支，这时你可以这样：
+但有些情况下，你可能想**只获取其中一个分支**，这时你可以这样：
 ```
 git clone -b master https://remote_repo_url/shenmewanyier
 ```
 *-b：用于指定分支。master是你想 clone 的远程分支的名称。*
 
-或者你可能想只获取最后一个历史版本，这时你可以这样：
+或者你可能想**只获取最后一个历史版本**，这时你可以这样：
 ```
 git clone --depth=1 https://remote_repo_url/shenmewanyier
 ```
 *--depth=1：用于指定获取最近提交的几个历史版本，=1即获取一个*
 
-### 上传代码到本地仓库（不上传到远程仓库）
+## 查看工程状态（哪些文件被修改了，哪些文件没 add 等等）
 
+有时，你可能想要查看本地工程的状态，你可以使用这个命令：
+```
+git status
+```
+这个命令会列出当前工作区中哪些文件有变更，哪些文件未被 Git 管理等。
+*注意，如果已经 commit 了全部内容，则工作区是干净的，这个命令将返回`nothing to commit, working tree clean`*
+
+### 上传变更到本地仓库（不上传到远程仓库）
+
+Git 上传变更需要分两步进行。假设工作区（即你的本地工程）相较本地仓库已经有了变更内容。
+这时想提交变更，我们可以执行以下命令：
 ```
 git add    # 把文件修改添加到暂存区
 git commit # 把暂存区的所有内容提交到当前分支
 ```
-注意，没有添加到暂存区（即没有执行git add）的修改内容是不会被commit的，即使是对同一个文件的修改。
-例如，有文件 bingo.txt
-```
-# 修改文件内容
-git add bingo.txt # 将修改加入暂存区
-# 再次修改文件内容
-git commit -m '我是commitshuoming'
-```
-这是使用`git status`查看，你会发现，第二次修改的内容没有被commit，因为它没有被添加到暂存区。
-**这也说明，Git管理的是修改，而非文件。**
+**注意，没有添加到暂存区的修改内容是不会被 commit 的，即使是对同一个文件的修改。**例如：
+假设我们有个名为 bingo.txt 的文件。
+我们对这个文件进行修改，然后执行`git add bingo.txt`将修改加入暂存区。
+现在我们再次对这个文件进行修改，然后执行`git commit -m '我是commit说明'`将变更内容提交到本地仓库。
+这时，使用`git status`查看工程状态，你会发现，第二次修改的内容没有被 commit。
+这是因为`git commit`命令是将暂存区的内容提交到本地仓库，而第二次变更内容并没有使用`git add`命令添加到暂存区，所以这部分变更不会被 commit。
 
-## 查看仓库状态（哪些文件被修改了，哪些文件没添加...）
-
-```
-git status # 注意，如果已经commit了全部内容，则工作区是干净的，这个命令将放回`nothing to commit, working tree clean`
-```
+**！！重要！！：这就涉及到了 Git 的一个重要特性——Git管理的是修改，而非文件。**
 
 ## 查看历史
 

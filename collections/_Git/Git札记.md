@@ -10,7 +10,7 @@
 2. Git 有个**暂存区**的概念。工程文件（就是你要进行管理的文件）放在**工作区（Working Directory）**。`.git`目录是**版本库（Repository）**，
 版本库中有一个称为 stage（或者叫 index）的**暂存区**。它们的关系如下：
 
-![Git本地仓库结构图]({{ site.baseurl }}/assets/img/git.png)
+![Git本地仓库结构图]({{ site.baseurl }}/assets/img/git-commit.png)
 
 ### 从远程仓库获取工程（git clone）
 
@@ -89,44 +89,44 @@ git log --graph
 
 因为Git有工作区、暂存区和本地仓库，所以回滚代码有多种情况：
 
-![Git回滚]({{ site.baseurl }}/assets/img/git2.png)
+![Git回滚]({{ site.baseurl }}/assets/img/git-reset.png)
 
-#### 第一种，未commit，也未add
+#### 第一种，撤销工作区的修改（未 commit 未 add 的修改）
 
 这种情况，变更内容只在工作区，执行以下命令即可，撤销文件的全部变更内容，**但要注意，一旦撤销，就没有后悔药了**。
 ```
 git checkout -- <file>
 ```
 
-#### 第二种，未commit，但已add
+#### 第二种，回滚暂存区的修改（未 commit，已 add 的修改）
 
-执行以下命令，可以从暂存区撤销修改，重新放回工作区
+执行以下命令，可以从暂存区撤销修改，**重新放回工作区**
 ```
 git reset HEAD <file>
 ```
 然后就可以参照*第一种*了
 
-#### 第三种，已commit
+#### 第三种，回滚版本库、暂存区和工作区的修改（已 commit 的修改）
 
-**注意，执行以下操作后，工作区和暂存区中为commit的变更都会丢失。**
+**注意，执行以下操作后，工作区和暂存区中未 commit 的变更都会丢失。**
 
-需要告诉Git你要回滚到哪个版本。
-有三种形式：
+需要告诉Git你要回滚到哪个版本，Git 有三种形式获取版本：
 1. 版本号
 使用`git log`可以查看到版本号
 （不需要把整个版本号都输入，只输入前几位就行，Git会自动匹配）
-2. HEAD^
-HEAD ： 代表当前版本
-HEAD^ : 代表上一版本
-HEAD^^ : 代表上上一版本
+2. `HEAD^`
+`HEAD` ： 代表当前版本
+`HEAD^` : 代表上一版本
+`HEAD^^` : 代表上上一版本
 ...
-3. HEAD~
+3. `HEAD~`
 HEAD~100 : 代表往上100个版本
 
 使用以下命令进行回滚
 ```
-git reset --hard HEAD^ # 回滚到上一个版本，注意跟*第二种*的区别，这里有参数`--hard`
+git reset --hard HEAD^
 ```
+*HEAD^ ：表示回滚到上一个版本，注意跟第二种的区别，这里有参数 `--hard`*
 
 #### 后悔回滚了怎么办？
 

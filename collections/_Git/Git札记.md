@@ -59,6 +59,73 @@ git clone --depth=1 https://remote_repo_url/shenmewanyier
 ```
 *--depth=1：用于指定获取最近提交的几个历史版本，=1即获取一个*
 
+### 分支
+
+#### 查看分支
+
+执行 `git clone` 命令可以从远程仓库获取全部分支，但此时执行**查看分支命令**：
+```
+git branch
+```
+你只能看到一个分支（默认是 master 分支）。这是因为其他分支都是隐藏的，你可以使用`-a`参数来查看全部分支：
+```
+git branch -a
+```
+或者也可以使用`-r`参数查看远程分支
+```
+git branch -r
+```
+
+#### 创建分支
+
+创建分支是我们在开发中很常用的操作：
+```
+git checkout -b dev # 创建dev分支，并切换到dev分支
+```
+等价于
+```
+git branch dev      # 创建dev分支
+git checkout dev    # 切换到dev分支
+```
+
+#### 合并分支
+
+假设，要把 dev 分支的内容合并到 master 上
+第一步，我们要先切换到 master 分支
+```
+git checkout master
+```
+第二步，进行合并
+将dev分支合并到当前分支（注意，merge成功后，会自动执行commit，所以这里要写 commit 说明）
+```
+git merge dev -m '你的commit说明'
+```
+**！！注意！！：**
+Git默认会**尽量**采用**Fast forward**方式合并分支。
+这种合并方式非常快，从代码角度来说，就是直接将 master 指针指向了 dev 分支的最新提交。
+显然这样就会存在一个问题（如果你认为是问题的话），如果查看分支线就会发现，你只能看到 master 的线，而看不到 dev 的线。而且在删除dev之后，dev的分支信息会删除。
+这可能是你希望的，但如果你不希望这样，可以添加`--no-ff`命令强制关闭Fast forward。
+注意上边说的是**尽量**，Fast forward 的条件很严格，通常开发中应该很少能采用这种合并方式。
+如果 merge 过程中产生冲突，则不能进行 Fast forward。这时需要你处理冲突后再commit。
+如果从 master 创建分支之后 master 分支上有了新的提交，这时即使没有冲突也不能使用 Fast forward。
+
+如果你想避免使用 Fast forward，可以使用`--no-ff`参数：
+```
+git merge --no-ff -m 'commit log' dev
+```
+
+#### 删除分支
+
+如果分支内容都已经合并到其他分支：
+```
+git branch -d dev # 删除dev分支
+```
+
+如果分支有变更内容未合并到主分支，但还是想删除，则可以强制删除：
+```
+git branch -D dev # 强制删除dev分支
+```
+
 ### 查看工程状态（哪些文件被修改了，哪些文件没 add 等等）
 
 有时，你可能想要查看本地工程的状态，你可以使用这个命令：
@@ -144,10 +211,10 @@ git reset --hard HEAD^
 git reflog # 查看命令历史，可以查看你执行过的操作
 ```
 
-## 远程仓库
+### 远程仓库
 
 Git是分布式的，我们本地就有一个仓库，这样的好处之一是，我们在不联网的状态下，在本地也可以对项目进行版本管理。
-如果想与其他人共享代码，则通常需要一个远程仓库。
+如果想与其他人共享代码，则通常需要使用远程仓库。
 
 #### 添加远程仓库
 
@@ -155,7 +222,7 @@ Git是分布式的，我们本地就有一个仓库，这样的好处之一是�
 ```
 git remote add origin 远程仓库地址
 ```
-这里的`origin`是我们定义的远程仓库的名字，`origin`是Git对远程仓库的默认叫法，通常都使用这个名字，你也可以改成别的。
+`origin`是我们定义的远程仓库的名字，`origin`是Git对远程仓库的默认叫法，通常都使用这个名字，你也可以改成别的。
 
 添加成功后，我们需要把本地仓库中的分支提交到远程仓库，并与远程仓库的分支关联。
 ```
@@ -187,58 +254,6 @@ git push origin master
 
 ```
 git remote rm origin
-```
-
-## 分支
-
-#### 创建分支
-
-```
-git checkout -b dev # 创建dev分支，并切换到dev分支
-```
-等价于
-```
-git branch dev      # 创建dev分支
-git checkout dev    # 切换到dev分支
-```
-
-查看当前分支：
-```
-git branch
-```
-
-#### 合并分支
-
-比如，要把dev分支的内容合并到master上
-我们要先切换到master分支
-```
-git checkout master
-```
-然后进行合并，合并时要注意
-Git默认会尽量采用Fast forward方式合并分支。
-这种合并方式非常快，从代码角度来说，就是直接将master指针指向了dev分支的最新提交。
-但这样就会存在一个问题，如果查看分支线就会发现，你只能看到master的线，而看不到dev的线。
-而且在删除dev之后，dev的分支信息会删除。
-这可能是你希望的，但如果你不希望这样，可以添加`--no-ff`命令强制关闭Fast forward。
-
-注意到上边说的是**尽量**，如果merge过程中产生冲突，则不能进行Fast forward。这时需要你处理冲突后，在commit。
-```
-git merge dev # 将dev分支合并到当前分支，注意，merge成功后，会自动执行commit
-```
-如果不想使用Fast forward
-```
-git merge --no-ff -m 'commit log' dev
-```
-
-#### 删除分支
-
-如果分支内容都已经合并到其他分支
-```
-git branch -d dev # 删除dev分支
-```
-如果分支有变更内容未合并到主分支，但还是想删除，则可以强制删除
-```
-git branch -D dev # 强制删除dev分支
 ```
 
 ## 暂存变更内容

@@ -1,13 +1,21 @@
 ---
 ---
 
-## 结构
+### MVC
+
+所有的业务逻辑都由 Model 实现（不是 Controller）。
+Controller 只是一个消息分发器，用来解耦 View 和 Model。
+**View 和 Model 之间是有交互的**，View 直接向 Model 取数据。
+
+### MVP
+
+#### 结构
 
 * Model: 数据层，负责与网络层和数据库层的逻辑交互。
 * View: UI层，显示数据, 并向Presenter报告用户行为。
 * Presenter: 从Model拿数据，应用到UI层，管理UI的状态，响应用户的行为。
 
-## 优点
+#### 优点
 
 * 分离了视图逻辑和业务逻辑，降低了耦合。（MVC中，M和C是有交互的）
 * Activity只处理生命周期的任务，代码变得更加简洁。
@@ -16,10 +24,12 @@
 * 把业务逻辑抽到Presenter中去，避免后台线程引用Activity导致Activity的资源无法被系统回收而引起内存泄露和OOM。
 
 
-## 具体实现
+#### 具体实现
 
 MVP三层都抽象为接口。
 
 * V层持有P的接口对象
 * P层持有V层和M层的接口对象
 * M层为P层的提供数据
+
+### MVVM

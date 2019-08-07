@@ -7,6 +7,10 @@
 Controller 只是一个消息分发器，用来解耦 View 和 Model。
 **View 和 Model 之间是有交互的**，View 直接向 Model 取数据。
 
+#### Android 中的 MVC
+
+
+
 ### MVP
 
 #### 结构

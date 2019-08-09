@@ -14,14 +14,16 @@
 
 ###### ·Picasso
 
-tags: `单利`,`对外接口`
+`单例模式`,`对外接口`
 图片加载、转换、缓存的管理类。
-*这里有个很高端的地方: 在使用get()方法获取Picasso单利时, 不需要传递Context, 因为Picasso通过注册Provider进而从Provider中获取了Context.*
+
+*另外：这里有个很高端的地方: 在使用get()方法获取Picasso单例对象时, 不需要传递Context, 因为Picasso通过注册Provider进而从Provider中获取了Context.*
 
 ###### ·RequestCreator
 
-tags: `Builder模式`, `链式API`, `对外接口`
-用于构建图片下载请求. 实际上调用`Picasso#load()`方法后获取就是这个类的对象.
+`Builder模式`, `链式API`, `对外接口`
+每请求一个图片就对应一个RequestCreator。
+用于构建图片下载请求. 实际上调用`Picasso#load()`方法后获取就是这个类的对象。
 Request的属性
 * 占位图
 * 缓存策略

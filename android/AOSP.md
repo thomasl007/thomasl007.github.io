@@ -32,5 +32,6 @@ Repo 实际**TODO**是一个 Git 的脚本，是谷歌为了方便下载 AOSP �
 `repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest`
 或者指定分支
 `repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-4.0.1_r1`
+**注：repo 需要使用 python2 环境，python3 不行。如果既安装了 python2 也安装了 python3。则修改修改一下 repo 的配置文件，把第一行的 python 改成 python2。**
 
 

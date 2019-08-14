@@ -8,7 +8,7 @@ Android系统架构分层：
 * 第3层：Android Framework
 * 第4层：Applications
 
-### Pie | 9.0.0_r8
+### 基于 Pie | 9.0.0_r8
 
 |目录 / 文件|说明|分层|备注|
 |-|-|-|-|
@@ -42,3 +42,15 @@ Android系统架构分层：
 |bootstrap.bash||
 |~~abi~~|~~应用程序二进制接口，生成libgabi++和.so相关库文件~~||< 8.0|
 |~~ndk~~|~~原生开发套件，提供了一些列工具可以快速开发c/c++的动态库~~||< 8.0|
+
+### frameworks (基于 Pie | 9.0.0_r8)
+
+frameworks
+|--base
+   |--core-------核心库，这个是重点
+   |--location---地区库
+   |--obex-------蓝牙传输库
+   |--opengl-----2D-3D加速库
+   |--sax--------XML解析器
+   |--wifi-------无线网
+   |--telephony--电话通讯管理

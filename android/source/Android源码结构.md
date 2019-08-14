@@ -45,6 +45,7 @@ Android系统架构分层：
 
 ### frameworks (基于 Pie | 9.0.0_r8)
 
+```
 frameworks
 |--base
    |--core-------核心库，这个是重点
@@ -54,3 +55,4 @@ frameworks
    |--sax--------XML解析器
    |--wifi-------无线网
    |--telephony--电话通讯管理
+```

@@ -49,7 +49,19 @@ lunch
 
 3、编译
 ```
-make
+make -j8
 ```
+这里最好加上 -j8 参数，否则在低配机器上可能提示内存不足
+
+4、运行
+网上包括官网都说直接运行`emulator`，但是我运行时提示
+```
+emulator: ERROR: No AVD specified. Use '@foo' or '-avd foo' to launch a virtual device named 'foo'
+```
+最后的解决方法是，先执行：
+```
+set_stuff_for_environment
+```
+然后再`emulator`
 
 

@@ -1,6 +1,9 @@
 ---
 ---
 
+* content
+{:toc}
+
 ### Dart 特性
 
 #### 声明变量
@@ -23,6 +26,20 @@ pubspec.yaml文件管理Flutter应用程序的assets(资源，如图片、packag
 * `is` 是什么类型
 * `is!` 不是什么类型
 * `expr1 ?? expr2` 如果 expr1 为非null，则返回其值; 否则，计算并返回 expr2 的值
+
+#### 循环
+
+`break` 和 `continue` 后边可以加标签，用于指定退出循环后跳转的位置。第一标签用 `标签名:` 的形式。
+
+#### bool 判断
+
+Dart 只把文字 `true` 视为 true，所以 `if ('abc')` 会被视为 false。所以，如果不是 `bool` 型，最好不要这么写，在 check 模式会有警告。
+
+#### 数组（列表）
+
+Dart 使用列表表示数组。
+* 定义定长数组 `var lst = new List(5)` ，采用逐个赋值的方式进行初始化。
+* 定义变长数组 `var lst = new List()` 或 `var lst = [val0, val1, val2]`。
 
 ### Flutter
 

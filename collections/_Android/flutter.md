@@ -41,6 +41,131 @@ Dart 使用列表表示数组。
 * 定义定长数组 `var lst = new List(5)` ，采用逐个赋值的方式进行初始化。
 * 定义变长数组 `var lst = new List()` 或 `var lst = [val0, val1, val2]`。
 
+#### Map
+
+* Dart 的 map 可以在声明时直接初始化 `var details = {'Username':'tom','Password':'pass@123'};`。
+也可以先声明再添加内容 `var identifier = new Map(); identifier['Username'] = 'tom';`。
+两种方式的长度都是可变的。
+* Dart 也有 `HashMap` 和 `LinkedHashMap` 之类的。
+* 遍历时可使用迭代器。
+* 默认是异构的（可以保存多种数据类型），也可以指定存储的数据类型，跟 java 一样。
+
+#### 反射（暂时跳过）
+
+#### 可选参数和默认值
+
+1. `void function_name(param1, [optional_param_1, optional_param_2]) { }`
+1. `void function_name(a, {optional_param1, optional_param2}) { }`
+调用方法：`function_name(optional_param1: value, optional_param2: value);`
+1. `void function_name(param1, {param2: default_value})`
+
+#### Lambda
+
+`[return_type] function_name(parameters) => expression;`
+
+#### 构造函数重载（命名构造函数）
+
+定义多个构造函数的方法：
+```         
+class Car {                   
+    Car() {                           
+       print("Non-parameterized constructor invoked");
+    }                                   
+    Car.namedConst(String engine) {
+       print("The engine is : ${engine}");    
+    }                               
+}
+void main() {
+    Car c2 = new Car();
+    Car c1 = new Car.namedConst('E1001');
+}  
+```
+
+#### 属性的 Getter 和 Setter 方法的定义
+
+Dart 默认提供 Getter 和 Setter 方法，如果要自定义的话可以按照以下形式：
+```
+Return_type  get identifier
+{
+}
+
+set identifier
+{
+}
+```
+
+#### 继承和接口
+
+Dart 的继承同Java。
+**Dart 没有声明接口的语法，类本身就可以当做接口使用。**实现类必须重写接口中的全部方法。
+`class identifier implements interface_name`
+
+#### 【语法糖】级联操作符（`..`）
+
+```
+class Student {
+   void test_method() {
+      print("这是一个测试方法");
+   }
+
+   void test_method1() {
+      print("这是一个测试方法1");
+   }
+}  
+void main() {
+   new Student()
+   ..test_method()
+   ..test_method1();
+}
+```
+
+#### 第三方库管理
+
+Dart 使用**pub**管理第三方库，跟 maven 属于一类东西。
+https://pub.dartlang.org/
+包元数据是定义在 pubsec.yaml 文件中，每个 Dart 应用程序都有一个 pubsec.yaml 文件。
+常用 pub 命令：
+* `pub get`: 获取应用程序所依赖的所有包。
+* `pub upgrade`: 将所有依赖项升级到较新版本。
+* `pub build`: 这用于构建您的Web应用程序，它将创建一个构建文件夹，其中包含所有相关脚本。
+* `pub help`: 这将为您提供所有不同pub命令的帮助。
+
+#### 引入包的方法
+
+* Dart 内置的库使用：`import 'dart:scheme'`
+* 外部库使用：`import 'package:scheme'`,
+例如，`import 'package:xml/xml.dart'`
+
+如果只想导入一部分内容：
+```
+import 'package: lib1/lib1.dart' show foo, bar;  
+// 只导入foo 和 bar.
+```
+如果想排除一部分内容：
+```
+import 'package: mylib/mylib.dart' hide foo;  
+// 导入除了foo的所有
+```
+跟引入的库指定名称：
+`import 'package:xml/xml.dart' as xml;`
+
+#### 自定义库
+
+`library library_name`
+引入：`import 'dir/library_name'`
+
+#### 访问权限
+
+以`_`开头的为私有。
+
+#### 异常处理
+
+Dart 在异常处理这块比其他语言多了一个 `on` 关键字。
+
+#### typedef定义函数指针
+
+Dart 可使用`typedef`定义函数指针，跟c里的typedef类似。
+
 ### Flutter
 
 状态：

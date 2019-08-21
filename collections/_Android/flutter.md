@@ -96,9 +96,10 @@ set identifier
 
 #### 继承和接口
 
-Dart 的继承同Java。
+Dart 的继承类似Java，但可以使用 Mixins 实现类似多继承的功能。
 **Dart 没有声明接口的语法，类本身就可以当做接口使用。**实现类必须重写接口中的全部方法。
 `class identifier implements interface_name`
+Dart2 有抽象类的概念，可以使用抽象类作为接口。
 
 #### 【语法糖】级联操作符（`..`）
 

@@ -18,7 +18,11 @@ pubspec.yaml文件管理Flutter应用程序的assets(资源，如图片、packag
 
 #### 运算符
 
-`??=` 只在变量为 `null` 时才赋值。
+* `〜/` 除以，返回整数结果。
+* `??=` 只在变量为 `null` 时才赋值。
+* `is` 是什么类型
+* `is!` 不是什么类型
+* `expr1 ?? expr2` 如果 expr1 为非null，则返回其值; 否则，计算并返回 expr2 的值
 
 ### Flutter
 

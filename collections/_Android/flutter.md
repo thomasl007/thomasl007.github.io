@@ -1,7 +1,26 @@
 ---
 ---
+
+### Dart 特性
+
+#### 声明变量
+
+可以使用 `var` 和 `dynamic`, 也可以指定变量类型。
+
+#### 声明常量
+
+`final` 和 `const`。
+`final` 声明的变量必须初始化，一旦赋值不能修改。但声明的 `list` 或 `map` 里边元素的值是可变的。
+`const` 可用于代替 `new`，但声明的变量必须是在编译时可计算的。`const` 声明的 `list` 或 `map` 里边的元素也是不可修改的。
+
 Scaffold是 Material library 中提供的一个widget, 它提供了默认的导航栏、标题和包含主屏幕widget树的body属性。widget树可以很复杂。
 pubspec.yaml文件管理Flutter应用程序的assets(资源，如图片、package等)。
+
+#### 运算符
+
+`??=` 只在变量为 `null` 时才赋值。
+
+### Flutter
 
 状态：
 

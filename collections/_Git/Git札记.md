@@ -52,6 +52,7 @@ git clone -b 分支名 https://remote_repo_url/shenmewanyier
 ```
 git clone --single-branch https://remote_repo_url/shenmewanyier
 ```
+*注：可以添加 -b <branch> 指定要克隆哪个分支*
 
 或者你可能想**只获取最后一个历史版本**，这时你可以这样：
 ```

@@ -17,15 +17,15 @@
 假设远程仓库已经存在，而我们本地没有任何内容。我们要拉取远程仓库到本地来完成开发工作。
 这时我们需要使用`git clone`命令。
 
-#### 最基本最常见的用法
+#### 基本用法
 
 **最基本也是最常见**的用法是：
 ```
 git clone https://remote_repo_url/shenmewanyier
 ```
-*https://shenmewanyier/shenmewanyier ：是远程仓库的地址。*
+*https://remote_repo_url/shenmewanyier ：是远程仓库的地址。*
 执行这个命令会在本地创建一个名为 shenmewanyier 的目录，里边包括工程文件和一个`.git`目录。
-*注：这个命令会将远程仓库的全部内容 clone 的本地，包括全部分支和历史版本。(我们暂且认为是全部内容，实际未必，之后讲解)*
+**注：这个命令会将远程仓库的全部内容 clone 的本地，包括全部分支和历史版本。(我们暂且认为是全部内容，实际未必，之后讲解)**
 
 #### 指定 clone 到本地时创建的目录名
 
@@ -35,26 +35,26 @@ git clone https://remote_repo_url/shenmewanyier zhegewanyier
 ```
 *zhegewanyier ：就是你想指定的目录名。*
 
-#### 其他用法（通常开发时不会用到）
-
-##### clone 同时切换分支
+#### clone 并切换到指定分支
 
 `git clone` 的默认分支是 master，如果你希望在 clone 之后直接切换到指定的某个分支，你可以这样做：
 ```
 git clone -b 分支名 https://remote_repo_url/shenmewanyier
 ```
-*-b：用于指定分支。master是你想 clone 的远程分支的名称。*
+*-b：用于指定分支。*
 
-##### 只 clone 其中一个分支，或最后提交的几个历史版本
+#### 只 clone 一个分支
 
 `git clone`命令默认会将整个工程 clone 到本地，包括工程的全部分支和历史版本，通常这是我们希望的。
 但有些情况下，你可能想**只获取其中一个分支**，这时你可以这样：
 ```
 git clone --single-branch https://remote_repo_url/shenmewanyier
 ```
-*注：可以添加 -b <branch> 指定要克隆哪个分支*
+**注：可以添加 -b <branch> 指定要克隆哪个分支**
 
-或者你可能想**只获取最后一个历史版本**，这时你可以这样：
+#### 只 clone 最后提交的几个历史版本
+
+有时你可能想**只获取最后一个历史版本**，这时你可以这样：
 ```
 git clone --depth=1 https://remote_repo_url/shenmewanyier
 ```
